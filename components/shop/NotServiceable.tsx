@@ -16,7 +16,7 @@ export function NotServiceable({ cities }: { cities: string[] }) {
           {closed ? "You can still browse and fill your cart. Ordering opens at 6 AM." : `You can still browse. We're live in ${cities.join(", ")}.`}
         </p>
       </div>
-      {!closed && <Button size="sm" variant="secondary" onClick={openLocation}>Change</Button>}
+      {!closed && <Button size="sm" variant="secondary" onClick={() => openLocation()}>Change</Button>}
     </div>
   );
 }

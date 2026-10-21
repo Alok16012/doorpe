@@ -2,7 +2,9 @@
 
 A clean-room rebuild of the quick-commerce core loop: pick a location → browse or search → add to cart → log in with phone OTP → checkout → live order tracking → help and refunds. Plus a store dashboard for staff.
 
-All code, copy, brand and product art are original. Product names and brands are fictional demo data.
+The look follows Blinkit closely: same layout, colours (green CTA, yellow brand, blue discount flags), type sizes and component shapes, measured from their public mobile site. The name, logo, marketing copy and product images are our own. Product names and brands are fictional demo data.
+
+Product images are [Microsoft Fluent Emoji 3D](https://github.com/microsoft/fluentui-emoji) (MIT licence, copyright Microsoft Corporation), stored in `public/img/e/`. Font: Figtree (SIL Open Font Licence), standing in for the paid Okra font.
 
 ## Run it
 

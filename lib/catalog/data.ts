@@ -123,11 +123,11 @@ export const GROUPS: GroupDef[] = [
             p("Pure Cow Ghee", "Desi Dairy", "🫙", [["500 ml", 340, 315], ["1 L", 670, 615]], "ghee"),
           ]},
           { slug: "spices", name: "Spices & Masala", icon: "🌶️", products: [
-            p("Turmeric Powder (Haldi)", "Masala Mandi", "🟡", [["100 g", 43, 32]], "haldi turmeric"),
+            p("Turmeric Powder (Haldi)", "Masala Mandi", "🫙", [["100 g", 43, 32]], "haldi turmeric"),
             p("Red Chilli Powder", "Masala Mandi", "🌶️", [["100 g", 55, 44]], "chilli powder lal mirch"),
-            p("Cumin Seeds (Jeera)", "Masala Mandi", "🌰", [["100 g", 125, 48]], "jeera cumin"),
+            p("Cumin Seeds (Jeera)", "Masala Mandi", "🧂", [["100 g", 125, 48]], "jeera cumin"),
             p("Garam Masala", "Masala Mandi", "🧂", [["100 g", 90, 76]], "garam masala"),
-            p("Green Cardamom (Elaichi)", "Masala Mandi", "🟢", [["20 g", 250, 181]], "elaichi cardamom"),
+            p("Green Cardamom (Elaichi)", "Masala Mandi", "🫛", [["20 g", 250, 181]], "elaichi cardamom"),
           ]},
           { slug: "salt-sugar", name: "Salt & Sugar", icon: "🧂", products: [
             p("Iodised Salt", "Pure Pinch", "🧂", [["1 kg", 28, 27]], "salt namak"),
@@ -142,7 +142,7 @@ export const GROUPS: GroupDef[] = [
           { slug: "dry-fruits", name: "Dry Fruits & Nuts", icon: "🥜", products: [
             p("California Almonds", "Nutty Tales", "🌰", [["250 g", 380, 289]], "almond badam"),
             p("Cashew W320", "Nutty Tales", "🥜", [["250 g", 420, 319]], "cashew kaju"),
-            p("Roasted Makhana", "Nutty Tales", "⚪", [["100 g", 210, 99]], "makhana fox nut"),
+            p("Roasted Makhana", "Nutty Tales", "🍿", [["100 g", 210, 99]], "makhana fox nut"),
             p("Raw Peanuts", "Nutty Tales", "🥜", [["500 g", 120, 79]], "peanut moongphali"),
           ]},
           { slug: "cereals-oats", name: "Cereals & Oats", icon: "🥣", products: [
@@ -150,6 +150,21 @@ export const GROUPS: GroupDef[] = [
             p("Corn Flakes Original", "Morning Bowl", "🥣", [["475 g", 210, 182]], "cornflakes cereal"),
             p("Crunchy Muesli Fruit & Nut", "Morning Bowl", "🥣", [["500 g", 399, 319]], "muesli"),
             p("Peanut Butter Crunchy", "Nutty Tales", "🥜", [["350 g", 249, 199]], "peanut butter spread"),
+          ]},
+        ],
+      },
+      {
+        slug: "biscuits-bakery", name: "Bakery & Biscuits", icon: "🍪", tint: "#f8eedf",
+        subs: [
+          { slug: "biscuits", name: "Biscuits & Cookies", icon: "🍪", products: [
+            p("Choco Chip Cookies", "Daily Bake", "🍪", [["200 g", 60, 42]], "cookies"),
+            p("Cream Bourbon Biscuits", "Daily Bake", "🍫", [["150 g", 30, 25]], "bourbon biscuit"),
+            p("Marie Tea Biscuits", "Daily Bake", "🍘", [["250 g", 40, 35]], "marie biscuit"),
+            p("Digestive Oats Biscuits", "Daily Bake", "🍪", [["250 g", 75, 65]], "digestive"),
+          ]},
+          { slug: "cakes-rusks", name: "Cakes & Rusks", icon: "🍰", products: [
+            p("Chocolate Muffin Pack", "Daily Bake", "🧁", [["4 pcs", 120, 99]], "muffin cake"),
+            p("Elaichi Rusk", "Daily Bake", "🥖", [["300 g", 70, 59]], "rusk toast"),
           ]},
         ],
       },
@@ -220,9 +235,9 @@ export const GROUPS: GroupDef[] = [
             p("Gems Candy Pack", "Cocoa Bay", "🍬", [["5 x 17.8 g", 100, 90]], "candy gems"),
           ]},
           { slug: "indian-sweets", name: "Indian Sweets", icon: "🍮", products: [
-            p("Gulab Jamun Tin", "Mithai Ghar", "🟤", [["1 kg", 299, 239]], "gulab jamun"),
-            p("Rasgulla Tin", "Bengal Sweets Co", "⚪", [["1 kg", 280, 225]], "rasgulla"),
-            p("Kaju Katli", "Mithai Ghar", "🔷", [["250 g", 349, 299]], "kaju katli barfi"),
+            p("Gulab Jamun Tin", "Mithai Ghar", "🍡", [["1 kg", 299, 239]], "gulab jamun"),
+            p("Rasgulla Tin", "Bengal Sweets Co", "🍮", [["1 kg", 280, 225]], "rasgulla"),
+            p("Kaju Katli", "Mithai Ghar", "🍬", [["250 g", 349, 299]], "kaju katli barfi"),
           ]},
         ],
       },
@@ -280,24 +295,9 @@ export const GROUPS: GroupDef[] = [
           ]},
           { slug: "frozen", name: "Frozen Snacks", icon: "❄️", products: [
             p("Veg Momos", "Frost Bite", "🥟", [["24 pcs", 199, 165]], "momos frozen"),
-            p("Aloo Tikki", "Frost Bite", "🟠", [["400 g", 150, 129]], "aloo tikki frozen"),
+            p("Aloo Tikki", "Frost Bite", "🥔", [["400 g", 150, 129]], "aloo tikki frozen"),
             p("French Fries", "Frost Bite", "🍟", [["420 g", 150, 119]], "fries frozen"),
-            p("Green Peas (Frozen)", "Frost Bite", "🟢", [["500 g", 113, 87]], "matar peas frozen"),
-          ]},
-        ],
-      },
-      {
-        slug: "biscuits-bakery", name: "Biscuits & Bakery", icon: "🍪", tint: "#f8eedf",
-        subs: [
-          { slug: "biscuits", name: "Biscuits & Cookies", icon: "🍪", products: [
-            p("Choco Chip Cookies", "Daily Bake", "🍪", [["200 g", 60, 42]], "cookies"),
-            p("Cream Bourbon Biscuits", "Daily Bake", "🍫", [["150 g", 30, 25]], "bourbon biscuit"),
-            p("Marie Tea Biscuits", "Daily Bake", "🍘", [["250 g", 40, 35]], "marie biscuit"),
-            p("Digestive Oats Biscuits", "Daily Bake", "🍪", [["250 g", 75, 65]], "digestive"),
-          ]},
-          { slug: "cakes-rusks", name: "Cakes & Rusks", icon: "🍰", products: [
-            p("Chocolate Muffin Pack", "Daily Bake", "🧁", [["4 pcs", 120, 99]], "muffin cake"),
-            p("Elaichi Rusk", "Daily Bake", "🥖", [["300 g", 70, 59]], "rusk toast"),
+            p("Green Peas (Frozen)", "Frost Bite", "🫛", [["500 g", 113, 87]], "matar peas frozen"),
           ]},
         ],
       },
@@ -468,7 +468,7 @@ export const GROUPS: GroupDef[] = [
           { slug: "stationery", name: "Stationery", icon: "📒", products: [
             p("Ruled Notebook A5 (Pack of 3)", "Inkwell", "📒", [["3 pcs", 180, 149]], "notebook"),
             p("Gel Pens Blue (Pack of 5)", "Inkwell", "🖊️", [["5 pcs", 100, 85]], "pen"),
-            p("Sticky Notes", "Inkwell", "🟨", [["100 sheets", 80, 65]], "sticky notes"),
+            p("Sticky Notes", "Inkwell", "🗒️", [["100 sheets", 80, 65]], "sticky notes"),
           ]},
           { slug: "toys-games", name: "Toys & Games", icon: "🧸", products: [
             p("Card Game Classic", "Play Day", "🃏", [["1 pack", 199, 149]], "cards game"),
@@ -507,8 +507,8 @@ export const STOREFRONTS = [
 ];
 
 /** Home rails. `rule` picks products; `pick` lists slugs explicitly. */
-export const COLLECTIONS: { slug: string; title: string; rule?: { minDiscount?: number; categories?: string[]; subs?: string[] }; limit?: number }[] = [
-  { slug: "big-savings", title: "Big savings today", rule: { minDiscount: 25 }, limit: 24 },
+export const COLLECTIONS: { slug: string; title: string; rule?: { minDiscount?: number; categories?: string[]; subs?: string[]; groups?: string[] }; limit?: number }[] = [
+  { slug: "big-savings", title: "Hot deals", rule: { minDiscount: 20, groups: ["groceries", "snacks-drinks"] }, limit: 24 },
   { slug: "fresh-picks", title: "Picked fresh this morning", rule: { categories: ["fruits-vegetables"] }, limit: 20 },
   { slug: "late-night-cravings", title: "Late-night cravings", rule: { categories: ["chips-namkeen", "sweets-chocolates", "ice-creams", "instant-food"] }, limit: 20 },
   { slug: "dairy-daily", title: "Your daily dairy", rule: { categories: ["dairy-bread-eggs"] }, limit: 20 },

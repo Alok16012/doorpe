@@ -3,8 +3,8 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { ArrowLeft, ShieldCheck } from "lucide-react";
 import { BottomSheet } from "../ui/BottomSheet";
-import { Button } from "../ui/Button";
-import { BRAND } from "@/lib/brand";
+import { Logo } from "../shop/Logo";
+import { emojiSrc } from "@/lib/emoji";
 import type { User } from "@/lib/types";
 
 export function LoginSheet({ open, onClose, onDone }: { open: boolean; onClose: () => void; onDone: (u: User) => void }) {
@@ -48,56 +48,67 @@ export function LoginSheet({ open, onClose, onDone }: { open: boolean; onClose: 
 
   const validPhone = /^[6-9]\d{9}$/.test(phone);
 
+  const wall = ["🥛", "🍌", "🧴", "🥨", "🍞", "🍫", "🧀", "🍦", "🥫", "🥦", "☕", "🍳", "🥚", "🧃", "🍪", "🍅", "🧈", "🥜"];
   return (
-    <BottomSheet open={open} onClose={onClose} labelledBy="login-title">
-      <div className="bg-bg">
-        <div className="relative grid h-36 place-items-center overflow-hidden bg-brand" aria-hidden>
-          <div className="absolute inset-0 grid grid-cols-6 gap-3 p-3 text-3xl opacity-40 select-none">
-            {Array.from("🥛🍞🥚🍌🧀🍫🥔🧅🍅🥤🍪🧴🍦🥜🧃🍎🥕🧈").map((e, i) => <span key={i}>{e}</span>)}
+    <BottomSheet open={open} onClose={onClose} labelledBy="login-title" full>
+      <div className="flex min-h-full flex-col bg-bg">
+        <div className="relative h-[300px] shrink-0 overflow-hidden md:h-[220px]" aria-hidden>
+          <div className="absolute -left-10 top-3 grid w-[140%] grid-cols-6 gap-3">
+            {wall.map((e, i) => (
+              <span key={i} className={`grid aspect-square place-items-center rounded-2xl bg-surface-tint p-2 ${i % 12 >= 6 ? "translate-x-10" : ""}`}>
+                <img src={emojiSrc(e)} alt="" className="size-full" />
+              </span>
+            ))}
           </div>
-          <div className="relative rounded-lg bg-bg px-4 py-2 text-2xl font-extrabold tracking-tight shadow-card">{BRAND.name}</div>
+          <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-bg to-transparent" />
         </div>
-        <div className="space-y-4 p-5">
+        <button onClick={onClose} aria-label="Close" className="absolute left-4 top-4 z-10 grid size-10 place-items-center rounded-full bg-bg shadow-pop"><ArrowLeft size={20} /></button>
+        <div className="relative -mt-8 flex flex-1 flex-col items-center px-6 pb-6">
+          <Logo size="lg" />
           {step === "phone" ? (
-            <form onSubmit={(e) => { e.preventDefault(); if (validPhone) send(); }} className="space-y-4">
-              <div className="text-center">
-                <h2 id="login-title" className="text-xl font-extrabold">Log in or sign up</h2>
-                <p className="mt-1 text-sm text-muted">One code, no passwords. Takes ten seconds.</p>
-              </div>
-              <label className="flex h-13 items-center gap-2 rounded-md border border-input px-3 focus-within:border-accent focus-within:ring-2 focus-within:ring-accent/20">
-                <span className="text-sm font-bold">+91</span>
+            <form onSubmit={(e) => { e.preventDefault(); if (validPhone) send(); }} className="mt-4 flex w-full max-w-sm flex-1 flex-col items-center">
+              <h2 id="login-title" className="text-center text-2xl font-extrabold text-text">Groceries in minutes</h2>
+              <p className="mt-1 text-center text-base text-text">Log in or Sign up</p>
+              <label className="mt-6 flex h-12 w-full items-center gap-2 rounded-xl border border-border px-4 focus-within:border-text">
+                <span className="text-sm font-bold text-text">+91</span>
                 <input
                   autoFocus inputMode="numeric" autoComplete="tel-national" aria-label="Mobile number"
                   value={phone} onChange={(e) => setPhone(e.target.value.replace(/\D/g, "").slice(0, 10))}
-                  placeholder="10-digit mobile number" className="h-full flex-1 bg-transparent text-base font-semibold tracking-wide outline-none placeholder:font-medium placeholder:text-faint"
+                  placeholder="Enter mobile number" className="h-full flex-1 bg-transparent text-sm font-semibold outline-none placeholder:font-normal placeholder:text-faint"
                 />
               </label>
-              {error && <p role="alert" className="text-sm font-semibold text-danger">{error}</p>}
-              <Button type="submit" size="lg" block disabled={!validPhone} loading={busy}>Get code</Button>
-              <p className="text-center text-xs text-muted">By continuing you agree to our Terms and Privacy Policy.</p>
+              {error && <p role="alert" className="mt-2 w-full text-sm font-semibold text-danger">{error}</p>}
+              <button type="submit" disabled={!validPhone || busy} className="mt-4 h-12 w-full rounded-xl bg-accent text-base font-semibold text-on-accent transition-colors disabled:bg-[#9c9c9c]">
+                {busy ? "Sending…" : "Continue"}
+              </button>
+              <p className="mt-auto pt-8 text-center text-xs text-muted">By continuing, you agree to our <span className="underline">Terms of service</span> &amp; <span className="underline">Privacy policy</span></p>
             </form>
           ) : (
-            <form onSubmit={(e) => { e.preventDefault(); verify(); }} className="space-y-4">
-              <button type="button" onClick={() => setStep("phone")} className="flex items-center gap-1 text-sm font-bold text-accent"><ArrowLeft size={16} /> Change number</button>
-              <div>
-                <h2 id="login-title" className="text-xl font-extrabold">Enter the 4-digit code</h2>
-                <p className="mt-1 text-sm text-muted">Sent by SMS to +91 {phone}</p>
-              </div>
+            <form onSubmit={(e) => { e.preventDefault(); verify(); }} className="mt-4 flex w-full max-w-sm flex-col items-center">
+              <h2 id="login-title" className="text-center text-xl font-extrabold text-text">OTP Verification</h2>
+              <p className="mt-1 text-center text-sm text-muted">We have sent a verification code to<br /><b className="text-text">+91-{phone}</b> <button type="button" onClick={() => setStep("phone")} className="ml-1 font-semibold text-accent">Change</button></p>
               {devOtp && (
-                <p className="flex items-center gap-2 rounded-md bg-info-soft px-3 py-2 text-sm font-semibold text-info">
-                  <ShieldCheck size={16} /> Demo mode, no SMS is sent. Your code is <span className="font-extrabold tracking-widest">{devOtp}</span>
+                <p className="mt-4 flex w-full items-center gap-2 rounded-lg bg-info-soft px-3 py-2 text-sm font-semibold text-info">
+                  <ShieldCheck size={16} /> Demo mode, no SMS sent. Code: <span className="font-extrabold tracking-widest">{devOtp}</span>
                 </p>
               )}
-              <input
-                autoFocus inputMode="numeric" autoComplete="one-time-code" aria-label="One-time code" maxLength={4}
-                value={code}
-                onChange={(e) => { const v = e.target.value.replace(/\D/g, "").slice(0, 4); setCode(v); if (v.length === 4) verify(v); }}
-                className="h-14 w-full rounded-md border border-input text-center text-2xl font-extrabold tracking-[0.6em] outline-none focus:border-accent focus:ring-2 focus:ring-accent/20"
-              />
-              {error && <p role="alert" className="text-sm font-semibold text-danger">{error}</p>}
-              <Button type="submit" size="lg" block disabled={code.length !== 4} loading={busy}>Verify and continue</Button>
-              <p className="text-center text-sm text-muted">
-                {wait > 0 ? <>Resend code in 0:{String(wait).padStart(2, "0")}</> : <button type="button" onClick={send} className="font-bold text-accent">Resend code</button>}
+              <div className="relative mt-5">
+                <div className="flex gap-3" aria-hidden>
+                  {[0, 1, 2, 3].map((i) => (
+                    <span key={i} className={`grid size-12 place-items-center rounded-xl border text-xl font-bold ${code.length === i ? "border-text" : "border-border"}`}>{code[i] ?? ""}</span>
+                  ))}
+                </div>
+                <input
+                  autoFocus inputMode="numeric" autoComplete="one-time-code" aria-label="One-time code" maxLength={4}
+                  value={code}
+                  onChange={(e) => { const v = e.target.value.replace(/\D/g, "").slice(0, 4); setCode(v); if (v.length === 4) verify(v); }}
+                  className="absolute inset-0 w-full opacity-0"
+                />
+              </div>
+              {error && <p role="alert" className="mt-3 text-sm font-semibold text-danger">{error}</p>}
+              {busy && <p className="mt-3 text-sm text-muted">Verifying…</p>}
+              <p className="mt-5 text-center text-sm text-muted">
+                {wait > 0 ? <>Resend code in {wait} seconds</> : <button type="button" onClick={send} className="font-semibold text-accent">Resend code</button>}
               </p>
             </form>
           )}

@@ -6,6 +6,7 @@ import { currentLocation } from "@/lib/location";
 import { stockFor } from "@/lib/inventory";
 import { toCard } from "@/lib/dto";
 import { ProductCard } from "@/components/shop/ProductCard";
+import { emojiSrc } from "@/lib/emoji";
 
 export async function generateMetadata(props: PageProps<"/cn/[slug]">): Promise<Metadata> {
   const c = catalog.category((await props.params).slug);
@@ -45,36 +46,38 @@ export default async function CategoryPage(props: PageProps<"/cn/[slug]">) {
 
   return (
     <div className="md:pt-4">
-      <div className="flex items-center justify-between border-b border-border bg-bg px-3 py-2.5 md:rounded-t-md md:border md:px-4">
-        <h1 className="text-sm font-extrabold md:text-lg">{cat.name}</h1>
-        <nav aria-label="Sort" className="no-scrollbar flex gap-1.5 overflow-x-auto">
+      <div className="flex items-center justify-between border-b border-border bg-bg px-3 py-3 md:mt-2 md:px-4">
+        <h1 className="text-sm font-bold text-text md:text-lg">{cat.name}</h1>
+        <nav aria-label="Sort" className="no-scrollbar hidden gap-1.5 overflow-x-auto md:flex">
           {SORTS.map((s) => (
             <Link key={s.key} href={q({ sort: s.key === "relevance" ? undefined : s.key })} aria-current={s.key === sort ? "true" : undefined}
-              className={`whitespace-nowrap rounded-pill border px-2.5 py-1 text-xs font-bold ${s.key === sort ? "border-accent bg-accent-soft text-accent" : "border-border text-muted hover:border-input"}`}>
+              className={`whitespace-nowrap rounded-md border px-3 py-1.5 text-xs font-semibold ${s.key === sort ? "border-add bg-accent-soft text-add" : "border-border text-muted hover:border-input"}`}>
               {s.label}
             </Link>
           ))}
         </nav>
       </div>
       <div className="flex md:border-x md:border-b md:border-border">
-        <nav aria-label={`${cat.name} sub-categories`} className="no-scrollbar sticky top-16 h-[calc(100dvh-4rem)] w-20 shrink-0 overflow-y-auto border-r border-border bg-bg pb-24 md:top-[84px] md:h-[calc(100dvh-84px)] md:w-[200px]">
+        <nav aria-label={`${cat.name} sub-categories`} className="no-scrollbar sticky top-16 h-[calc(100dvh-4rem)] w-[80px] shrink-0 overflow-y-auto border-r border-border bg-bg pb-24 md:top-[86px] md:h-[calc(100dvh-86px)] md:w-[200px]">
           <ul>
             {[{ slug: undefined, name: "All", icon: cat.icon }, ...cat.subs].map((s) => {
               const active = s.slug === sub;
               return (
                 <li key={s.slug ?? "all"}>
                   <Link href={q({ sub: s.slug })} aria-current={active ? "page" : undefined}
-                    className={`relative flex flex-col items-center gap-1 px-1 py-3 text-center md:flex-row md:gap-3 md:px-3 md:text-left ${active ? "bg-accent-soft/60" : "hover:bg-surface"}`}>
-                    {active && <span aria-hidden className="absolute inset-y-2 right-0 w-1 rounded-l-sm bg-accent" />}
-                    <span aria-hidden className="grid size-12 place-items-center rounded-md text-2xl md:size-10" style={{ background: cat.tint }}>{s.icon}</span>
-                    <span className={`text-[11px] leading-tight md:text-sm ${active ? "font-extrabold text-text" : "font-semibold text-muted"}`}>{s.name}</span>
+                    className={`relative flex flex-col items-center gap-1.5 px-1 py-2.5 text-center md:flex-row md:gap-3 md:border-b md:border-border md:px-3 md:py-3 md:text-left ${active ? "md:bg-[#ecffec]" : "hover:bg-surface"}`}>
+                    {active && <span aria-hidden className="absolute inset-y-1 right-0 w-1 rounded-l-sm bg-accent" />}
+                    <span aria-hidden className={`grid size-[52px] place-items-center overflow-hidden rounded-lg md:size-12 ${active ? "bg-[#ecffec] md:bg-[#d9f5dc]" : "bg-[#f3f4f8]"}`}>
+                      <img src={emojiSrc(s.icon)} alt="" className={`size-10 transition-transform ${active ? "translate-y-0.5 scale-110" : ""}`} />
+                    </span>
+                    <span className={`text-[11px] leading-[13px] md:text-sm ${active ? "font-semibold text-text" : "text-muted"}`}>{s.name}</span>
                   </Link>
                 </li>
               );
             })}
           </ul>
         </nav>
-        <section className="min-w-0 flex-1 bg-surface p-2 md:p-4" aria-label={subName}>
+        <section className="min-w-0 flex-1 bg-[#f4f6fb] p-2 md:p-4" aria-label={subName}>
           <h2 className="sr-only">{subName}</h2>
           {cards.length ? (
             <ul className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-5 md:gap-3">

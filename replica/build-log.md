@@ -34,3 +34,12 @@ Harder than expected:
 Not done yet (needs keys or a decision from you):
 - Real SMS OTP (MSG91/Twilio), Razorpay for UPI/cards, Supabase driver for production data (schema is ready in replica/schema.sql).
 - Saved screenshots in replica/clone-screens/ for replica-diff (Playwright isn't installed on this machine).
+
+## 2026-10-22: design matched to the original (user request)
+
+The user asked for the design to look the same as Blinkit. Measured their public mobile web with computed styles and rebuilt the tokens and components to match:
+- Colours: green `#0c831f` CTA and cart bar, ADD outline `#318616` on `#f7fff9`, blue discount flag, yellow `#f8cb46` brand, `#e5f3f3` category tiles, `#f8f8f8` search box, `#f4f6fb` cart background.
+- Type: Okra is paid, so Figtree stands in. Sizes match (18/800 header, 17/800 sections, 13/600 names and prices, 9/700 ETA chip).
+- Components: zig-zag discount flag, image-only border on rail cards, "N options" inside ADD, green unit picker, anchored location popover with GPS-first button, centred "My Cart" header, blue savings strip, green total bar, OTP boxes, product-wall login.
+- Product art: Fluent Emoji 3D renders (MIT) on white instead of emoji glyphs.
+- Kept our own: name, logo, taglines and marketing copy, product images. Contrast still passes AA (tokens.json, 18 pairs).

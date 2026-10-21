@@ -105,14 +105,14 @@ export function CheckoutScreen({ coupons, tipOptions }: { coupons: { code: strin
   const walletShort = pay === "wallet" && quote && user.walletBalance < quote.grandTotal;
 
   return (
-    <div className="pb-32">
-      <TitleBar title="Checkout" back="/cart" />
+    <div className="min-h-dvh bg-[#f4f6fb] pb-32">
+      <TitleBar title="Checkout" back="/cart" center />
       <div className="mx-auto max-w-3xl space-y-3 p-3 md:grid md:grid-cols-[1fr_340px] md:gap-4 md:space-y-0">
         <div className="space-y-3">
           {/* address */}
-          <section className="rounded-md bg-bg p-4" aria-labelledby="addr-h">
+          <section className="rounded-xl bg-bg p-4" aria-labelledby="addr-h">
             <div className="mb-3 flex items-center justify-between">
-              <h2 id="addr-h" className="text-base font-extrabold">Deliver to</h2>
+              <h2 id="addr-h" className="text-[15px] font-bold">Deliver to</h2>
               <button onClick={() => setAdding(true)} className="flex items-center gap-1 text-sm font-bold text-accent"><Plus size={16} /> Add new</button>
             </div>
             {addresses === null ? <div className="skeleton h-16 rounded-md" /> : addresses.length === 0 ? (
@@ -140,8 +140,8 @@ export function CheckoutScreen({ coupons, tipOptions }: { coupons: { code: strin
           </section>
 
           {/* instructions */}
-          <section className="rounded-md bg-bg p-4" aria-labelledby="note-h">
-            <h2 id="note-h" className="text-base font-extrabold">Delivery instructions</h2>
+          <section className="rounded-xl bg-bg p-4" aria-labelledby="note-h">
+            <h2 id="note-h" className="text-[15px] font-bold">Delivery instructions</h2>
             <div className="no-scrollbar mt-3 flex gap-2 overflow-x-auto">
               {NOTES.map((n) => {
                 const on = notes.includes(n);
@@ -155,24 +155,26 @@ export function CheckoutScreen({ coupons, tipOptions }: { coupons: { code: strin
           </section>
 
           {/* tip */}
-          <section className="rounded-md bg-bg p-4" aria-labelledby="tip-h">
+          <section className="rounded-xl bg-bg p-4" aria-labelledby="tip-h">
             <div className="flex items-start gap-3">
               <HandHeart className="mt-0.5 shrink-0 text-accent" aria-hidden />
               <div className="flex-1">
-                <h2 id="tip-h" className="text-base font-extrabold">Tip your rider</h2>
+                <h2 id="tip-h" className="text-[15px] font-bold">Tip your rider</h2>
                 <p className="text-xs text-muted">Every rupee goes to them. Riding through traffic and rain is hard work.</p>
               </div>
             </div>
             <div className="mt-3 flex flex-wrap gap-2" role="radiogroup" aria-label="Tip amount">
-              {[0, ...tipOptions].map((t) => (
-                <button key={t} role="radio" aria-checked={tip === t} onClick={() => setTip(t)} className={`rounded-pill border px-4 py-1.5 text-sm font-bold ${tip === t ? "border-accent bg-accent-soft text-accent" : "border-border"}`}>{t ? inr(t) : "No tip"}</button>
+              {[0, ...tipOptions].map((t, i) => (
+                <button key={t} role="radio" aria-checked={tip === t} onClick={() => setTip(t)} className={`flex items-center gap-1.5 rounded-lg border px-3 py-2 text-[13px] font-semibold ${tip === t ? "border-accent bg-accent-soft text-accent" : "border-border text-text"}`}>
+                  <span aria-hidden>{["🙅", "🙂", "😀", "😍", "🤩"][i]}</span>{t ? inr(t) : "No tip"}
+                </button>
               ))}
             </div>
           </section>
 
           {/* coupon */}
-          <section className="rounded-md bg-bg p-4" aria-labelledby="cpn-h">
-            <h2 id="cpn-h" className="flex items-center gap-2 text-base font-extrabold"><Tag size={18} aria-hidden /> Offers & coupons</h2>
+          <section className="rounded-xl bg-bg p-4" aria-labelledby="cpn-h">
+            <h2 id="cpn-h" className="flex items-center gap-2 text-[15px] font-bold"><Tag size={18} aria-hidden /> Offers & coupons</h2>
             <form onSubmit={(e) => { e.preventDefault(); setCoupon(couponInput.trim().toUpperCase() || undefined); }} className="mt-3 flex gap-2">
               <input value={couponInput} onChange={(e) => setCouponInput(e.target.value.toUpperCase())} placeholder="Enter code" aria-label="Coupon code" className="h-10 flex-1 rounded-md border border-input px-3 text-sm font-bold uppercase tracking-wide outline-none focus:border-accent" />
               <Button type="submit" variant="secondary" disabled={!couponInput.trim()}>Apply</Button>
@@ -193,8 +195,8 @@ export function CheckoutScreen({ coupons, tipOptions }: { coupons: { code: strin
           </section>
 
           {/* payment */}
-          <section className="rounded-md bg-bg p-4" aria-labelledby="pay-h">
-            <h2 id="pay-h" className="text-base font-extrabold">Pay with</h2>
+          <section className="rounded-xl bg-bg p-4" aria-labelledby="pay-h">
+            <h2 id="pay-h" className="text-[15px] font-bold">Pay with</h2>
             <ul role="radiogroup" aria-label="Payment method" className="mt-3 space-y-2">
               {PAY.map(({ key, label, sub, icon: I }) => (
                 <li key={key}>
@@ -222,10 +224,10 @@ export function CheckoutScreen({ coupons, tipOptions }: { coupons: { code: strin
           <button
             onClick={place}
             disabled={!quote || loading || placing || !selected || !!walletShort || !loc}
-            className="flex h-14 w-full items-center justify-between rounded-md bg-accent px-4 text-on-accent hover:bg-accent-hover disabled:opacity-60"
+            className="flex h-[58px] w-full items-center justify-between rounded-lg bg-accent px-4 text-on-accent hover:bg-accent-hover disabled:opacity-60"
           >
-            <span className="text-left leading-tight"><span className="block text-base font-extrabold">{quote ? inr(quote.grandTotal) : "…"}</span><span className="block text-2xs font-bold uppercase opacity-80">Total</span></span>
-            <span className="text-base font-extrabold">{placing ? "Placing order…" : !selected ? "Add an address" : pay === "cod" ? "Place order ›" : `Pay ${quote ? inr(quote.grandTotal) : ""} ›`}</span>
+            <span className="text-left leading-tight"><span className="block text-[15px] font-bold">{quote ? inr(quote.grandTotal) : "…"}</span><span className="block text-2xs font-bold uppercase opacity-80">Total</span></span>
+            <span className="text-[15px] font-bold">{placing ? "Placing order…" : !selected ? "Add an address" : pay === "cod" ? "Place order ›" : `Pay ${quote ? inr(quote.grandTotal) : ""} ›`}</span>
           </button>
         </div>
       </div>

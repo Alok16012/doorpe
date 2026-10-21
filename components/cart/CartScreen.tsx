@@ -49,12 +49,12 @@ export function CartScreen({ picks, eta, shared }: { picks: CardProduct[]; eta: 
   const byId = useMemo(() => new Map(lines.map((l) => [l.variantId, l])), [lines]);
   const problems = quote?.lines.filter((l) => l.problem) ?? [];
 
-  if (!hydrated) return <><TitleBar title="Your cart" /><div className="mx-auto max-w-3xl space-y-3 p-3">{[0, 1, 2].map((i) => <div key={i} className="skeleton h-24 rounded-md" />)}</div></>;
+  if (!hydrated) return <><TitleBar title="My Cart" center /><div className="mx-auto max-w-3xl space-y-3 p-3">{[0, 1, 2].map((i) => <div key={i} className="skeleton h-24 rounded-md" />)}</div></>;
 
   if (!lines.length)
     return (
       <div className="min-h-dvh bg-surface">
-        <TitleBar title="Your cart" />
+        <TitleBar title="My Cart" center />
         <div className="mx-auto max-w-3xl p-3">
           {sharedOpen && <SharedBanner count={shared.length} onAdd={addShared} />}
           <div className="rounded-lg bg-bg px-6 py-12 text-center">
@@ -71,22 +71,22 @@ export function CartScreen({ picks, eta, shared }: { picks: CardProduct[]; eta: 
   const canCheckout = !!quote && quote.itemCount > 0 && !!svc?.ok && svc.open;
 
   return (
-    <div className="min-h-dvh bg-surface pb-32">
-      <TitleBar title="Your cart" right={<button onClick={share} className="flex items-center gap-1 rounded-md px-3 py-2 text-sm font-bold text-accent hover:bg-accent-soft"><Share2 size={16} /> Share</button>} />
+    <div className="min-h-dvh bg-[#f4f6fb] pb-32">
+      <TitleBar title="My Cart" center right={<button onClick={share} className="flex items-center gap-1 rounded-md px-3 py-2 text-[15px] font-semibold text-accent"><Share2 size={16} /> Share</button>} />
       <div className="mx-auto max-w-3xl space-y-3 p-3">
         {sharedOpen && <SharedBanner count={shared.length} onAdd={addShared} />}
         {quote && quote.savings > 0 && (
-          <p className="flex items-center justify-between rounded-md bg-info-soft px-4 py-2.5 text-sm font-extrabold text-info">
-            <span>You&apos;re saving on this order</span><span>{inr(quote.savings)}</span>
+          <p className="flex items-center justify-between rounded-lg bg-info-soft px-4 py-3 text-[15px] font-semibold text-info">
+            <span>Your total savings</span><span>{inr(quote.savings)}</span>
           </p>
         )}
 
-        <section className="rounded-md bg-bg" aria-label="Items">
+        <section className="rounded-xl bg-bg" aria-label="Items">
           <div className="flex items-center gap-3 p-4">
-            <span className="grid size-11 place-items-center rounded-md bg-surface"><Timer size={22} aria-hidden /></span>
+            <span className="grid size-12 place-items-center rounded-lg bg-[#f4f6fb]"><Timer size={24} strokeWidth={2.2} aria-hidden /></span>
             <div>
-              <p className="font-extrabold">{svc?.ok ? `Arrives in ${svc.etaMin} minutes` : loc ? "Not deliverable to this location" : "Set a location to see delivery time"}</p>
-              <p className="text-xs text-muted">{quote?.itemCount ?? lines.reduce((s, l) => s + l.qty, 0)} items in one delivery</p>
+              <p className="text-[17px] font-bold text-text">{svc?.ok ? `Delivery in ${svc.etaMin} minutes` : loc ? "Not deliverable to this location" : "Set a location to see delivery time"}</p>
+              <p className="text-xs text-muted">Shipment of {quote?.itemCount ?? lines.reduce((s, l) => s + l.qty, 0)} item{(quote?.itemCount ?? 2) > 1 ? "s" : ""}</p>
             </div>
           </div>
           {problems.length > 0 && (
@@ -100,11 +100,11 @@ export function CartScreen({ picks, eta, shared }: { picks: CardProduct[]; eta: 
               const card: CardProduct = { slug: l.productSlug, name: l.name, brand: "", icon: l.icon, tint: l.tint, variants: [{ id: l.variantId, unit: l.unit, price: l.price, mrp: l.mrp, stock: l.available }] };
               return (
                 <li key={l.variantId} className="flex items-center gap-3 px-4 py-3">
-                  <Link href={`/p/${l.productSlug}`} className="w-16 shrink-0"><ProductArt icon={l.icon} tint={l.tint} size="sm" dim={l.problem === "out_of_stock"} /></Link>
+                  <Link href={`/p/${l.productSlug}`} className="w-[70px] shrink-0 rounded-lg border border-border"><ProductArt icon={l.icon} size="sm" dim={l.problem === "out_of_stock"} /></Link>
                   <div className="min-w-0 flex-1">
-                    <p className="line-clamp-2 text-sm font-semibold leading-5">{l.name}</p>
+                    <p className="line-clamp-2 text-[13px] leading-4 text-text">{l.name}</p>
                     <p className="text-xs text-muted">{l.unit}</p>
-                    <p className="mt-0.5 text-sm"><b>{inr(l.price)}</b>{l.mrp > l.price && <s className="ml-1.5 text-xs text-faint">{inr(l.mrp)}</s>}</p>
+                    <p className="mt-1 text-[13px]"><b className="font-bold">{inr(l.price)}</b>{l.mrp > l.price && <s className="ml-1.5 text-xs text-faint">{inr(l.mrp)}</s>}</p>
                     {l.problem === "out_of_stock" && <p className="text-xs font-bold text-danger">Sold out at your store</p>}
                     {l.problem === "reduced" && <p className="text-xs font-bold text-warning">Only {l.available} available</p>}
                   </div>
@@ -133,7 +133,7 @@ export function CartScreen({ picks, eta, shared }: { picks: CardProduct[]; eta: 
         )}
 
         <section aria-label="You might need">
-          <h2 className="px-1 pb-2 pt-1 text-base font-extrabold">Before you check out</h2>
+          <h2 className="px-1 pb-3 pt-1 text-base font-bold">You might also like</h2>
           <div className="no-scrollbar flex gap-3 overflow-x-auto pb-1">
             {picks.filter((p) => !byId.has(p.variants[0].id)).map((p) => <ProductCard key={p.slug} p={p} eta={eta} variant="rail" />)}
           </div>
@@ -142,26 +142,26 @@ export function CartScreen({ picks, eta, shared }: { picks: CardProduct[]; eta: 
         {quote && quote.itemCount > 0 && <BillDetails b={quote} />}
         {error && <p className="text-center text-sm text-danger">Couldn&apos;t refresh prices. Check your connection.</p>}
 
-        <section className="rounded-md bg-bg p-4">
-          <h2 className="text-sm font-extrabold">Cancellation</h2>
-          <p className="mt-1 text-xs leading-5 text-muted">You can cancel for free until we start packing. Once your items are packed, the order can&apos;t be cancelled. If we&apos;re running late, we&apos;ll tell you, and refund where it&apos;s fair.</p>
+        <section className="rounded-xl bg-bg p-4">
+          <h2 className="text-[15px] font-bold">Cancellation Policy</h2>
+          <p className="mt-1 text-xs leading-[18px] text-muted">You can cancel for free until we start packing. Once your items are packed, the order can&apos;t be cancelled. If we&apos;re running late, we&apos;ll tell you, and refund where it&apos;s fair.</p>
         </section>
       </div>
 
       <div className="fixed inset-x-0 bottom-0 z-40 border-t border-border bg-bg px-3 py-3 shadow-bar">
         <div className="mx-auto max-w-3xl">
           {!loc || !svc?.ok ? (
-            <Button size="lg" block onClick={openLocation}>{loc ? "Change delivery location" : "Set delivery location"}</Button>
+            <Button size="lg" block onClick={() => openLocation()}>{loc ? "Change delivery location" : "Set delivery location"}</Button>
           ) : !svc.open ? (
             <Button size="lg" block disabled>Store is closed right now</Button>
           ) : (
             <button
               disabled={!canCheckout || loading}
               onClick={() => (user ? router.push("/checkout") : openLogin(() => router.push("/checkout")))}
-              className="flex h-14 w-full items-center justify-between rounded-md bg-accent px-4 text-on-accent hover:bg-accent-hover disabled:opacity-70"
+              className="flex h-[58px] w-full items-center justify-between rounded-lg bg-accent px-4 text-on-accent hover:bg-accent-hover disabled:opacity-70"
             >
-              <span className="text-left leading-tight"><span className="block text-base font-extrabold">{quote ? inr(quote.grandTotal) : "…"}</span><span className="block text-2xs font-bold uppercase opacity-80">Total</span></span>
-              <span className="text-base font-extrabold">{user ? "Continue to checkout ›" : "Log in to continue ›"}</span>
+              <span className="text-left leading-tight"><span className="block text-base font-bold">{quote ? inr(quote.grandTotal) : "…"}</span><span className="block text-[10px] font-semibold uppercase opacity-90">Total</span></span>
+              <span className="text-[17px] font-semibold">{user ? "Proceed ›" : "Login to Proceed ›"}</span>
             </button>
           )}
         </div>

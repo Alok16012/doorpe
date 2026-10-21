@@ -67,6 +67,7 @@ export const catalog = {
     if (!c) return undefined;
     let list = products;
     const r = c.rule || {};
+    if (r.groups) list = list.filter((p) => r.groups!.includes(p.group));
     if (r.categories) list = list.filter((p) => r.categories!.includes(p.category));
     if (r.subs) list = list.filter((p) => r.subs!.includes(p.sub));
     if (r.minDiscount) list = list.filter((p) => discountOf(p) >= r.minDiscount!).sort((a, b) => discountOf(b) - discountOf(a));

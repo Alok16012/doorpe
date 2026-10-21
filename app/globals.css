@@ -3,32 +3,34 @@
 /* Generated from replica/design/tokens.json. Change values there first. */
 :root {
   --color-bg: #ffffff;
-  --color-surface: #f3f5f9;
-  --color-surface-tint: #e9f3f7;
-  --color-border: #e4e7ed;
-  --color-border-input: #868f9e;
-  --color-text: #1a1d23;
-  --color-text-muted: #5b6370;
-  --color-text-faint: #6b7280;
-  --color-accent: #1747c9;
-  --color-accent-hover: #123aa8;
-  --color-accent-soft: #edf2ff;
+  --color-surface: #f5f7fd;
+  --color-surface-tint: #e5f3f3;
+  --color-border: #e8e8e8;
+  --color-border-input: #8a8a8a;
+  --color-text: #1f1f1f;
+  --color-text-muted: #666666;
+  --color-text-faint: #757575;
+  --color-accent: #0c831f;
+  --color-accent-hover: #0a6e1a;
+  --color-accent-soft: #f7fff9;
   --color-on-accent: #ffffff;
-  --color-brand: #ffc83d;
-  --color-on-brand: #1a1d23;
-  --color-deal: #c2410c;
+  --color-add: #318616;
+  --color-brand: #f8cb46;
+  --color-on-brand: #1f1f1f;
+  --color-deal: #2563eb;
   --color-on-deal: #ffffff;
-  --color-info: #1f55c9;
-  --color-info-soft: #e8effd;
-  --color-success: #157f3c;
-  --color-success-soft: #e7f6ec;
-  --color-danger: #c62828;
-  --color-warning: #a15c00;
-  --color-scrim: #0b0d12;
+  --color-info: #1c5dd6;
+  --color-info-soft: #e5f0ff;
+  --color-success: #0c831f;
+  --color-success-soft: #eaf7ec;
+  --color-danger: #d32f2f;
+  --color-warning: #9a5b00;
+  --color-search: #f8f8f8;
+  --color-scrim: #000000;
 
-  --shadow-card: 0 1px 2px rgba(16, 24, 40, 0.05);
-  --shadow-bar: 0 -4px 16px rgba(16, 24, 40, 0.08);
-  --shadow-pop: 0 16px 40px rgba(16, 24, 40, 0.18);
+  --shadow-card: 0 0 0 0.5px rgba(0, 0, 0, 0.04);
+  --shadow-bar: 0 -2px 12px rgba(0, 0, 0, 0.08);
+  --shadow-pop: 0 8px 28px rgba(0, 0, 0, 0.16);
   --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
@@ -45,6 +47,8 @@
   --color-accent-hover: var(--color-accent-hover);
   --color-accent-soft: var(--color-accent-soft);
   --color-on-accent: var(--color-on-accent);
+  --color-add: var(--color-add);
+  --color-search: var(--color-search);
   --color-brand: var(--color-brand);
   --color-on-brand: var(--color-on-brand);
   --color-deal: var(--color-deal);
@@ -57,16 +61,16 @@
   --color-warning: var(--color-warning);
   --color-scrim: var(--color-scrim);
 
-  --font-sans: var(--font-manrope), system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-sans: var(--font-figtree), system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 
-  --text-2xs: 10px;
-  --text-2xs--line-height: 12px;
+  --text-2xs: 9px;
+  --text-2xs--line-height: 10px;
 
   --radius-xs: 4px;
-  --radius-sm: 8px;
-  --radius-md: 12px;
-  --radius-lg: 16px;
-  --radius-xl: 24px;
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
 
   --shadow-card: var(--shadow-card);
   --shadow-bar: var(--shadow-bar);
@@ -81,6 +85,10 @@
   --animate-shimmer: shimmer 1.2s linear infinite;
   --animate-toast: toast-in 200ms var(--ease);
 
+  @keyframes slide-up {
+    from { transform: translateY(100%); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
   @keyframes sheet-up {
     from { transform: translateY(100%); }
     to { transform: translateY(0); }

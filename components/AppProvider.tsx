@@ -12,7 +12,7 @@ type Ctx = {
   setUser: (u: User | null) => void;
   loc: ClientLoc;
   svc: ClientSvc | null;
-  openLocation: () => void;
+  openLocation: (opts?: { gps?: boolean }) => void;
   openLogin: (then?: () => void) => void;
   toast: (msg: string) => void;
 };
@@ -26,6 +26,7 @@ export const useApp = () => {
 export function AppProvider({ children, initialUser, loc, svc }: { children: React.ReactNode; initialUser: User | null; loc: ClientLoc; svc: ClientSvc | null }) {
   const [user, setUser] = useState(initialUser);
   const [locOpen, setLocOpen] = useState(false);
+  const [autoGps, setAutoGps] = useState(false);
   const [loginOpen, setLoginOpen] = useState(false);
   const after = useRef<(() => void) | undefined>(undefined);
   const [toastMsg, setToastMsg] = useState<{ id: number; text: string } | null>(null);
@@ -37,14 +38,14 @@ export function AppProvider({ children, initialUser, loc, svc }: { children: Rea
     timer.current = setTimeout(() => setToastMsg(null), 2600);
   }, []);
   const openLogin = useCallback((then?: () => void) => { after.current = then; setLoginOpen(true); }, []);
-  const openLocation = useCallback(() => setLocOpen(true), []);
+  const openLocation = useCallback((opts?: { gps?: boolean }) => { setAutoGps(!!opts?.gps); setLocOpen(true); }, []);
   const closeLoc = useCallback(() => setLocOpen(false), []);
   const closeLogin = useCallback(() => setLoginOpen(false), []);
 
   return (
     <C.Provider value={{ user, setUser, loc, svc, openLocation, openLogin, toast }}>
       {children}
-      <LocationSheet open={locOpen} onClose={closeLoc} hasLocation={!!loc} />
+      <LocationSheet open={locOpen} onClose={closeLoc} hasLocation={!!loc} autoGps={autoGps} />
       <LoginSheet
         open={loginOpen}
         onClose={closeLogin}

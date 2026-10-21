@@ -59,7 +59,7 @@ export function OrderScreen({ initial, justPlaced }: { initial: LiveOrder; justP
   const head =
     o.status === "cancelled" ? { bg: "bg-surface", title: "Order cancelled", sub: o.cancelReason || "" }
     : o.status === "delivered" ? { bg: "bg-success text-on-accent", title: "Delivered", sub: `Arrived at ${new Date(o.deliveredAt || Date.now()).toLocaleTimeString("en-IN", { hour: "numeric", minute: "2-digit" })}` }
-    : { bg: "bg-brand text-on-brand", title: `Arriving in ${o.live.minutesLeft} min${o.live.minutesLeft > 1 ? "s" : ""}`, sub: STEPS[o.live.stepIndex]?.hint };
+    : { bg: "bg-accent text-on-accent", title: `Arriving in ${o.live.minutesLeft} min${o.live.minutesLeft > 1 ? "s" : ""}`, sub: STEPS[o.live.stepIndex]?.hint };
 
   function reorder() {
     for (const it of o.items) {
@@ -70,7 +70,7 @@ export function OrderScreen({ initial, justPlaced }: { initial: LiveOrder; justP
   }
 
   return (
-    <div className="pb-10">
+    <div className="min-h-dvh bg-[#f4f6fb] pb-10">
       <TitleBar title={`Order #${o.code}`} back="/account/orders" right={<button onClick={() => setHelpOpen(true)} className="flex items-center gap-1 rounded-md px-3 py-2 text-sm font-bold text-accent hover:bg-accent-soft"><CircleHelp size={16} /> Help</button>} />
       <div className={`${head.bg} px-4 py-5 text-center`}>
         {justPlaced && !final && <p className="mb-1 inline-flex items-center gap-1 rounded-pill bg-bg/70 px-2 py-0.5 text-xs font-extrabold text-text"><Check size={12} strokeWidth={4} /> Order confirmed</p>}
@@ -80,14 +80,14 @@ export function OrderScreen({ initial, justPlaced }: { initial: LiveOrder; justP
 
       <div className="mx-auto max-w-3xl space-y-3 p-3">
         {o.status !== "cancelled" && (
-          <div className="overflow-hidden rounded-md bg-bg">
+          <div className="overflow-hidden rounded-xl bg-bg">
             <LiveMap store={o.live.store} home={{ lat: o.address.lat, lng: o.address.lng }} rider={o.live.rider} className="h-64" />
           </div>
         )}
 
         {!final && (
           <section className="grid gap-3 md:grid-cols-2">
-            <div className="flex items-center gap-3 rounded-md bg-bg p-4">
+            <div className="flex items-center gap-3 rounded-xl bg-bg p-4">
               <span className="grid size-11 place-items-center rounded-full bg-success-soft text-2xl" aria-hidden>🛵</span>
               <div className="flex-1">
                 <p className="text-sm font-extrabold">{o.status === "out_for_delivery" ? `${o.rider.name} is on the way` : `${o.rider.name} will deliver your order`}</p>
@@ -95,7 +95,7 @@ export function OrderScreen({ initial, justPlaced }: { initial: LiveOrder; justP
               </div>
               <a href={`tel:${o.rider.phone}`} aria-label={`Call ${o.rider.name}`} className="grid size-10 place-items-center rounded-full border border-border text-accent hover:bg-accent-soft"><Phone size={18} /></a>
             </div>
-            <div className="flex items-center gap-3 rounded-md bg-bg p-4">
+            <div className="flex items-center gap-3 rounded-xl bg-bg p-4">
               <span className="grid size-11 place-items-center rounded-full bg-accent-soft text-accent"><KeyRound size={20} /></span>
               <div className="flex-1">
                 <p className="text-sm font-extrabold">Delivery code</p>
@@ -107,7 +107,7 @@ export function OrderScreen({ initial, justPlaced }: { initial: LiveOrder; justP
         )}
 
         {o.status !== "cancelled" && (
-          <section className="rounded-md bg-bg p-4" aria-labelledby="tl-h">
+          <section className="rounded-xl bg-bg p-4" aria-labelledby="tl-h">
             <h2 id="tl-h" className="sr-only">Order progress</h2>
             <ol className="space-y-0">
               {STEPS.map((s, i) => {
@@ -132,9 +132,9 @@ export function OrderScreen({ initial, justPlaced }: { initial: LiveOrder; justP
 
         {o.status === "delivered" && <RateCard id={o.id} initial={o.rating} />}
 
-        <section className="rounded-md bg-bg p-4" aria-labelledby="items-h">
+        <section className="rounded-xl bg-bg p-4" aria-labelledby="items-h">
           <div className="mb-2 flex items-center justify-between">
-            <h2 id="items-h" className="text-base font-extrabold">{o.items.reduce((s, i) => s + i.qty, 0)} items</h2>
+            <h2 id="items-h" className="text-[15px] font-bold">{o.items.reduce((s, i) => s + i.qty, 0)} items</h2>
             {final && <button onClick={reorder} className="flex items-center gap-1 text-sm font-bold text-accent"><RotateCcw size={14} /> Order again</button>}
           </div>
           <ul className="divide-y divide-border">
@@ -157,8 +157,8 @@ export function OrderScreen({ initial, justPlaced }: { initial: LiveOrder; justP
 
         <BillDetails b={o} />
 
-        <section className="rounded-md bg-bg p-4 text-sm">
-          <h2 className="mb-2 text-base font-extrabold">Order details</h2>
+        <section className="rounded-xl bg-bg p-4 text-sm">
+          <h2 className="mb-2 text-[15px] font-bold">Order details</h2>
           <dl className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-1.5">
             <dt className="text-muted">Order ID</dt><dd className="font-semibold">#{o.code}</dd>
             <dt className="text-muted">Payment</dt><dd className="font-semibold">{({ upi: "UPI", card: "Card", cod: "Cash on delivery", wallet: "Wallet" })[o.paymentMethod]} · {({ pending: "to be paid", paid: "paid", refunded: "refunded", failed: "failed" })[o.paymentStatus]}</dd>
@@ -187,7 +187,7 @@ function RateCard({ id, initial }: { id: string; initial?: number }) {
     await fetch(`/api/orders/${id}/rate`, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ rating: n }) });
   }
   return (
-    <section className="rounded-md bg-bg p-4 text-center" aria-labelledby="rate-h">
+    <section className="rounded-xl bg-bg p-4 text-center" aria-labelledby="rate-h">
       <h2 id="rate-h" className="text-sm font-extrabold">{sent ? "Thanks for rating!" : "How was your order?"}</h2>
       <div className="mt-2 flex justify-center gap-1" role="radiogroup" aria-label="Rating">
         {[1, 2, 3, 4, 5].map((n) => (

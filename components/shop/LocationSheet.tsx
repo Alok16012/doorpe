@@ -12,7 +12,7 @@ const POPULAR: Spot[] = [
   { label: "Koramangala 5th Block", sub: "Bengaluru, Karnataka", lat: 12.9345, lng: 77.6191 },
 ];
 
-export function LocationSheet({ open, onClose, hasLocation }: { open: boolean; onClose: () => void; hasLocation: boolean }) {
+export function LocationSheet({ open, onClose, hasLocation, autoGps = false }: { open: boolean; onClose: () => void; hasLocation: boolean; autoGps?: boolean }) {
   const router = useRouter();
   const [q, setQ] = useState("");
   const [results, setResults] = useState<Spot[]>([]);
@@ -23,7 +23,9 @@ export function LocationSheet({ open, onClose, hasLocation }: { open: boolean; o
 
   useEffect(() => {
     if (!open) { setQ(""); setResults([]); setError(""); setGps("idle"); }
-  }, [open]);
+    else if (autoGps) locateMe();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open, autoGps]);
 
   useEffect(() => {
     const term = q.trim();
@@ -50,7 +52,7 @@ export function LocationSheet({ open, onClose, hasLocation }: { open: boolean; o
     } finally { setSaving(false); }
   }
 
-  function useGps() {
+  function locateMe() {
     if (!navigator.geolocation) { setGps("denied"); return; }
     setGps("busy");
     navigator.geolocation.getCurrentPosition(
@@ -67,25 +69,25 @@ export function LocationSheet({ open, onClose, hasLocation }: { open: boolean; o
   }
 
   return (
-    <BottomSheet open={open} onClose={onClose} title={hasLocation ? "Change delivery location" : "Where should we deliver?"}>
+    <BottomSheet open={open} onClose={onClose} title={hasLocation ? "Change Location" : "Select your Location"}>
       <div className="space-y-3 p-4">
-        <label className="flex h-12 items-center gap-2 rounded-md border border-border bg-bg px-3 focus-within:border-accent">
+        <label className="flex h-12 items-center gap-2 rounded-lg border border-border bg-bg px-3 focus-within:border-text">
           <Search size={18} className="text-muted" aria-hidden />
           <input
             autoFocus
             type="search"
             value={q}
             onChange={(e) => setQ(e.target.value)}
-            placeholder="Search area, street or landmark"
+            placeholder="search delivery location"
             aria-label="Search delivery location"
             className="h-full flex-1 bg-transparent text-sm font-medium outline-none placeholder:text-faint"
           />
           {busy && <Loader2 size={16} className="animate-spin text-muted" aria-label="Searching" />}
         </label>
 
-        <button onClick={useGps} disabled={gps === "busy" || saving} className="flex w-full items-center gap-3 rounded-md bg-bg px-3 py-3 text-left text-sm font-bold text-accent hover:bg-accent-soft disabled:opacity-60">
+        <button onClick={locateMe} disabled={gps === "busy" || saving} className="flex w-full items-center gap-3 rounded-lg bg-bg px-3 py-3.5 text-left text-sm font-semibold text-accent disabled:opacity-60">
           {gps === "busy" ? <Loader2 size={18} className="animate-spin" /> : <Crosshair size={18} />}
-          <span>Use my current location</span>
+          <span>Use current location</span>
         </button>
         {gps === "denied" && (
           <p className="flex items-start gap-2 rounded-md bg-bg px-3 py-2 text-xs text-warning">
