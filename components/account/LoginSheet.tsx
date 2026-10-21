@@ -78,7 +78,7 @@ export function LoginSheet({ open, onClose, onDone }: { open: boolean; onClose: 
                 />
               </label>
               {error && <p role="alert" className="mt-2 w-full text-sm font-semibold text-danger">{error}</p>}
-              <button type="submit" disabled={!validPhone || busy} className="mt-4 h-12 w-full rounded-xl bg-accent text-base font-semibold text-on-accent transition-colors disabled:bg-[#9c9c9c]">
+              <button type="submit" disabled={!validPhone || busy} className="mt-4 h-12 w-full rounded-xl bg-accent text-base font-semibold text-on-accent transition-colors disabled:bg-switch-off disabled:text-muted">
                 {busy ? "Sending…" : "Continue"}
               </button>
               <p className="mt-auto pt-8 text-center text-xs text-muted">By continuing, you agree to our <span className="underline">Terms of service</span> &amp; <span className="underline">Privacy policy</span></p>

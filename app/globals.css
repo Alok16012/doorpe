@@ -3,34 +3,36 @@
 /* Generated from replica/design/tokens.json. Change values there first. */
 :root {
   --color-bg: #ffffff;
-  --color-surface: #f5f7fd;
-  --color-surface-tint: #e5f3f3;
-  --color-border: #e8e8e8;
-  --color-border-input: #8a8a8a;
-  --color-text: #1f1f1f;
-  --color-text-muted: #666666;
-  --color-text-faint: #757575;
-  --color-accent: #0c831f;
-  --color-accent-hover: #0a6e1a;
-  --color-accent-soft: #f7fff9;
+  --color-surface: #f2f7ff;
+  --color-surface-tint: #e1efff;
+  --color-border: #dde8f5;
+  --color-border-input: #7f93ad;
+  --color-text: #17233a;
+  --color-text-muted: #55667f;
+  --color-text-faint: #66768c;
+  --color-accent: #2f6fd1;
+  --color-accent-hover: #255bb0;
+  --color-accent-soft: #eef5ff;
   --color-on-accent: #ffffff;
-  --color-add: #318616;
-  --color-brand: #f8cb46;
-  --color-on-brand: #1f1f1f;
-  --color-deal: #2563eb;
+  --color-add: #2a64c2;
+  --color-brand: #bcdcff;
+  --color-on-brand: #17233a;
+  --color-deal: #6a4bd4;
   --color-on-deal: #ffffff;
-  --color-info: #1c5dd6;
-  --color-info-soft: #e5f0ff;
-  --color-success: #0c831f;
-  --color-success-soft: #eaf7ec;
-  --color-danger: #d32f2f;
-  --color-warning: #9a5b00;
-  --color-search: #f8f8f8;
+  --color-info: #1f5fbf;
+  --color-info-soft: #e3efff;
+  --color-success: #157a3c;
+  --color-success-soft: #e6f6ec;
+  --color-danger: #c9303e;
+  --color-warning: #935700;
+  --color-warn-soft: #fff4d6;
+  --color-switch-off: #c9d5e4;
+  --color-search: #f5f9ff;
   --color-scrim: #000000;
 
-  --shadow-card: 0 0 0 0.5px rgba(0, 0, 0, 0.04);
-  --shadow-bar: 0 -2px 12px rgba(0, 0, 0, 0.08);
-  --shadow-pop: 0 8px 28px rgba(0, 0, 0, 0.16);
+  --shadow-card: 0 0 0 0.5px rgba(23, 35, 58, 0.05);
+  --shadow-bar: 0 -2px 12px rgba(23, 35, 58, 0.08);
+  --shadow-pop: 0 8px 28px rgba(23, 35, 58, 0.16);
   --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
@@ -48,6 +50,8 @@
   --color-accent-soft: var(--color-accent-soft);
   --color-on-accent: var(--color-on-accent);
   --color-add: var(--color-add);
+  --color-warn-soft: var(--color-warn-soft);
+  --color-switch-off: var(--color-switch-off);
   --color-search: var(--color-search);
   --color-brand: var(--color-brand);
   --color-on-brand: var(--color-on-brand);

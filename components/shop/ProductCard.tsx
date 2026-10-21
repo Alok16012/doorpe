@@ -33,7 +33,7 @@ export function ProductCard({ p, eta, variant = "grid", sponsored = false }: { p
         </h3>
         {rail && p.variants.length > 1 && !soldOut
           ? <div className="mt-1.5"><UnitPicker p={p} /></div>
-          : <p className="mt-1.5 truncate text-xs font-medium text-[#4f4f4f]">{v.unit}</p>}
+          : <p className="mt-1.5 truncate text-xs font-medium text-muted">{v.unit}</p>}
         <div className="mt-auto flex items-center justify-between gap-1 pt-3">
           <p className="leading-none">
             <span className="block text-[13px] font-semibold text-text">{inr(v.price)}</span>

@@ -50,7 +50,7 @@ export default async function AdminOrderPage(props: PageProps<"/admin/orders/[id
           <Card title="Delivery">
             <p className="text-sm">{[o.address.houseNo, o.address.floor && `Floor ${o.address.floor}`, o.address.building, o.address.landmark, o.address.area].filter(Boolean).join(", ")}</p>
             <p className="mt-1 text-sm text-muted">Receiver: {o.address.receiverName} · {o.address.receiverPhone}</p>
-            {o.instructions && <p className="mt-2 rounded-md bg-[#fff4d6] px-2 py-1 text-xs font-semibold text-warning">{o.instructions}</p>}
+            {o.instructions && <p className="mt-2 rounded-md bg-warn-soft px-2 py-1 text-xs font-semibold text-warning">{o.instructions}</p>}
             <dl className="mt-3 grid grid-cols-[auto_1fr] gap-x-4 gap-y-1 text-xs">
               <dt className="text-muted">Rider</dt><dd className="font-semibold">{o.rider.name} · {o.rider.vehicle}</dd>
               <dt className="text-muted">Delivery code</dt><dd className="font-semibold tracking-widest">{o.deliveryOtp}</dd>

@@ -71,7 +71,7 @@ export function CartScreen({ picks, eta, shared }: { picks: CardProduct[]; eta: 
   const canCheckout = !!quote && quote.itemCount > 0 && !!svc?.ok && svc.open;
 
   return (
-    <div className="min-h-dvh bg-[#f4f6fb] pb-32">
+    <div className="min-h-dvh bg-surface pb-32">
       <TitleBar title="My Cart" center right={<button onClick={share} className="flex items-center gap-1 rounded-md px-3 py-2 text-[15px] font-semibold text-accent"><Share2 size={16} /> Share</button>} />
       <div className="mx-auto max-w-3xl space-y-3 p-3">
         {sharedOpen && <SharedBanner count={shared.length} onAdd={addShared} />}
@@ -83,7 +83,7 @@ export function CartScreen({ picks, eta, shared }: { picks: CardProduct[]; eta: 
 
         <section className="rounded-xl bg-bg" aria-label="Items">
           <div className="flex items-center gap-3 p-4">
-            <span className="grid size-12 place-items-center rounded-lg bg-[#f4f6fb]"><Timer size={24} strokeWidth={2.2} aria-hidden /></span>
+            <span className="grid size-12 place-items-center rounded-lg bg-surface"><Timer size={24} strokeWidth={2.2} aria-hidden /></span>
             <div>
               <p className="text-[17px] font-bold text-text">{svc?.ok ? `Delivery in ${svc.etaMin} minutes` : loc ? "Not deliverable to this location" : "Set a location to see delivery time"}</p>
               <p className="text-xs text-muted">Shipment of {quote?.itemCount ?? lines.reduce((s, l) => s + l.qty, 0)} item{(quote?.itemCount ?? 2) > 1 ? "s" : ""}</p>

@@ -15,7 +15,7 @@ function Chip({ p, v, selected, onSelect }: { p: CardProduct; v: CardProduct["va
       aria-label={`${v.unit}, ${inr(v.price)}${off ? `, ${off}% off` : ""}${v.stock <= 0 ? ", sold out" : ""}`}
       className={`relative min-w-[96px] rounded-lg border px-3 pb-2 pt-6 text-left transition-colors ${selected ? "border-accent ring-1 ring-accent" : "border-border bg-bg hover:border-input"} ${v.stock <= 0 ? "opacity-60" : ""}`}
     >
-      {off > 0 && <span className="absolute inset-x-0 top-0 rounded-t-[11px] bg-gradient-to-r from-deal to-[#4f86f0] py-[3px] text-center text-[9px] font-extrabold text-on-deal">{off}% OFF</span>}
+      {off > 0 && <span className="absolute inset-x-0 top-0 rounded-t-[11px] bg-gradient-to-r from-deal to-[#8b74e6] py-[3px] text-center text-[9px] font-extrabold text-on-deal">{off}% OFF</span>}
       {qty > 0 && <span className="absolute -right-2 -top-2 grid size-5 place-items-center rounded-full bg-accent text-[10px] font-bold text-on-accent">{qty}</span>}
       <span className="block text-[13px] font-semibold">{v.unit}</span>
       <span className="mt-0.5 block text-[13px]"><b className="font-bold">{inr(v.price)}</b>{off > 0 && <s className="ml-1 text-[11px] text-faint">MRP {inr(v.mrp)}</s>}</span>

@@ -15,7 +15,7 @@ export default async function EarningsPage() {
         <div className="rounded-lg bg-surface py-2"><b className="block text-sm tabular-nums">{inr(v.tips)}</b>tips</div>
         <div className="rounded-lg bg-surface py-2"><b className="block text-sm tabular-nums">{v.km} km</b>ridden</div>
       </div>
-      {v.cash > 0 && <p className="mt-3 rounded-md bg-[#fff4d6] px-2 py-1.5 text-xs font-semibold text-warning">Cash collected: {inr(v.cash)}. Hand this over at the store at the end of your shift.</p>}
+      {v.cash > 0 && <p className="mt-3 rounded-md bg-warn-soft px-2 py-1.5 text-xs font-semibold text-warning">Cash collected: {inr(v.cash)}. Hand this over at the store at the end of your shift.</p>}
     </section>
   );
   return (

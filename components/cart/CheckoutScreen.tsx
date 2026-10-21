@@ -105,7 +105,7 @@ export function CheckoutScreen({ coupons, tipOptions }: { coupons: { code: strin
   const walletShort = pay === "wallet" && quote && user.walletBalance < quote.grandTotal;
 
   return (
-    <div className="min-h-dvh bg-[#f4f6fb] pb-32">
+    <div className="min-h-dvh bg-surface pb-32">
       <TitleBar title="Checkout" back="/cart" center />
       <div className="mx-auto max-w-3xl space-y-3 p-3 md:grid md:grid-cols-[1fr_340px] md:gap-4 md:space-y-0">
         <div className="space-y-3">

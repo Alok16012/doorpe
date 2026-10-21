@@ -25,7 +25,7 @@ export default async function Home() {
 
       {/* desktop banners (the mobile web home goes straight to categories) */}
       <section aria-label="Offers" className="hidden pt-6 md:block">
-        <Link href={hero.href} className="relative flex h-[234px] items-center overflow-hidden rounded-xl px-12" style={{ background: "linear-gradient(90deg,#0c831f 0%,#2ea043 55%,#7fd18b 100%)" }}>
+        <Link href={hero.href} className="relative flex h-[234px] items-center overflow-hidden rounded-xl px-12" style={{ background: "linear-gradient(90deg, var(--color-accent-hover) 0%, var(--color-accent) 45%, #8fc0f5 100%)" }}>
           <div className="relative z-10 max-w-[520px] text-white">
             <p className="text-[40px] font-extrabold leading-[44px]">{hero.title}</p>
             <p className="mt-2 text-lg font-medium opacity-90">{hero.body}</p>
@@ -36,7 +36,7 @@ export default async function Home() {
           </span>
         </Link>
         <div className="mt-5 grid grid-cols-3 gap-5">
-          {minis.concat(catalog.banners().slice(0, 1).map((b) => ({ ...b, title: "Snacks for every craving", body: "Chips, chocolates and cold drinks", cta: "Order now", href: "/c/late-night-cravings", tint: "#fff0c2", art: "🍟🍫🥤" }))).map((b) => (
+          {minis.concat(catalog.banners().slice(0, 1).map((b) => ({ ...b, title: "Snacks for every craving", body: "Chips, chocolates and cold drinks", cta: "Order now", href: "/c/late-night-cravings", tint: "#e6e9ff", art: "🍟🍫🥤" }))).map((b) => (
             <Link key={b.title} href={b.href} className="relative flex h-[195px] flex-col justify-between overflow-hidden rounded-xl p-6" style={{ background: b.tint }}>
               <div className="relative z-10 max-w-[60%]">
                 <p className="text-[22px] font-extrabold leading-7">{b.title}</p>
@@ -89,7 +89,7 @@ export default async function Home() {
         {rails.slice(0, 2).map((r) => (
           <Rail key={r.slug} title={r.title} href={`/c/${r.slug}`} eta={eta} products={r.products.map((p) => toCard(p, stock))} />
         ))}
-        <section className="mt-8 bg-[#e9eefc] px-4 pb-6 pt-5 md:rounded-xl md:px-6" aria-labelledby="theme-h">
+        <section className="mt-8 bg-surface-tint px-4 pb-6 pt-5 md:rounded-xl md:px-6" aria-labelledby="theme-h">
           <div className="flex items-center justify-between">
             <div>
               <h2 id="theme-h" className="text-[17px] font-extrabold leading-5 text-text md:text-2xl">Movie night sorted</h2>
@@ -101,7 +101,7 @@ export default async function Home() {
             {[["popcorn", "chips-namkeen", "Popcorn & Popped"], ["chips", "chips-namkeen", "Chips & Crisps"], ["soft-drinks", "drinks-juices", "Cold Drinks"], ["tubs", "ice-creams", "Ice Cream Tubs"]].map(([sub, cat, label]) => (
               <li key={sub}>
                 <Link href={`/cn/${cat}?sub=${sub}`} className="block text-center">
-                  <span className="block overflow-hidden rounded-lg bg-[#d9e2fb]"><ProductArt icon={catalog.sub(sub)!.icon} size="sm" className="!p-3" /></span>
+                  <span className="block overflow-hidden rounded-lg bg-bg"><ProductArt icon={catalog.sub(sub)!.icon} size="sm" className="!p-3" /></span>
                   <span className="mt-1.5 line-clamp-2 block text-xs font-semibold leading-[14px] text-text">{label}</span>
                 </Link>
               </li>

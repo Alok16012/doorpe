@@ -18,7 +18,7 @@ export function SlideToConfirm({ label, onConfirm, disabled, tone = "accent" }: 
   return (
     <div ref={track} role="button" tabIndex={disabled ? -1 : 0} aria-disabled={disabled} aria-label={`${label}. Slide or press Enter to confirm`}
       onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); fire(); } }}
-      className={`relative h-[60px] select-none overflow-hidden rounded-xl ${disabled ? "bg-[#cfd3da]" : tone === "dark" ? "bg-text" : "bg-accent"} text-on-accent`}>
+      className={`relative h-[60px] select-none overflow-hidden rounded-xl ${disabled ? "bg-switch-off" : tone === "dark" ? "bg-text" : "bg-accent"} text-on-accent`}>
       <span className="pointer-events-none absolute inset-0 grid place-items-center pl-12 text-base font-bold" style={{ opacity: 1 - x / (max() || 1) }}>{label}</span>
       <span
         onPointerDown={(e) => { if (disabled || busy) return; start.current = e.clientX - x; (e.target as HTMLElement).setPointerCapture(e.pointerId); }}

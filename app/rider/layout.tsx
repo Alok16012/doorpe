@@ -3,7 +3,7 @@ import { currentUser } from "@/lib/auth";
 import { RiderGate, RiderShell } from "@/components/rider/RiderShell";
 
 export const metadata: Metadata = { title: { default: "Rider", template: "%s · Rider" }, manifest: "/rider.webmanifest", robots: { index: false } };
-export const viewport: Viewport = { themeColor: "#0c831f" };
+export const viewport: Viewport = { themeColor: "#2f6fd1" };
 
 export default async function RiderLayout({ children }: { children: React.ReactNode }) {
   const user = await currentUser();

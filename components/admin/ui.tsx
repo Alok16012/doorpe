@@ -34,8 +34,8 @@ export function Stat({ label: l, value, hint, href, tone }: { label: string; val
 const STATUS: Record<OrderStatus, [string, string]> = {
   placed: ["New", "bg-info-soft text-info"],
   packing: ["Packing", "bg-info-soft text-info"],
-  packed: ["Packed", "bg-[#fff4d6] text-warning"],
-  out_for_delivery: ["On the way", "bg-[#fff4d6] text-warning"],
+  packed: ["Packed", "bg-warn-soft text-warning"],
+  out_for_delivery: ["On the way", "bg-warn-soft text-warning"],
   delivered: ["Delivered", "bg-success-soft text-success"],
   cancelled: ["Cancelled", "bg-surface text-muted"],
 };

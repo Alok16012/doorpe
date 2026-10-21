@@ -65,9 +65,9 @@ export default async function CategoryPage(props: PageProps<"/cn/[slug]">) {
               return (
                 <li key={s.slug ?? "all"}>
                   <Link href={q({ sub: s.slug })} aria-current={active ? "page" : undefined}
-                    className={`relative flex flex-col items-center gap-1.5 px-1 py-2.5 text-center md:flex-row md:gap-3 md:border-b md:border-border md:px-3 md:py-3 md:text-left ${active ? "md:bg-[#ecffec]" : "hover:bg-surface"}`}>
+                    className={`relative flex flex-col items-center gap-1.5 px-1 py-2.5 text-center md:flex-row md:gap-3 md:border-b md:border-border md:px-3 md:py-3 md:text-left ${active ? "md:bg-accent-soft" : "hover:bg-surface"}`}>
                     {active && <span aria-hidden className="absolute inset-y-1 right-0 w-1 rounded-l-sm bg-accent" />}
-                    <span aria-hidden className={`grid size-[52px] place-items-center overflow-hidden rounded-lg md:size-12 ${active ? "bg-[#ecffec] md:bg-[#d9f5dc]" : "bg-[#f3f4f8]"}`}>
+                    <span aria-hidden className={`grid size-[52px] place-items-center overflow-hidden rounded-lg md:size-12 ${active ? "bg-surface-tint" : "bg-surface"}`}>
                       <img src={emojiSrc(s.icon)} alt="" className={`size-10 transition-transform ${active ? "translate-y-0.5 scale-110" : ""}`} />
                     </span>
                     <span className={`text-[11px] leading-[13px] md:text-sm ${active ? "font-semibold text-text" : "text-muted"}`}>{s.name}</span>
@@ -77,7 +77,7 @@ export default async function CategoryPage(props: PageProps<"/cn/[slug]">) {
             })}
           </ul>
         </nav>
-        <section className="min-w-0 flex-1 bg-[#f4f6fb] p-2 md:p-4" aria-label={subName}>
+        <section className="min-w-0 flex-1 bg-surface p-2 md:p-4" aria-label={subName}>
           <h2 className="sr-only">{subName}</h2>
           {cards.length ? (
             <ul className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-5 md:gap-3">

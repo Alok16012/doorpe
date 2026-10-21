@@ -63,3 +63,7 @@ Order model: new "rider" mode. If a rider is on duty at the store, auto orders h
 Verified end to end with two separate sessions (customer on localhost, rider on 127.0.0.1): offer appears, accept, early pickup refused while packing, pickup after packing, live location on customer map, can't go offline mid-delivery, wrong OTP refused, COD needs cash confirmation, delivered, ₹57 pay including ₹30 tip, earnings and admin numbers match. Without riders on duty, demo auto mode still works.
 
 Found while testing: the `rounded-pill` radius token was never defined, so every pill-shaped chip in the app rendered square. Fixed in globals.css.
+
+## 2026-10-22: pastel blue theme (user request)
+
+Swapped the palette in tokens.json and globals.css: page `#f2f7ff`, tiles `#e1efff`, search `#f5f9ff`, buttons and cart bar `#2f6fd1`, ADD `#2a64c2` on `#eef5ff`, logo tile `#bcdcff` with navy text, discount flags violet `#6a4bd4`, navy text `#17233a`. All 23 text/background pairs pass WCAG AA. Replaced every hard-coded green/yellow/grey in components with tokens (new `warn-soft`, `switch-off`), and moved storefront and banner tints, map pins, app icons and both manifests to the blue family. Layout is unchanged.

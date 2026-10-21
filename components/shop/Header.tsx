@@ -47,7 +47,7 @@ function AccountButton() {
 function DesktopCart() {
   const { count, total } = useCartTotals();
   return (
-    <Link href="/cart" className={`flex h-[50px] min-w-[112px] items-center gap-2 rounded-md px-3 text-sm font-bold ${count ? "bg-accent text-on-accent" : "bg-[#e8e8e8] text-[#999]"}`} aria-label={count ? `Cart, ${count} items, ${inr(total)}` : "Cart is empty"}>
+    <Link href="/cart" className={`flex h-[50px] min-w-[112px] items-center gap-2 rounded-md px-3 text-sm font-bold ${count ? "bg-accent text-on-accent" : "bg-surface-tint text-muted"}`} aria-label={count ? `Cart, ${count} items, ${inr(total)}` : "Cart is empty"}>
       <ShoppingCart size={24} aria-hidden />
       {count ? <span className="leading-tight">{count} item{count > 1 ? "s" : ""}<br />{inr(total)}</span> : <span>My Cart</span>}
     </Link>

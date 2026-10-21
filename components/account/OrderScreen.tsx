@@ -70,7 +70,7 @@ export function OrderScreen({ initial, justPlaced }: { initial: LiveOrder; justP
   }
 
   return (
-    <div className="min-h-dvh bg-[#f4f6fb] pb-10">
+    <div className="min-h-dvh bg-surface pb-10">
       <TitleBar title={`Order #${o.code}`} back="/account/orders" right={<button onClick={() => setHelpOpen(true)} className="flex items-center gap-1 rounded-md px-3 py-2 text-sm font-bold text-accent hover:bg-accent-soft"><CircleHelp size={16} /> Help</button>} />
       <div className={`${head.bg} px-4 py-5 text-center`}>
         {justPlaced && !final && <p className="mb-1 inline-flex items-center gap-1 rounded-pill bg-bg/70 px-2 py-0.5 text-xs font-extrabold text-text"><Check size={12} strokeWidth={4} /> Order confirmed</p>}

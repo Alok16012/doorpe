@@ -35,9 +35,9 @@ export function LiveMap({
       setTimeout(() => m.invalidateSize(), 300);
       m.once("unload", () => ro.disconnect());
       const pts: Pt[] = [];
-      if (store) { Lmod.marker([store.lat, store.lng], { icon: Lmod.divIcon({ html: pin("🏪", "#ffc83d"), className: "", iconSize: [38, 38], iconAnchor: [19, 19] }), title: "Store" }).addTo(m); pts.push(store); }
-      if (home) { Lmod.marker([home.lat, home.lng], { icon: Lmod.divIcon({ html: pin("🏠", "#1747c9"), className: "", iconSize: [38, 38], iconAnchor: [19, 19] }), title: "You" }).addTo(m); pts.push(home); }
-      if (store && home) Lmod.polyline([[store.lat, store.lng], [home.lat, home.lng]], { color: "#1747c9", weight: 3, dashArray: "6 8", opacity: 0.7 }).addTo(m);
+      if (store) { Lmod.marker([store.lat, store.lng], { icon: Lmod.divIcon({ html: pin("🏪", "var(--color-brand)"), className: "", iconSize: [38, 38], iconAnchor: [19, 19] }), title: "Store" }).addTo(m); pts.push(store); }
+      if (home) { Lmod.marker([home.lat, home.lng], { icon: Lmod.divIcon({ html: pin("🏠", "var(--color-accent)"), className: "", iconSize: [38, 38], iconAnchor: [19, 19] }), title: "You" }).addTo(m); pts.push(home); }
+      if (store && home) Lmod.polyline([[store.lat, store.lng], [home.lat, home.lng]], { color: "#2f6fd1", weight: 3, dashArray: "6 8", opacity: 0.7 }).addTo(m);
       if (pick) {
         const pm = Lmod.marker([pick.lat, pick.lng], { draggable: true, icon: Lmod.divIcon({ html: pin("📍", "#fff"), className: "", iconSize: [38, 38], iconAnchor: [19, 36] }), title: "Delivery spot" }).addTo(m);
         pm.on("dragend", () => { const p = pm.getLatLng(); onPickRef.current?.({ lat: p.lat, lng: p.lng }); });
@@ -55,7 +55,7 @@ export function LiveMap({
     const Lmod = lib.current, m = map.current;
     if (!Lmod || !m) return;
     if (!rider) { riderM.current?.remove(); riderM.current = null; return; }
-    if (!riderM.current) riderM.current = Lmod.marker([rider.lat, rider.lng], { icon: Lmod.divIcon({ html: pin("🛵", "#157f3c"), className: "", iconSize: [38, 38], iconAnchor: [19, 19] }), title: "Rider", zIndexOffset: 1000 }).addTo(m);
+    if (!riderM.current) riderM.current = Lmod.marker([rider.lat, rider.lng], { icon: Lmod.divIcon({ html: pin("🛵", "var(--color-success)"), className: "", iconSize: [38, 38], iconAnchor: [19, 19] }), title: "Rider", zIndexOffset: 1000 }).addTo(m);
     else riderM.current.setLatLng([rider.lat, rider.lng]);
   }, [rider?.lat, rider?.lng, rider]);
 

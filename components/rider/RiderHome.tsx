@@ -79,7 +79,7 @@ export function RiderHome() {
 
   return (
     <>
-      <header className={`sticky top-0 z-30 px-4 pb-4 pt-4 text-on-accent ${s.me.online ? "bg-accent" : "bg-[#4b5563]"}`}>
+      <header className={`sticky top-0 z-30 px-4 pb-4 pt-4 text-on-accent ${s.me.online ? "bg-accent" : "bg-muted"}`}>
         <div className="flex items-center justify-between gap-3">
           <div className="min-w-0">
             <p className="truncate text-lg font-extrabold">Hi, {s.me.name.split(" ")[0]}</p>
@@ -99,7 +99,7 @@ export function RiderHome() {
 
       {err && <p className="mx-4 mt-3 rounded-lg bg-danger/10 px-3 py-2 text-sm font-semibold text-danger">{err}</p>}
       {(s.me.online || s.active) && (gps === "denied" || gps === "unsupported") && (
-        <p className="mx-4 mt-3 flex items-start gap-2 rounded-lg bg-[#fff4d6] px-3 py-2 text-xs font-semibold text-warning">
+        <p className="mx-4 mt-3 flex items-start gap-2 rounded-lg bg-warn-soft px-3 py-2 text-xs font-semibold text-warning">
           <CircleAlert size={14} className="mt-0.5 shrink-0" /> Location is off. Turn it on so customers can see you coming.
         </p>
       )}
@@ -149,7 +149,7 @@ export function RiderHome() {
                       <span className="flex items-center gap-1"><Clock size={14} className="text-muted" /> {o.placedMinsAgo} min ago</span>
                     </div>
                     <p className="mt-2 flex items-start gap-1 text-sm text-muted"><MapPin size={14} className="mt-0.5 shrink-0" /> {o.area}</p>
-                    {o.cod > 0 && <p className="mt-2 flex items-center gap-1.5 rounded-md bg-[#fff4d6] px-2 py-1 text-xs font-bold text-warning"><Banknote size={14} /> Collect {inr(o.cod)} cash</p>}
+                    {o.cod > 0 && <p className="mt-2 flex items-center gap-1.5 rounded-md bg-warn-soft px-2 py-1 text-xs font-bold text-warning"><Banknote size={14} /> Collect {inr(o.cod)} cash</p>}
                     <button onClick={() => accept(o.id)} className="mt-3 h-12 w-full rounded-lg bg-accent text-base font-bold text-on-accent">Accept #{o.code}</button>
                   </li>
                 ))}
@@ -220,8 +220,8 @@ function ActiveJob({ a, store, rider, onStep }: { a: NonNullable<State["active"]
             </div>
             <a href={`tel:+91${a.address.receiverPhone}`} aria-label={`Call ${a.address.receiverName}`} className="grid size-11 shrink-0 place-items-center rounded-full bg-success-soft text-success"><Phone size={20} /></a>
           </div>
-          {a.instructions && <p className="mt-2 rounded-md bg-[#fff4d6] px-2 py-1.5 text-xs font-semibold text-warning">Note: {a.instructions}</p>}
-          {a.cod > 0 && <p className="mt-2 flex items-center gap-1.5 rounded-md bg-[#fff4d6] px-2 py-1.5 text-sm font-bold text-warning"><Banknote size={16} /> Collect {inr(a.cod)} in cash or UPI</p>}
+          {a.instructions && <p className="mt-2 rounded-md bg-warn-soft px-2 py-1.5 text-xs font-semibold text-warning">Note: {a.instructions}</p>}
+          {a.cod > 0 && <p className="mt-2 flex items-center gap-1.5 rounded-md bg-warn-soft px-2 py-1.5 text-sm font-bold text-warning"><Banknote size={16} /> Collect {inr(a.cod)} in cash or UPI</p>}
         </div>
       )}
 
@@ -244,7 +244,7 @@ function ActiveJob({ a, store, rider, onStep }: { a: NonNullable<State["active"]
                 I&apos;ve collected {inr(a.cod)}
               </label>
             )}
-            <button disabled={otp.length !== 4 || (a.cod > 0 && !cash)} className="h-14 w-full rounded-lg bg-accent text-base font-bold text-on-accent disabled:bg-[#cfd3da]">Complete delivery</button>
+            <button disabled={otp.length !== 4 || (a.cod > 0 && !cash)} className="h-14 w-full rounded-lg bg-accent text-base font-bold text-on-accent disabled:bg-switch-off">Complete delivery</button>
           </form>
         )}
       </div>

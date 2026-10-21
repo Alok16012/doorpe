@@ -496,14 +496,14 @@ export const GROUPS: GroupDef[] = [
 
 /** "Shop by store" tiles: each points to a category or a collection. */
 export const STOREFRONTS = [
-  { slug: "fresh", name: "Fresh Market", icon: "🥬", tint: "#d9f0df", href: "/cn/fruits-vegetables" },
-  { slug: "pharmacy", name: "Pharmacy", icon: "💊", tint: "#dcefe7", href: "/cn/health-pharma" },
-  { slug: "pets", name: "Pet Shop", icon: "🐶", tint: "#f6e2d2", href: "/cn/pet-care" },
-  { slug: "gadgets", name: "Gadget Hub", icon: "🎧", tint: "#e2e0fa", href: "/cn/electronics" },
-  { slug: "beauty", name: "Beauty Corner", icon: "💄", tint: "#fadde5", href: "/cn/skin-face" },
-  { slug: "party", name: "Party Pack", icon: "🎉", tint: "#fff0c2", href: "/c/party-pack" },
-  { slug: "kids", name: "Kids Zone", icon: "🧸", tint: "#fff3d6", href: "/cn/stationery-games" },
-  { slug: "home", name: "Home Fixes", icon: "🛠️", tint: "#e8ebf0", href: "/cn/home-needs" },
+  { slug: "fresh", name: "Fresh Market", icon: "🥬", tint: "#dceeff", href: "/cn/fruits-vegetables" },
+  { slug: "pharmacy", name: "Pharmacy", icon: "💊", tint: "#e2f2fb", href: "/cn/health-pharma" },
+  { slug: "pets", name: "Pet Shop", icon: "🐶", tint: "#e6e9ff", href: "/cn/pet-care" },
+  { slug: "gadgets", name: "Gadget Hub", icon: "🎧", tint: "#dbe8ff", href: "/cn/electronics" },
+  { slug: "beauty", name: "Beauty Corner", icon: "💄", tint: "#e9e4ff", href: "/cn/skin-face" },
+  { slug: "party", name: "Party Pack", icon: "🎉", tint: "#d9f0fa", href: "/c/party-pack" },
+  { slug: "kids", name: "Kids Zone", icon: "🧸", tint: "#e3ecff", href: "/cn/stationery-games" },
+  { slug: "home", name: "Home Fixes", icon: "🛠️", tint: "#e0f4f7", href: "/cn/home-needs" },
 ];
 
 /** Home rails. `rule` picks products; `pick` lists slugs explicitly. */
@@ -516,9 +516,9 @@ export const COLLECTIONS: { slug: string; title: string; rule?: { minDiscount?: 
 ];
 
 export const BANNERS = [
-  { title: "Fresh fruit, picked this morning", body: "Seasonal fruits and veggies from nearby farms", cta: "Shop fresh", href: "/cn/fruits-vegetables", tint: "#d9f0df", art: "🍓🥭🍌" },
-  { title: "Medicines in minutes", body: "Everyday health essentials, sealed and genuine", cta: "Order now", href: "/cn/health-pharma", tint: "#dcefe7", art: "💊🩹🌡️" },
-  { title: "Treats for your pet", body: "Food, litter and chews they actually like", cta: "Explore", href: "/cn/pet-care", tint: "#f6e2d2", art: "🐶🦴🐱" },
+  { title: "Fresh fruit, picked this morning", body: "Seasonal fruits and veggies from nearby farms", cta: "Shop fresh", href: "/cn/fruits-vegetables", tint: "#dceeff", art: "🍓🥭🍌" },
+  { title: "Medicines in minutes", body: "Everyday health essentials, sealed and genuine", cta: "Order now", href: "/cn/health-pharma", tint: "#e2f2fb", art: "💊🩹🌡️" },
+  { title: "Treats for your pet", body: "Food, litter and chews they actually like", cta: "Explore", href: "/cn/pet-care", tint: "#e6e9ff", art: "🐶🦴🐱" },
 ];
 
 export const SEARCH_HINTS = ["milk", "bread", "eggs", "atta", "paneer", "chips", "ice cream", "onion", "coffee", "diapers"];
