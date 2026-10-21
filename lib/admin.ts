@@ -375,3 +375,48 @@ export async function reports(daysBack = 14) {
     payments: [...pay.entries()].map(([m, x]) => ({ m, ...x })).sort((a, b) => b.v - a.v),
   };
 }
+
+// ---------- riders ----------
+export async function adminRiders() {
+  const { users, orders, locs } = await read((db) => ({ users: db.users, orders: db.orders, locs: db.riderLocations }));
+  const today = istDay(new Date());
+  return users.filter((u) => u.role === "rider").map((u) => {
+    const mine = orders.filter((o) => o.riderId === u.id);
+    const active = mine.find((o) => o.status !== "delivered" && o.status !== "cancelled");
+    const done = mine.filter((o) => o.status === "delivered" && o.deliveredAt && istDay(o.deliveredAt) === today);
+    const loc = locs[u.id];
+    return {
+      id: u.id, name: u.name || "Rider", phone: u.phone, vehicle: u.vehicle || "", storeId: u.riderStoreId || "",
+      online: !!u.online, onlineSince: u.onlineSince, active: active ? { id: active.id, code: active.code, status: liveView(active).status } : null,
+      today: done.length, earned: done.reduce((s, o) => s + (o.riderPay ?? 0), 0), cash: done.reduce((s, o) => s + (o.cashCollected ? o.grandTotal : 0), 0),
+      lastSeen: loc?.at,
+    };
+  }).sort((a, b) => Number(b.online) - Number(a.online) || a.name.localeCompare(b.name));
+}
+
+export async function addRider(input: { phone: string; name: string; vehicle: string; storeId: string }) {
+  const phone = input.phone.replace(/\D/g, "").slice(-10);
+  if (!/^[6-9]\d{9}$/.test(phone)) throw new AdminError("Enter a valid 10-digit mobile number");
+  if (!input.name.trim()) throw new AdminError("Add the rider's name");
+  if (!STORES.some((s) => s.id === input.storeId)) throw new AdminError("Pick a store");
+  return write((db) => {
+    let u = db.users.find((x) => x.phone === phone);
+    if (u?.role === "admin") throw new AdminError("This number is an admin. Use a different number for riding.");
+    if (!u) { u = { id: uid("u_"), phone, role: "rider", walletBalance: 0, createdAt: new Date().toISOString() }; db.users.push(u); }
+    Object.assign(u, { role: "rider", name: input.name.trim().slice(0, 60), vehicle: input.vehicle.trim().toUpperCase().slice(0, 20), riderStoreId: input.storeId, online: false });
+    return u;
+  });
+}
+
+export async function updateRider(id: string, patch: { storeId?: string; remove?: boolean; forceOffline?: boolean }) {
+  return write((db) => {
+    const u = db.users.find((x) => x.id === id && x.role === "rider");
+    if (!u) throw new AdminError("Rider not found");
+    const busy = db.orders.some((o) => o.riderId === id && o.status !== "delivered" && o.status !== "cancelled");
+    if ((patch.remove || patch.storeId || patch.forceOffline) && busy) throw new AdminError("This rider is on a delivery right now. Try after it's done.");
+    if (patch.storeId) { if (!STORES.some((s) => s.id === patch.storeId)) throw new AdminError("Unknown store"); u.riderStoreId = patch.storeId; }
+    if (patch.forceOffline) { u.online = false; u.onlineSince = undefined; }
+    if (patch.remove) { u.role = "customer"; u.online = false; u.riderStoreId = undefined; }
+    return u;
+  });
+}

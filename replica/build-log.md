@@ -53,3 +53,13 @@ To make this possible the catalogue, coupons, fees and store settings moved from
 Verified in the browser: new product appears in store, search, category and cart pricing; hiding it 404s the product page; pausing a store closes ordering; fee changes reprice carts; a new coupon applies with its cap; complaint refund credits the wallet; new sub-category shows in the store rail; an admin can't remove their own access. All admin pages render at 375 and 1280 px without overflow.
 
 Harder than expected: the dev server kept an old in-memory database object without the new fields, so the first store update silently failed. The loader now backfills missing fields.
+
+## 2026-10-22: rider app
+
+`/rider` mobile web app with its own manifest: duty toggle, GPS every 5 s, order offers with pay/distance/cash, accept (atomic, one active job), slide-to-confirm steps (also Enter key), item checklist at pickup, Google Maps navigation links, OTP + cash confirmation, success screen, earnings (today, 7 days, trips, cash to hand over), profile. Admin → Riders: add/remove riders, assign store, force off duty, live status, trips, earnings, cash held.
+
+Order model: new "rider" mode. If a rider is on duty at the store, auto orders hold at "packed" until accepted; the customer sees "Finding a delivery partner", then the rider's real name, stage and GPS position with a distance-based ETA.
+
+Verified end to end with two separate sessions (customer on localhost, rider on 127.0.0.1): offer appears, accept, early pickup refused while packing, pickup after packing, live location on customer map, can't go offline mid-delivery, wrong OTP refused, COD needs cash confirmation, delivered, ₹57 pay including ₹30 tip, earnings and admin numbers match. Without riders on duty, demo auto mode still works.
+
+Found while testing: the `rounded-pill` radius token was never defined, so every pill-shaped chip in the app rendered square. Fixed in globals.css.

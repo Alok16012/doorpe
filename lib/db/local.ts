@@ -27,12 +27,13 @@ type DB = {
   coupons?: (Coupon & { active: boolean; createdAt: string })[];
   settings?: FeeSettings;
   storeOverrides: Record<string, StoreOverride>;
+  riderLocations: Record<string, { lat: number; lng: number; at: string; accuracy?: number }>;
 };
 export type { DB };
 
 const DIR = process.env.DATA_DIR || (process.env.NETLIFY || process.env.VERCEL ? "/tmp/turant" : path.join(process.cwd(), ".data"));
 const FILE = path.join(DIR, "db.json");
-const empty = (): DB => ({ users: [], otps: [], addresses: [], orders: [], issues: [], wallet: [], stock: {}, idem: {}, catalogVersion: 1, storeOverrides: {} });
+const empty = (): DB => ({ users: [], otps: [], addresses: [], orders: [], issues: [], wallet: [], stock: {}, idem: {}, catalogVersion: 1, storeOverrides: {}, riderLocations: {} });
 
 const g = globalThis as unknown as { __turantDb?: DB; __turantQueue?: Promise<unknown> };
 

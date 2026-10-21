@@ -1,7 +1,7 @@
 import "server-only";
-import { read, write, uid } from "./db/local";
+import { read, write, uid, dbSync } from "./db/local";
 import { quote } from "./pricing";
-import { serviceability, storeById } from "./geo";
+import { distanceKm, serviceability, storeById } from "./geo";
 import type { Address, CartLine, Order, OrderStatus, User } from "./types";
 
 const RIDERS = [
@@ -95,33 +95,82 @@ function timeline(o: Order) {
 }
 
 export type LiveOrder = Order & {
-  live: { status: OrderStatus; stepIndex: number; minutesLeft: number; progress: number; rider: { lat: number; lng: number } | null; store: { lat: number; lng: number; name: string }; canCancel: boolean };
+  live: {
+    status: OrderStatus; stepIndex: number; minutesLeft: number; progress: number;
+    rider: { lat: number; lng: number } | null; store: { lat: number; lng: number; name: string }; canCancel: boolean;
+    /** A rider is online at the store but nobody has accepted yet. */
+    searching: boolean;
+    /** Where the assigned rider is in their job. */
+    riderStage?: "to_store" | "at_store" | "to_customer" | "at_customer";
+  };
 };
+
+const RANK: Record<OrderStatus, number> = { placed: 0, packing: 1, packed: 2, out_for_delivery: 3, delivered: 4, cancelled: 5 };
+
+export function ridersOnlineAt(storeId: string) {
+  return dbSync().users.some((u) => u.role === "rider" && u.online && u.riderStoreId === storeId);
+}
+
+function freshRiderLocation(riderId?: string) {
+  if (!riderId) return null;
+  const l = dbSync().riderLocations?.[riderId];
+  return l && Date.now() - Date.parse(l.at) < 3 * 60_000 ? l : null;
+}
 
 export function liveView(o: Order, now = Date.now()): LiveOrder {
   const store = storeById(o.storeId)!;
-  let status = o.status;
   const tl = timeline(o);
-  if (o.mode === "auto" && status !== "cancelled" && status !== "delivered") {
-    status = now >= tl.delivered ? "delivered" : now >= tl.out ? "out_for_delivery" : now >= tl.packed ? "packed" : now >= tl.packing ? "packing" : "placed";
+  const storeStage: OrderStatus = now >= tl.packed ? "packed" : now >= tl.packing ? "packing" : "placed";
+  let status = o.status;
+  let searching = false;
+  if (status !== "cancelled" && status !== "delivered") {
+    if (o.mode === "auto") {
+      const derived: OrderStatus = now >= tl.delivered ? "delivered" : now >= tl.out ? "out_for_delivery" : storeStage;
+      // with real riders on duty, the order waits at "packed" until one of them accepts
+      if (!o.riderId && RANK[o.status] < RANK.out_for_delivery && ridersOnlineAt(o.storeId)) {
+        status = RANK[derived] > RANK.packed ? "packed" : derived;
+        searching = true;
+      } else status = derived;
+    } else if (o.mode === "rider" && RANK[o.status] < RANK.out_for_delivery) {
+      status = RANK[storeStage] > RANK[o.status] ? storeStage : o.status;
+    }
   }
+
   let outStart = tl.out, outEnd = tl.delivered;
-  if (o.mode === "manual" && o.dispatchedAt) { outStart = Date.parse(o.dispatchedAt); outEnd = outStart + Math.max(3, Math.round(o.etaMin * 0.6)) * 60_000; }
+  if (o.mode !== "auto" && o.dispatchedAt) { outStart = Date.parse(o.dispatchedAt); outEnd = outStart + Math.max(3, Math.round(o.etaMin * 0.6)) * 60_000; }
   let rider: { lat: number; lng: number } | null = null;
   let progress = 0;
-  if (status === "out_for_delivery") {
+  let minutesLeft = 0;
+  const home = { lat: o.address.lat, lng: o.address.lng };
+  const real = o.mode === "rider" ? freshRiderLocation(o.riderId) : null;
+  if (real && status !== "delivered" && status !== "cancelled") {
+    rider = { lat: real.lat, lng: real.lng };
+    const kmToHome = distanceKm(real, home);
+    const kmToStore = distanceKm(real, store);
+    const total = distanceKm(store, home) || 0.1;
+    progress = status === "out_for_delivery" ? Math.min(0.97, Math.max(0, 1 - kmToHome / total)) : 0;
+    // ~20 km/h through city traffic, plus a minute at the door
+    minutesLeft = status === "out_for_delivery" ? Math.max(1, Math.ceil((kmToHome / 20) * 60) + 1) : Math.max(1, Math.ceil(((kmToStore + total) / 20) * 60) + 2);
+  } else if (status === "out_for_delivery") {
     progress = Math.min(0.97, Math.max(0, (now - outStart) / (outEnd - outStart)));
     const bend = Math.sin(progress * Math.PI) * 0.0025;
     rider = { lat: store.lat + (o.address.lat - store.lat) * progress + bend, lng: store.lng + (o.address.lng - store.lng) * progress - bend };
   }
-  const end = o.mode === "auto" ? tl.delivered : outEnd;
-  const minutesLeft = status === "delivered" || status === "cancelled" ? 0 : Math.max(1, Math.ceil((end - now) / 60_000));
+  if (!minutesLeft) {
+    const end = o.mode === "auto" ? tl.delivered : outEnd;
+    minutesLeft = status === "delivered" || status === "cancelled" ? 0 : Math.max(1, Math.ceil((end - now) / 60_000));
+  }
+  if (status === "delivered" || status === "cancelled") minutesLeft = 0;
+  const riderStage = o.mode !== "rider" ? undefined
+    : status === "out_for_delivery" ? (o.atCustomerAt ? "at_customer" : "to_customer")
+    : o.atStoreAt ? "at_store" : "to_store";
   return {
     ...o, status,
     live: {
       status, stepIndex: STEPS.findIndex((s) => s.key === status), minutesLeft, progress, rider,
       store: { lat: store.lat, lng: store.lng, name: store.name },
       canCancel: status === "placed" || status === "packing",
+      searching, riderStage,
     },
   };
 }
@@ -196,7 +245,7 @@ export async function advanceOrder(id: string, otp?: string) {
   return write((db) => {
     const row = db.orders.find((x) => x.id === id)!;
     const now = new Date().toISOString();
-    row.mode = "manual";
+    row.mode = row.riderId ? "rider" : "manual";
     row.status = next;
     if (next === "packed") row.packedAt = now;
     if (next === "out_for_delivery") row.dispatchedAt = now;

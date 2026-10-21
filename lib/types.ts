@@ -34,8 +34,10 @@ export type Address = {
 };
 
 export type User = {
-  id: string; phone: string; name?: string; email?: string; role: "customer" | "admin";
+  id: string; phone: string; name?: string; email?: string; role: "customer" | "admin" | "rider";
   walletBalance: number; createdAt: string;
+  /** Riders only */
+  riderStoreId?: string; vehicle?: string; online?: boolean; onlineSince?: string;
 };
 
 export type Order = {
@@ -49,9 +51,11 @@ export type Order = {
   instructions?: string; etaMin: number; deliveryOtp: string;
   rider: { name: string; phone: string; vehicle: string };
   status: OrderStatus;
-  /** "auto" = demo progression from timestamps; "manual" = staff advance from /admin. */
-  mode: "auto" | "manual";
+  /** "auto" = demo progression from timestamps; "manual" = staff advance from /admin; "rider" = a rider accepted it. */
+  mode: "auto" | "manual" | "rider";
   placedAt: string; packedAt?: string; dispatchedAt?: string; deliveredAt?: string; cancelledAt?: string;
+  /** Rider workflow */
+  riderId?: string; riderAssignedAt?: string; atStoreAt?: string; atCustomerAt?: string; riderPay?: number; cashCollected?: boolean;
   cancelReason?: string; rating?: number; idempotencyKey?: string;
 };
 

@@ -71,6 +71,7 @@
   --radius-md: 8px;
   --radius-lg: 12px;
   --radius-xl: 16px;
+  --radius-pill: 999px;
 
   --shadow-card: var(--shadow-card);
   --shadow-bar: var(--shadow-bar);

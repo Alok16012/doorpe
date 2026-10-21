@@ -7,7 +7,7 @@ import { Card, field } from "./ui";
 
 const NEXT: Partial<Record<OrderStatus, string>> = { placed: "Start packing", packing: "Mark packed", packed: "Hand to rider", out_for_delivery: "Confirm delivery" };
 
-export function OrderActions({ id, status, mode }: { id: string; status: OrderStatus; mode: "auto" | "manual" }) {
+export function OrderActions({ id, status, mode }: { id: string; status: OrderStatus; mode: "auto" | "manual" | "rider" }) {
   const router = useRouter();
   const [pending, start] = useTransition();
   const [otp, setOtp] = useState("");
@@ -19,6 +19,7 @@ export function OrderActions({ id, status, mode }: { id: string; status: OrderSt
   return (
     <Card title="Actions">
       {mode === "auto" && <p className="mb-3 text-xs text-muted">This order moves by itself in demo mode. Using a button switches it to manual.</p>}
+      {mode === "rider" && <p className="mb-3 text-xs text-muted">A rider has this order and updates it from their app. Only step in if something is stuck.</p>}
       <div className="flex flex-wrap items-end gap-2">
         {status === "out_for_delivery" && (
           <label className="w-36"><span className="mb-1 block text-xs font-semibold text-muted">Customer&apos;s code</span>

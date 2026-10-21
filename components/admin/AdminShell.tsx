@@ -4,7 +4,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import {
   Boxes, ChartNoAxesColumn, ClipboardList, ExternalLink, FolderTree, LayoutDashboard, Menu, MessageSquareWarning,
-  Package, Settings, Store, TicketPercent, Users, X, Columns3,
+  Package, Settings, Store, TicketPercent, Users, X, Columns3, Bike,
 } from "lucide-react";
 import { Logo } from "../shop/Logo";
 
@@ -16,6 +16,7 @@ const NAV = [
   { href: "/admin/categories", label: "Categories", icon: FolderTree },
   { href: "/admin/inventory", label: "Inventory", icon: Boxes },
   { href: "/admin/stores", label: "Stores", icon: Store },
+  { href: "/admin/riders", label: "Riders", icon: Bike },
   { href: "/admin/customers", label: "Customers", icon: Users },
   { href: "/admin/coupons", label: "Coupons", icon: TicketPercent },
   { href: "/admin/issues", label: "Complaints", icon: MessageSquareWarning, badge: true },

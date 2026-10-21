@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { creditWallet, setRole } from "@/app/admin/actions";
 import { Card, field, label } from "./ui";
 
-export function CustomerActions({ id, role }: { id: string; role: "customer" | "admin" }) {
+export function CustomerActions({ id, role }: { id: string; role: "customer" | "admin" | "rider" }) {
   const router = useRouter();
   const [pending, start] = useTransition();
   const [amount, setAmount] = useState("");
@@ -20,11 +20,11 @@ export function CustomerActions({ id, role }: { id: string; role: "customer" | "
         <label><span className={label}>Note</span><input className={field} value={note} onChange={(e) => setNote(e.target.value)} /></label>
         <button disabled={pending || !amount} className="col-span-2 h-10 rounded-md bg-accent text-sm font-semibold text-on-accent disabled:opacity-50">Apply to wallet</button>
       </form>
-      <div className="mt-4 flex items-center justify-between border-t border-border pt-4">
+      {role === "rider" ? <p className="mt-4 border-t border-border pt-4 text-sm text-muted">This person is a rider. Manage them from Riders.</p> : <div className="mt-4 flex items-center justify-between border-t border-border pt-4">
         <span className="text-sm"><b>Admin access</b><span className="block text-xs text-muted">Can open this panel and change anything</span></span>
         <button disabled={pending} onClick={() => go(() => setRole(id, role === "admin" ? "customer" : "admin"), role === "admin" ? "Admin access removed" : "Made admin")}
           className={`h-9 rounded-md border px-3 text-sm font-semibold ${role === "admin" ? "border-danger text-danger" : "border-accent text-accent"}`}>{role === "admin" ? "Remove admin" : "Make admin"}</button>
-      </div>
+      </div>}
       {msg && <p role="status" className={`mt-3 text-sm font-semibold ${msg.ok ? "text-success" : "text-danger"}`}>{msg.t}</p>}
     </Card>
   );

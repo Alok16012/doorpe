@@ -59,7 +59,7 @@ export function OrderScreen({ initial, justPlaced }: { initial: LiveOrder; justP
   const head =
     o.status === "cancelled" ? { bg: "bg-surface", title: "Order cancelled", sub: o.cancelReason || "" }
     : o.status === "delivered" ? { bg: "bg-success text-on-accent", title: "Delivered", sub: `Arrived at ${new Date(o.deliveredAt || Date.now()).toLocaleTimeString("en-IN", { hour: "numeric", minute: "2-digit" })}` }
-    : { bg: "bg-accent text-on-accent", title: `Arriving in ${o.live.minutesLeft} min${o.live.minutesLeft > 1 ? "s" : ""}`, sub: STEPS[o.live.stepIndex]?.hint };
+    : { bg: "bg-accent text-on-accent", title: o.live.riderStage === "at_customer" ? "Your rider is here" : `Arriving in ${o.live.minutesLeft} min${o.live.minutesLeft > 1 ? "s" : ""}`, sub: o.live.searching ? "Packed and waiting for a rider" : o.live.riderStage === "at_customer" ? `Share code ${o.deliveryOtp} with ${o.rider.name}` : STEPS[o.live.stepIndex]?.hint };
 
   function reorder() {
     for (const it of o.items) {
@@ -87,14 +87,24 @@ export function OrderScreen({ initial, justPlaced }: { initial: LiveOrder; justP
 
         {!final && (
           <section className="grid gap-3 md:grid-cols-2">
-            <div className="flex items-center gap-3 rounded-xl bg-bg p-4">
-              <span className="grid size-11 place-items-center rounded-full bg-success-soft text-2xl" aria-hidden>🛵</span>
-              <div className="flex-1">
-                <p className="text-sm font-extrabold">{o.status === "out_for_delivery" ? `${o.rider.name} is on the way` : `${o.rider.name} will deliver your order`}</p>
-                <p className="text-xs text-muted">{o.rider.vehicle}</p>
+            {o.live.searching ? (
+              <div className="flex items-center gap-3 rounded-xl bg-bg p-4">
+                <span className="relative grid size-11 place-items-center"><span className="absolute inset-0 animate-ping rounded-full bg-accent/25" /><span className="relative text-2xl" aria-hidden>🛵</span></span>
+                <div className="flex-1">
+                  <p className="text-sm font-bold">Finding a delivery partner</p>
+                  <p className="text-xs text-muted">Riders near the store are getting your order</p>
+                </div>
               </div>
-              <a href={`tel:${o.rider.phone}`} aria-label={`Call ${o.rider.name}`} className="grid size-10 place-items-center rounded-full border border-border text-accent hover:bg-accent-soft"><Phone size={18} /></a>
-            </div>
+            ) : (
+              <div className="flex items-center gap-3 rounded-xl bg-bg p-4">
+                <span className="grid size-11 place-items-center rounded-full bg-success-soft text-2xl" aria-hidden>🛵</span>
+                <div className="flex-1">
+                  <p className="text-sm font-bold">{({ to_store: `${o.rider.name} is heading to the store`, at_store: `${o.rider.name} is at the store`, to_customer: `${o.rider.name} is on the way`, at_customer: `${o.rider.name} has arrived` } as Record<string, string>)[o.live.riderStage ?? ""] ?? (o.status === "out_for_delivery" ? `${o.rider.name} is on the way` : `${o.rider.name} will deliver your order`)}</p>
+                  <p className="text-xs text-muted">{o.rider.vehicle}</p>
+                </div>
+                <a href={`tel:${o.rider.phone}`} aria-label={`Call ${o.rider.name}`} className="grid size-10 place-items-center rounded-full border border-border text-accent hover:bg-accent-soft"><Phone size={18} /></a>
+              </div>
+            )}
             <div className="flex items-center gap-3 rounded-xl bg-bg p-4">
               <span className="grid size-11 place-items-center rounded-full bg-accent-soft text-accent"><KeyRound size={20} /></span>
               <div className="flex-1">

@@ -1,0 +1,10 @@
+{
+  "name": "Turant Rider",
+  "short_name": "Rider",
+  "start_url": "/rider",
+  "scope": "/rider",
+  "display": "standalone",
+  "background_color": "#0c831f",
+  "theme_color": "#0c831f",
+  "icons": [{ "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml" }]
+}

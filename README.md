@@ -18,6 +18,7 @@ Open http://localhost:3000.
 - **Location:** pick any "Popular area" or search. Demo stores cover parts of Delhi, Gurugram, Noida, Mumbai, Bengaluru, Hyderabad, Pune, Kolkata and Chennai.
 - **Login:** any 10-digit Indian mobile number. No SMS is sent; the code appears on screen.
 - **Admin panel:** log in as `9999999999` and open `/admin`. Other admins can be added from Customers.
+- **Rider app:** open `/rider` on a phone and log in as `8888888888` or `7777777777` (Connaught Place store). Add real riders from Admin → Riders.
 - **Orders** move through the statuses by themselves over the delivery ETA. Pressing a button on the dashboard takes manual control (delivery needs the customer's code).
 
 Data is stored in `.data/db.json`. Delete that file to reset.
@@ -41,6 +42,20 @@ Data is stored in `.data/db.json`. Delete that file to reset.
 
 Every change shows up in the store on the next page load.
 
+## Rider app (`/rider`)
+
+A mobile web app for delivery partners. Install it to the home screen; it has its own app manifest.
+
+1. **On duty / off duty.** While on duty (or on a delivery) the phone's GPS is sent every 5 seconds and the customer's map shows the real rider.
+2. **Orders.** New orders at the rider's store show up with trip pay, distance, item count and any cash to collect. The phone buzzes on new ones. One active delivery at a time.
+3. **Steps.** Accept → slide "Reached the store" → item checklist → slide "Picked up" (only after the store marks it packed) → "Navigate to customer" opens Google Maps → slide "Reached the customer" → enter the customer's 4-digit code (and confirm cash for COD) → delivered.
+4. **Earnings.** ₹25 per trip + ₹6 per km + 100% of tips. Today, last 7 days, recent trips, and cash to hand over.
+5. **Profile.** Name and vehicle number customers see, store, safety notes, log out.
+
+When at least one rider is on duty at a store, new orders wait at "Packed" with "Finding a delivery partner" until a rider accepts. With no riders on duty, orders move by themselves as before (demo mode).
+
+To test a rider and a customer at the same time in one browser, open the customer site on `localhost:3000` and the rider app on `127.0.0.1:3000`; they keep separate logins.
+
 ## Where things are
 
 | path | what |
@@ -52,6 +67,7 @@ Every change shows up in the store on the next page load.
 | `lib/orders.ts` | place, track, cancel, staff advance |
 | `lib/db/local.ts` | local JSON driver (swap for Supabase); holds the editable catalogue, coupons, fees and store settings |
 | `lib/admin.ts` + `app/admin/` | admin queries, actions and pages |
+| `lib/rider.ts` + `app/rider/` + `app/api/rider/` | rider workflow, pay, earnings, rider screens |
 | `lib/brand.ts` + `app/globals.css` | name and colour tokens |
 | `replica/` | recon map, architecture, schema, design tokens, feature matrix, build log |
 

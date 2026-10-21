@@ -39,3 +39,5 @@ export const saveCoupon = async (c: Omit<StoredCoupon, "createdAt">, original?: 
 export const deleteCoupon = async (code: string) => run(() => A.deleteCoupon(code), ["/"]);
 export const resolveIssue = async (id: string, action: "refund" | "reject", amount?: number) => run(() => A.resolveIssue(id, action, amount), ["/admin"]);
 export const saveFees = async (f: FeeSettings) => run(() => A.saveFees(f), ["/"]);
+export const addRider = async (input: Parameters<typeof A.addRider>[0]) => run(() => A.addRider(input), ["/admin"]);
+export const updateRider = async (id: string, patch: Parameters<typeof A.updateRider>[1]) => run(() => A.updateRider(id, patch), ["/admin"]);

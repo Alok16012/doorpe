@@ -8,6 +8,8 @@ const COOKIE = "turant_session";
 const SECRET = process.env.SESSION_SECRET || "dev-only-secret-change-me";
 const MAX_AGE = 60 * 60 * 24 * 30;
 const ADMIN_PHONES = (process.env.ADMIN_PHONES || "9999999999").split(",").map((s) => s.trim());
+/** Demo rider numbers, "phone:storeId". The first login creates the rider profile. */
+const RIDER_PHONES = (process.env.RIDER_PHONES || "8888888888:del-cp,7777777777:del-cp").split(",").map((s) => s.trim().split(":"));
 
 const sign = (v: string) => createHmac("sha256", SECRET).update(v).digest("base64url");
 
@@ -80,7 +82,9 @@ export async function verifyOtp(phone: string, code: string): Promise<{ ok: true
     row.expiresAt = 0;
     let user = db.users.find((u) => u.phone === phone);
     if (!user) {
-      user = { id: uid("u_"), phone, role: ADMIN_PHONES.includes(phone) ? "admin" : "customer", walletBalance: 0, createdAt: new Date().toISOString() };
+      const rider = RIDER_PHONES.find(([p]) => p === phone);
+      user = { id: uid("u_"), phone, role: ADMIN_PHONES.includes(phone) ? "admin" : rider ? "rider" : "customer", walletBalance: 0, createdAt: new Date().toISOString() };
+      if (rider) Object.assign(user, { name: `Rider ${phone.slice(-4)}`, riderStoreId: rider[1] || "del-cp", vehicle: "DL 1S AB " + phone.slice(-4), online: false });
       db.users.push(user);
     }
     return { ok: true as const, user };
@@ -91,5 +95,11 @@ export async function verifyOtp(phone: string, code: string): Promise<{ ok: true
 export async function requireAdmin(): Promise<User> {
   const u = await currentUser();
   if (!u || u.role !== "admin") throw new Error("Staff only");
+  return u;
+}
+
+export async function requireRider(): Promise<User> {
+  const u = await currentUser();
+  if (!u || u.role !== "rider") throw new Error("Riders only");
   return u;
 }

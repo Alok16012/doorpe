@@ -30,7 +30,7 @@ export default async function CustomersPage(props: PageProps<"/admin/customers">
                     <td className={`${td} tabular-nums`}>{inr(u.spent)}</td>
                     <td className={`${td} tabular-nums`}>{inr(u.walletBalance)}</td>
                     <td className={`${td} text-muted`}>{u.lastOrder ? new Date(u.lastOrder).toLocaleDateString("en-IN", { day: "numeric", month: "short" }) : "—"}</td>
-                    <td className={td}>{u.role === "admin" ? <span className="rounded-pill bg-brand/50 px-2 py-0.5 text-xs font-bold">Admin</span> : <span className="text-xs text-muted">Customer</span>}</td>
+                    <td className={td}>{u.role === "admin" ? <span className="rounded-pill bg-brand/50 px-2 py-0.5 text-xs font-bold">Admin</span> : u.role === "rider" ? <span className="rounded-pill bg-success-soft px-2 py-0.5 text-xs font-bold text-success">Rider</span> : <span className="text-xs text-muted">Customer</span>}</td>
                   </tr>
                 ))}
               </tbody>

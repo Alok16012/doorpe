@@ -35,7 +35,7 @@ Checkout: choose address; delivery instructions; tip; payment,checkout,must,yes,
 Payment: UPI; cards; netbanking; wallets; COD,payments,must,yes,partial,Razorpay or Cashfree in clone; COD trivial; COD + wallet real; UPI/card simulated. Razorpay not wired yet
 Coupons / promo codes applied at checkout,checkout,should,yes,yes,3 demo coupons; admin-managed
 Order placed confirmation screen,orders,must,yes,yes,
-Live order tracking: statuses + map + rider details + ETA,orders,must,yes,yes,"Placed -> Accepted -> Packing -> Packed -> Out for delivery -> Delivered / Cancelled; Leaflet map, rider position, OTP, timeline; polling"
+Live order tracking: statuses + map + rider details + ETA,orders,must,yes,yes,"Placed -> Accepted -> Packing -> Packed -> Out for delivery -> Delivered / Cancelled; Leaflet map, rider position, OTP, timeline; polling; real rider GPS when a rider has the order"
 Order history list and order detail with invoice,orders,must,yes,partial,list + detail; no PDF invoice
 Cancel order while not yet packed,orders,must,yes,yes,"Policy: not after packed; restores stock, refunds"
 Help / raise issue on an order (missing; damaged; wrong item) with photo,support,should,yes,yes,"photo upload, instant wallet refund"
@@ -48,7 +48,7 @@ Push / SMS notifications for order milestones,notifications,should,yes,no,
 Dark-store inventory per location and out-of-stock state,catalog,must,yes,yes,"Stock per store; card shows ""Out of stock""; per-store stock overrides, sold-out states"
 Surge / dynamic delivery fee with notice,checkout,could,yes,no,
 Admin: products; categories; collections; stores; orders; riders,admin,must,yes,yes,"Full admin panel: dashboard, orders, products CRUD, categories, inventory, stores, customers, coupons, complaints, reports, fees"
-Rider app / delivery partner status updates,ops,should,yes,partial,Minimal web view for riders; staff board advances orders with OTP; no rider GPS app
+Rider app / delivery partner status updates,ops,should,yes,yes,"Rider PWA at /rider: duty toggle, live GPS, offers, accept, store/pickup/customer steps with slide-to-confirm, OTP + COD, earnings; admin Riders page"
 Printouts store (upload document),stores,could,yes,skip,Niche partner workflow
 Pharmacy with consultation,stores,could,yes,skip,Regulated
 Ambulance service,stores,could,yes,skip,Regulated; hardware
