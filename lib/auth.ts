@@ -86,3 +86,10 @@ export async function verifyOtp(phone: string, code: string): Promise<{ ok: true
     return { ok: true as const, user };
   });
 }
+
+/** For server actions and admin pages: the signed-in admin, or an error. */
+export async function requireAdmin(): Promise<User> {
+  const u = await currentUser();
+  if (!u || u.role !== "admin") throw new Error("Staff only");
+  return u;
+}

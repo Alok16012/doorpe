@@ -1,6 +1,6 @@
 import "server-only";
 import { catalog } from "./catalog";
-import { COUPONS, FEES } from "./fees";
+import { fees, liveCoupons } from "./settings";
 import { read } from "./db/local";
 import type { CartLine, Quote, QuoteLine, User } from "./types";
 import type { Serviceability } from "./geo";
@@ -12,6 +12,7 @@ export async function quote(
   lines: CartLine[],
   opts: { svc: Serviceability | null; tip?: number; couponCode?: string; user?: User | null },
 ): Promise<Quote> {
+  const FEES = fees();
   const storeId = opts.svc?.ok ? opts.svc.store.id : null;
   const overrides = storeId ? await read((db) => db.stock[storeId] || {}) : {};
   const out: QuoteLine[] = [];
@@ -19,7 +20,7 @@ export async function quote(
     const hit = catalog.variant(l.variantId);
     if (!hit || l.qty <= 0) continue;
     const { product: p, variant: v } = hit;
-    const available = overrides[v.id] ?? v.baseStock;
+    const available = p.active ? overrides[v.id] ?? v.baseStock : 0;
     const max = Math.min(MAX_PER_ITEM, available);
     const qty = Math.min(l.qty, max);
     out.push({
@@ -42,7 +43,7 @@ export async function quote(
   let coupon: Quote["coupon"];
   if (opts.couponCode) {
     const code = opts.couponCode.trim().toUpperCase();
-    const c = COUPONS.find((x) => x.code === code);
+    const c = liveCoupons().find((x) => x.code === code);
     if (!c) coupon = { code, title: "", discount: 0, error: "This code isn't valid" };
     else if (itemsTotal < c.minOrder) coupon = { code, title: c.title, discount: 0, error: `Add items worth ₹${Math.ceil((c.minOrder - itemsTotal) / 100)} more to use this code` };
     else if (c.firstOrderOnly && opts.user && (await read((db) => db.orders.some((o) => o.userId === opts.user!.id && o.status !== "cancelled"))))

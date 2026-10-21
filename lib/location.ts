@@ -1,5 +1,6 @@
 import "server-only";
 import { cookies } from "next/headers";
+import "./db/local"; // wires admin store overrides into geo
 import { serviceability, type Serviceability } from "./geo";
 
 export const LOC_COOKIE = "turant_loc";

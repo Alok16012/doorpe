@@ -1,7 +1,9 @@
 "use client";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { Boxes, RefreshCw } from "lucide-react";
+import { RefreshCw } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { advance as advanceAction } from "@/app/admin/actions";
 import { Button } from "../ui/Button";
 import { useApp } from "../AppProvider";
 import type { LiveOrder } from "@/lib/orders";
@@ -18,11 +20,10 @@ export function OrderBoard({ initial }: { initial: LiveOrder[] }) {
   const [busy, setBusy] = useState("");
   const { toast } = useApp();
 
-  async function refresh() {
-    const r = await fetch("/api/admin/orders");
-    if (r.ok) setOrders((await r.json()).orders);
-  }
-  useEffect(() => { const t = setInterval(refresh, 5000); return () => clearInterval(t); }, []);
+  const router = useRouter();
+  useEffect(() => setOrders(initial), [initial]);
+  function refresh() { router.refresh(); }
+  useEffect(() => { const t = setInterval(() => router.refresh(), 5000); return () => clearInterval(t); }, [router]);
 
   async function advance(o: LiveOrder) {
     let otp: string | undefined;
@@ -31,31 +32,29 @@ export function OrderBoard({ initial }: { initial: LiveOrder[] }) {
       if (otp === undefined) return;
     }
     setBusy(o.id);
-    const r = await fetch(`/api/admin/orders/${o.id}/advance`, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ otp }) });
-    const d = await r.json();
+    const r = await advanceAction(o.id, otp);
     setBusy("");
-    if (!r.ok) return toast(d.error);
-    await refresh();
+    if (!r.ok) return toast(r.error);
+    refresh();
   }
 
   return (
-    <div className="p-3">
+    <div>
       <div className="mb-3 flex flex-wrap items-center gap-2">
         <Button size="sm" variant="secondary" onClick={refresh}><RefreshCw size={14} /> Refresh</Button>
-        <Link href="/admin/stock" className="inline-flex h-8 items-center gap-1.5 rounded-sm border border-accent px-3 text-xs font-bold text-accent hover:bg-accent-soft"><Boxes size={14} /> Stock</Link>
         <p className="text-xs text-muted">New orders move by themselves in demo mode. Pressing a button takes manual control of that order.</p>
       </div>
       <div className="no-scrollbar flex gap-3 overflow-x-auto pb-4">
         {COLS.map((c) => {
           const list = orders.filter((o) => o.status === c.key);
           return (
-            <section key={c.key} className="w-72 shrink-0 rounded-md bg-bg p-2" aria-label={c.title}>
+            <section key={c.key} className="w-72 shrink-0 rounded-xl border border-border bg-bg p-2" aria-label={c.title}>
               <h2 className="flex items-center justify-between px-1 pb-2 text-sm font-extrabold">{c.title}<span className="rounded-pill bg-surface px-2 text-xs">{list.length}</span></h2>
               <ul className="space-y-2">
                 {list.map((o) => (
                   <li key={o.id} className="rounded-sm border border-border p-3 text-sm">
                     <div className="flex items-center justify-between">
-                      <Link href={`/orders/${o.id}`} className="font-extrabold hover:underline">#{o.code}</Link>
+                      <Link href={`/admin/orders/${o.id}`} className="font-extrabold hover:underline">#{o.code}</Link>
                       <span className="text-xs text-muted">{new Date(o.placedAt).toLocaleTimeString("en-IN", { hour: "numeric", minute: "2-digit" })}</span>
                     </div>
                     <p className="mt-1 line-clamp-2 text-xs text-muted">{o.items.map((i) => `${i.qty}× ${i.name}`).join(", ")}</p>

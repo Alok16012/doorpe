@@ -17,21 +17,41 @@ Open http://localhost:3000.
 
 - **Location:** pick any "Popular area" or search. Demo stores cover parts of Delhi, Gurugram, Noida, Mumbai, Bengaluru, Hyderabad, Pune, Kolkata and Chennai.
 - **Login:** any 10-digit Indian mobile number. No SMS is sent; the code appears on screen.
-- **Staff:** log in as `9999999999` to get the store dashboard at `/admin` (order board, stock editor).
+- **Admin panel:** log in as `9999999999` and open `/admin`. Other admins can be added from Customers.
 - **Orders** move through the statuses by themselves over the delivery ETA. Pressing a button on the dashboard takes manual control (delivery needs the customer's code).
 
 Data is stored in `.data/db.json`. Delete that file to reset.
+
+## Admin panel (`/admin`)
+
+| page | what you can do |
+| --- | --- |
+| Dashboard | today's orders, revenue, average order, live orders, open complaints, 7-day chart, low stock |
+| Live board | move orders through packing, packed, out for delivery, delivered (needs the customer's code) |
+| Orders | filter by status, store or search; open an order to advance it or cancel and refund |
+| Products | add, edit, hide or show products; sizes, MRP, selling price, default stock, image, details |
+| Categories | add or edit categories and sub-categories, reorder tiles, hide them |
+| Inventory | set stock per store, quick +10/+50 buttons, low-stock filter |
+| Stores | pause a store, change hours and delivery radius |
+| Customers | orders, spend, wallet; credit or debit the wallet; make someone an admin |
+| Coupons | create flat, percent or free-delivery codes with minimum order, cap, expiry, first-order-only |
+| Complaints | refund or reject late-delivery and other complaints (item problems refund automatically) |
+| Reports | 14-day revenue, top products, sales by category, payment methods, average delivery time |
+| Fees & settings | delivery fee, free-delivery threshold, handling fee, small-order fee, tip buttons |
+
+Every change shows up in the store on the next page load.
 
 ## Where things are
 
 | path | what |
 | --- | --- |
-| `lib/catalog/data.ts` | categories, products, storefronts, rails, banners |
+| `lib/catalog/data.ts` | the demo catalogue used to seed the database on first run; storefronts, rails, banners |
 | `lib/geo.ts` | demo dark stores, serviceability, ETA |
 | `lib/fees.ts` | delivery, handling, small-cart fees and coupons |
 | `lib/pricing.ts` | server-side cart quote |
 | `lib/orders.ts` | place, track, cancel, staff advance |
-| `lib/db/local.ts` | local JSON driver (swap for Supabase) |
+| `lib/db/local.ts` | local JSON driver (swap for Supabase); holds the editable catalogue, coupons, fees and store settings |
+| `lib/admin.ts` + `app/admin/` | admin queries, actions and pages |
 | `lib/brand.ts` + `app/globals.css` | name and colour tokens |
 | `replica/` | recon map, architecture, schema, design tokens, feature matrix, build log |
 

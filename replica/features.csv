@@ -33,7 +33,7 @@ Guest browsing and cart before login,auth,must,yes,yes,Cart persists locally the
 Saved addresses (Home / Work / Other) with map pin and details,checkout,must,yes,yes,House no; floor; landmark; receiver name & phone; map pin + form
 Checkout: choose address; delivery instructions; tip; payment,checkout,must,yes,yes,"Inferred from app; web shows ""Login to Proceed""; instructions, tip, coupon, payment"
 Payment: UPI; cards; netbanking; wallets; COD,payments,must,yes,partial,Razorpay or Cashfree in clone; COD trivial; COD + wallet real; UPI/card simulated. Razorpay not wired yet
-Coupons / promo codes applied at checkout,checkout,should,yes,yes,3 demo coupons
+Coupons / promo codes applied at checkout,checkout,should,yes,yes,3 demo coupons; admin-managed
 Order placed confirmation screen,orders,must,yes,yes,
 Live order tracking: statuses + map + rider details + ETA,orders,must,yes,yes,"Placed -> Accepted -> Packing -> Packed -> Out for delivery -> Delivered / Cancelled; Leaflet map, rider position, OTP, timeline; polling"
 Order history list and order detail with invoice,orders,must,yes,partial,list + detail; no PDF invoice
@@ -47,7 +47,7 @@ Wallet (Blinkit Money equivalent) and gift cards,account,could,yes,partial,Simpl
 Push / SMS notifications for order milestones,notifications,should,yes,no,
 Dark-store inventory per location and out-of-stock state,catalog,must,yes,yes,"Stock per store; card shows ""Out of stock""; per-store stock overrides, sold-out states"
 Surge / dynamic delivery fee with notice,checkout,could,yes,no,
-Admin: products; categories; collections; stores; orders; riders,admin,must,yes,partial,Not visible to users but required to run it; order board + stock editor; no product/category CRUD
+Admin: products; categories; collections; stores; orders; riders,admin,must,yes,yes,"Full admin panel: dashboard, orders, products CRUD, categories, inventory, stores, customers, coupons, complaints, reports, fees"
 Rider app / delivery partner status updates,ops,should,yes,partial,Minimal web view for riders; staff board advances orders with OTP; no rider GPS app
 Printouts store (upload document),stores,could,yes,skip,Niche partner workflow
 Pharmacy with consultation,stores,could,yes,skip,Regulated

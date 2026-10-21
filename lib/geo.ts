@@ -1,9 +1,23 @@
 export type Store = {
   id: string; name: string; city: string; lat: number; lng: number; radiusKm: number;
   opensAt: number; closesAt: number; // hours in IST, closesAt 24 = midnight
+  isOpen?: boolean; // admin switch; false = paused regardless of hours
 };
 
-/** Demo dark stores. Replace with your own stores (admin / DB) before launch. */
+/** Stores with admin overrides applied. Pass the overrides map from the DB (server only). */
+let overridesSource: () => Record<string, StoreOverride> = () => ({});
+export function setStoreOverridesSource(fn: () => Record<string, StoreOverride>) { overridesSource = fn; }
+export function stores(): Store[] {
+  // the DB lives on globalThis, so every server bundle sees the same overrides
+  const shared = (globalThis as unknown as { __turantDb?: { storeOverrides?: Record<string, StoreOverride> } }).__turantDb?.storeOverrides;
+  const o = shared ?? overridesSource();
+  return STORES.map((s) => ({ ...s, isOpen: true, ...(o[s.id] || {}) }));
+}
+
+/** Admin-editable fields per store, stored in the DB. */
+export type StoreOverride = { isOpen?: boolean; opensAt?: number; closesAt?: number; radiusKm?: number; name?: string };
+
+/** Demo dark stores. Replace with your own stores before launch. */
 export const STORES: Store[] = [
   { id: "del-cp", name: "Connaught Place", city: "Delhi", lat: 28.6315, lng: 77.2167, radiusKm: 6, opensAt: 0, closesAt: 24 },
   { id: "del-saket", name: "Saket", city: "Delhi", lat: 28.5245, lng: 77.2066, radiusKm: 6, opensAt: 6, closesAt: 24 },
@@ -40,6 +54,7 @@ export function istHour(d = new Date()) {
 }
 
 export function isOpen(s: Store, d = new Date()) {
+  if (s.isOpen === false) return false;
   const h = istHour(d);
   return h >= s.opensAt && h < s.closesAt;
 }
@@ -49,8 +64,9 @@ export type Serviceability =
   | { ok: false; nearest: Store; distanceKm: number };
 
 export function serviceability(lat: number, lng: number): Serviceability {
-  let best = STORES[0], bestD = Infinity;
-  for (const s of STORES) {
+  const list = stores();
+  let best = list[0], bestD = Infinity;
+  for (const s of list) {
     const d = distanceKm({ lat, lng }, s);
     if (d < bestD) { bestD = d; best = s; }
   }
@@ -59,4 +75,4 @@ export function serviceability(lat: number, lng: number): Serviceability {
   return { ok: true, store: best, distanceKm: bestD, etaMin, open: isOpen(best) };
 }
 
-export const storeById = (id: string) => STORES.find((s) => s.id === id);
+export const storeById = (id: string) => stores().find((s) => s.id === id);

@@ -43,3 +43,13 @@ The user asked for the design to look the same as Blinkit. Measured their public
 - Components: zig-zag discount flag, image-only border on rail cards, "N options" inside ADD, green unit picker, anchored location popover with GPS-first button, centred "My Cart" header, blue savings strip, green total bar, OTP boxes, product-wall login.
 - Product art: Fluent Emoji 3D renders (MIT) on white instead of emoji glyphs.
 - Kept our own: name, logo, taglines and marketing copy, product images. Contrast still passes AA (tokens.json, 18 pairs).
+
+## 2026-10-22: admin panel
+
+Built `/admin` with a sidebar shell: Dashboard (KPIs, 7-day orders chart, live orders, low stock), Live board, Orders (filters, detail, advance, cancel & refund), Products (create/edit/hide with sizes, prices, stock, image picker), Categories (add/edit/reorder/hide, sub-categories), Inventory (per store), Stores (pause, hours, radius), Customers (wallet credit/debit, admin role), Coupons (CRUD with caps, expiry, first-order), Complaints (refund/reject), Reports (14 days), Fees & settings.
+
+To make this possible the catalogue, coupons, fees and store settings moved from code into the database (seeded from the demo data on first run). Admin mutations are server actions that check the admin role on every call.
+
+Verified in the browser: new product appears in store, search, category and cart pricing; hiding it 404s the product page; pausing a store closes ordering; fee changes reprice carts; a new coupon applies with its cap; complaint refund credits the wallet; new sub-category shows in the store rail; an admin can't remove their own access. All admin pages render at 375 and 1280 px without overflow.
+
+Harder than expected: the dev server kept an old in-memory database object without the new fields, so the first store update silently failed. The loader now backfills missing fields.
