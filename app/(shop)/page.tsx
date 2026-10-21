@@ -25,7 +25,7 @@ export default async function Home() {
 
       {/* desktop banners (the mobile web home goes straight to categories) */}
       <section aria-label="Offers" className="hidden pt-6 md:block">
-        <Link href={hero.href} className="relative flex h-[234px] items-center overflow-hidden rounded-xl px-12" style={{ background: "linear-gradient(90deg, var(--color-accent-hover) 0%, var(--color-accent) 45%, #8fc0f5 100%)" }}>
+        <Link href={hero.href} className="relative flex h-[234px] items-center overflow-hidden rounded-xl px-12" style={{ background: "linear-gradient(90deg, var(--color-accent-hover) 0%, var(--color-accent) 45%, #73a9ea 100%)" }}>
           <div className="relative z-10 max-w-[520px] text-white">
             <p className="text-[40px] font-extrabold leading-[44px]">{hero.title}</p>
             <p className="mt-2 text-lg font-medium opacity-90">{hero.body}</p>
@@ -36,7 +36,7 @@ export default async function Home() {
           </span>
         </Link>
         <div className="mt-5 grid grid-cols-3 gap-5">
-          {minis.concat(catalog.banners().slice(0, 1).map((b) => ({ ...b, title: "Snacks for every craving", body: "Chips, chocolates and cold drinks", cta: "Order now", href: "/c/late-night-cravings", tint: "#e6e9ff", art: "🍟🍫🥤" }))).map((b) => (
+          {minis.concat(catalog.banners().slice(0, 1).map((b) => ({ ...b, title: "Snacks for every craving", body: "Chips, chocolates and cold drinks", cta: "Order now", href: "/c/late-night-cravings", tint: "#d6dbff", art: "🍟🍫🥤" }))).map((b) => (
             <Link key={b.title} href={b.href} className="relative flex h-[195px] flex-col justify-between overflow-hidden rounded-xl p-6" style={{ background: b.tint }}>
               <div className="relative z-10 max-w-[60%]">
                 <p className="text-[22px] font-extrabold leading-7">{b.title}</p>

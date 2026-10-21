@@ -67,3 +67,7 @@ Found while testing: the `rounded-pill` radius token was never defined, so every
 ## 2026-10-22: pastel blue theme (user request)
 
 Swapped the palette in tokens.json and globals.css: page `#f2f7ff`, tiles `#e1efff`, search `#f5f9ff`, buttons and cart bar `#2f6fd1`, ADD `#2a64c2` on `#eef5ff`, logo tile `#bcdcff` with navy text, discount flags violet `#6a4bd4`, navy text `#17233a`. All 23 text/background pairs pass WCAG AA. Replaced every hard-coded green/yellow/grey in components with tokens (new `warn-soft`, `switch-off`), and moved storefront and banner tints, map pins, app icons and both manifests to the blue family. Layout is unchanged.
+
+## 2026-10-22: theme one step darker (user request)
+
+Surfaces `#e9f2ff`, tiles `#d3e6ff`, search `#eef5ff`, buttons `#245fc0`, ADD `#2259b8`, logo tile `#a3cdff`, discount flag `#5b3cc4`; storefront/banner tints, hero gradient, map pin, icons and manifests moved one step darker to match. Still 23/23 AA.

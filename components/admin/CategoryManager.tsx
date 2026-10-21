@@ -41,7 +41,7 @@ export function CategoryManager({ data, counts, icons }: { data: { groups: CatGr
           <section key={g.slug}>
             <div className="mb-2 flex items-center justify-between">
               <h2 className="text-base font-bold">{g.name}</h2>
-              <button onClick={() => setEdit({ kind: "cat", name: "", icon: "🛒", tint: "#e1efff", group: g.slug, active: true })} className="flex items-center gap-1 text-sm font-semibold text-accent"><Plus size={15} /> Add category</button>
+              <button onClick={() => setEdit({ kind: "cat", name: "", icon: "🛒", tint: "#d3e6ff", group: g.slug, active: true })} className="flex items-center gap-1 text-sm font-semibold text-accent"><Plus size={15} /> Add category</button>
             </div>
             <ul className="divide-y divide-border overflow-hidden rounded-xl border border-border bg-bg">
               {cats.map((c, i) => {

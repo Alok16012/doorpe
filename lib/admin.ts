@@ -172,7 +172,7 @@ export async function saveCategory(input: { name: string; icon: string; tint: st
       let s = slugify(input.name) || "category";
       while (c.categories.some((x) => x.slug === s) || c.subs.some((x) => x.slug === s)) s += "-2";
       const sort = Math.max(-1, ...c.categories.filter((x) => x.group === input.group).map((x) => x.sort)) + 1;
-      const row: CatCategory = { slug: s, name: input.name.trim(), icon: input.icon || "🛒", tint: input.tint || "#e1efff", group: input.group, sort, active: input.active };
+      const row: CatCategory = { slug: s, name: input.name.trim(), icon: input.icon || "🛒", tint: input.tint || "#d3e6ff", group: input.group, sort, active: input.active };
       c.categories.push(row);
       // every category needs at least one sub-category to hold products
       c.subs.push({ slug: `${s}-all`, name: input.name.trim(), icon: row.icon, category: s, sort: 0, active: true });
