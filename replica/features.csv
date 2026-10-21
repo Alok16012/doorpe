@@ -1,0 +1,57 @@
+feature,area,priority,original,clone,notes
+Location picker (use GPS or search address; serviceability check),location,must,yes,yes,Google Places style autocomplete; blocks browse until set; GPS + OpenStreetMap search + popular areas; serviceability by store radius
+Delivery ETA shown in header and on every product card,location,must,yes,yes,"ETA from nearest store; ""Delivery in 9 minutes""; ETA from distance to nearest demo store"
+Home: category grid grouped by sections,home,must,yes,yes,Grocery & Kitchen / Snacks & Drinks / Beauty & Personal Care / Household Essentials; 4 groups / 25 categories
+Home: shop-by-store carousel,home,should,yes,yes,Pet / Print / Electronics / Stationery / Kids / Pharma / Sports / Party / Beauty; 8 storefront tiles
+"Home: product carousels (Hot deals; Daily fresh; Dairy; Snacks) with ""see all""",home,must,yes,yes,Each is a curated collection; 4 rails + see-all pages
+Home: promotional banners and themed tiles,home,should,yes,yes,"Study smarter at night style banner with sub-category tiles; 3 banners, own copy"
+"Search with rotating placeholder (""Search \""milk\"""")",search,must,yes,yes,Placeholder cycles every ~2s
+Search suggestions with highlighted match and thumbnail,search,must,yes,yes,"Milk / Full cream milk / Cow milk ... shown while typing; plus recent + popular searches, typo tolerance"
+"Search results grid with sponsored ""Ad"" tag",search,must,yes,partial,2-col grid same card as listing; grid done; no paid ads (Ad tag supported on card)
+Category listing with left sub-category rail,catalog,must,yes,yes,"Sticky vertical rail; ""All"" first; 2-col grid; plus sort by price/discount"
+Product card: image; discount ribbon; ETA; name; unit; price; MRP strike; ADD,catalog,must,yes,yes,Core component; emoji art instead of photos
+"Product card variant selector (""2 options"" / unit dropdown)",catalog,must,yes,yes,Opens bottom sheet to pick unit; variant sheet
+Product detail page: image carousel with dots/thumbnails,pdp,must,yes,partial,4 images on sample; single art tile; no multi-image carousel (no photos)
+PDP: unit selector chips with discount badge,pdp,must,yes,yes,1 kg vs 2 x 1 kg
+"PDP: price; MRP; % off; ""Inclusive of all taxes""; Add to cart sticky bar",pdp,must,yes,yes,
+PDP: expandable product details (Key information; brand),pdp,must,yes,yes,View product details
+PDP: Similar products; Top products in category; People also bought,pdp,should,yes,yes,Horizontal rails
+PDP: recipes using this product,pdp,could,yes,no,Content rail; content not written
+PDP: breadcrumb (desktop),pdp,should,yes,yes,Home / Fresh Vegetables / Onion
+"PDP: ""Why shop from us"" 3 trust points (desktop)",pdp,could,yes,yes,own copy
+Add to cart stepper (ADD -> [- 1 +]) in place on every card,cart,must,yes,yes,Qty syncs across all surfaces instantly; synced across tabs via localStorage
+"Floating cart bar (""1 item ₹64 View Cart"")",cart,must,yes,yes,Mobile bottom pill
+Cart page: items with stepper; ETA header; shipment count,cart,must,yes,yes,
+Cart: bill details (items total; delivery charge; handling charge; grand total; savings),cart,must,yes,yes,Delivery charge free over threshold; strike-through; fees server-priced; tooltips
+"Cart: ""Your total savings"" banner",cart,should,yes,yes,
+Cart: cancellation policy note,cart,should,yes,yes,
+"Cart: empty state with ""Start Shopping""",cart,must,yes,yes,
+Cart: share cart link,cart,could,yes,yes,link with ?items=
+Cart: info tooltips on each charge,cart,could,yes,yes,
+Login / signup with mobile number + OTP,auth,must,yes,partial,"+91 only; ""Login to Proceed"" from cart; phone OTP works; SMS provider not wired (demo shows code on screen)"
+Guest browsing and cart before login,auth,must,yes,yes,Cart persists locally then merges on login
+Saved addresses (Home / Work / Other) with map pin and details,checkout,must,yes,yes,House no; floor; landmark; receiver name & phone; map pin + form
+Checkout: choose address; delivery instructions; tip; payment,checkout,must,yes,yes,"Inferred from app; web shows ""Login to Proceed""; instructions, tip, coupon, payment"
+Payment: UPI; cards; netbanking; wallets; COD,payments,must,yes,partial,Razorpay or Cashfree in clone; COD trivial; COD + wallet real; UPI/card simulated. Razorpay not wired yet
+Coupons / promo codes applied at checkout,checkout,should,yes,yes,3 demo coupons
+Order placed confirmation screen,orders,must,yes,yes,
+Live order tracking: statuses + map + rider details + ETA,orders,must,yes,yes,"Placed -> Accepted -> Packing -> Packed -> Out for delivery -> Delivered / Cancelled; Leaflet map, rider position, OTP, timeline; polling"
+Order history list and order detail with invoice,orders,must,yes,partial,list + detail; no PDF invoice
+Cancel order while not yet packed,orders,must,yes,yes,"Policy: not after packed; restores stock, refunds"
+Help / raise issue on an order (missing; damaged; wrong item) with photo,support,should,yes,yes,"photo upload, instant wallet refund"
+Refund to original method / wallet,support,should,yes,partial,wallet refunds real; gateway refunds need Razorpay
+Rate order and delivery partner,orders,could,yes,yes,
+"Reorder / ""Order again"" rail",home,should,yes,partial,"Home rail for logged-in users; ""Order again"" on order page; no home rail yet"
+Account page: profile; addresses; orders; wallet; gift cards; refer; settings; logout,account,must,yes,yes,"orders, addresses, wallet, profile, logout"
+Wallet (Blinkit Money equivalent) and gift cards,account,could,yes,partial,Simple ledger; wallet ledger; no gift cards
+Push / SMS notifications for order milestones,notifications,should,yes,no,
+Dark-store inventory per location and out-of-stock state,catalog,must,yes,yes,"Stock per store; card shows ""Out of stock""; per-store stock overrides, sold-out states"
+Surge / dynamic delivery fee with notice,checkout,could,yes,no,
+Admin: products; categories; collections; stores; orders; riders,admin,must,yes,partial,Not visible to users but required to run it; order board + stock editor; no product/category CRUD
+Rider app / delivery partner status updates,ops,should,yes,partial,Minimal web view for riders; staff board advances orders with OTP; no rider GPS app
+Printouts store (upload document),stores,could,yes,skip,Niche partner workflow
+Pharmacy with consultation,stores,could,yes,skip,Regulated
+Ambulance service,stores,could,yes,skip,Regulated; hardware
+Co-branded credit card,payments,could,yes,skip,Bank partnership
+Bistro / District / Feeding India links,footer,could,yes,skip,Sister products
+Native iOS/Android app with app-install nudges,platform,should,yes,partial,Clone ships as PWA first; installable PWA manifest; no native build

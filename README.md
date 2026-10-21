@@ -1,36 +1,41 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Turant — quick-commerce web app (Blinkit-style)
 
-## Getting Started
+A clean-room rebuild of the quick-commerce core loop: pick a location → browse or search → add to cart → log in with phone OTP → checkout → live order tracking → help and refunds. Plus a store dashboard for staff.
 
-First, run the development server:
+All code, copy, brand and product art are original. Product names and brands are fictional demo data.
+
+## Run it
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Location:** pick any "Popular area" or search. Demo stores cover parts of Delhi, Gurugram, Noida, Mumbai, Bengaluru, Hyderabad, Pune, Kolkata and Chennai.
+- **Login:** any 10-digit Indian mobile number. No SMS is sent; the code appears on screen.
+- **Staff:** log in as `9999999999` to get the store dashboard at `/admin` (order board, stock editor).
+- **Orders** move through the statuses by themselves over the delivery ETA. Pressing a button on the dashboard takes manual control (delivery needs the customer's code).
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Data is stored in `.data/db.json`. Delete that file to reset.
 
-## Learn More
+## Where things are
 
-To learn more about Next.js, take a look at the following resources:
+| path | what |
+| --- | --- |
+| `lib/catalog/data.ts` | categories, products, storefronts, rails, banners |
+| `lib/geo.ts` | demo dark stores, serviceability, ETA |
+| `lib/fees.ts` | delivery, handling, small-cart fees and coupons |
+| `lib/pricing.ts` | server-side cart quote |
+| `lib/orders.ts` | place, track, cancel, staff advance |
+| `lib/db/local.ts` | local JSON driver (swap for Supabase) |
+| `lib/brand.ts` + `app/globals.css` | name and colour tokens |
+| `replica/` | recon map, architecture, schema, design tokens, feature matrix, build log |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Before going live
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. Create a Supabase project and run `replica/schema.sql`; add a Supabase driver behind the same functions in `lib/`.
+2. Connect an SMS provider for OTP (MSG91 or Twilio) in `lib/auth.ts`.
+3. Connect Razorpay for UPI and cards.
+4. Replace the demo stores, catalogue and product art with your own.
