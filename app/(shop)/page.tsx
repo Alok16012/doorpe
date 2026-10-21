@@ -9,6 +9,7 @@ import { Rail } from "@/components/shop/Rail";
 import { LocationPrompt } from "@/components/shop/LocationPrompt";
 import { NotServiceable } from "@/components/shop/NotServiceable";
 import { ProductArt } from "@/components/shop/ProductArt";
+import { CategoryCard } from "@/components/shop/CategoryCard";
 
 export default async function Home() {
   const { svc } = await currentLocation();
@@ -25,7 +26,7 @@ export default async function Home() {
 
       {/* desktop banners (the mobile web home goes straight to categories) */}
       <section aria-label="Offers" className="hidden pt-6 md:block">
-        <Link href={hero.href} className="relative flex h-[234px] items-center overflow-hidden rounded-xl px-12" style={{ background: "linear-gradient(90deg, var(--color-accent-hover) 0%, var(--color-accent) 45%, #73a9ea 100%)" }}>
+        <Link href={hero.href} className="relative flex h-[234px] items-center overflow-hidden rounded-xl px-12" style={{ background: "linear-gradient(100deg, var(--color-hero-from) 0%, var(--color-hero-mid) 55%, #3a5299 100%)" }}>
           <div className="relative z-10 max-w-[520px] text-white">
             <p className="text-[40px] font-extrabold leading-[44px]">{hero.title}</p>
             <p className="mt-2 text-lg font-medium opacity-90">{hero.body}</p>
@@ -49,24 +50,31 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* categories by group */}
-      {catalog.groups().map((g) => (
-        <section key={g.slug} className="px-2 pt-6 md:px-0 md:pt-8" aria-labelledby={`g-${g.slug}`}>
-          <h2 id={`g-${g.slug}`} className="mb-3 px-1 text-[17px] font-extrabold leading-5 text-text md:mb-4 md:text-2xl">{g.name}</h2>
-          <ul className="grid grid-cols-4 gap-x-2 gap-y-3 md:grid-cols-10 md:gap-4">
-            {g.categories.map((c) => (
-              <li key={c.slug}>
-                <Link href={`/cn/${c.slug}`} className="group block text-center">
-                  <span className="block overflow-hidden rounded-lg bg-surface-tint transition-transform group-active:scale-95" style={{ aspectRatio: "83 / 90" }}>
-                    <ProductArt icon={c.icon} size="sm" className="h-full !p-2.5" />
-                  </span>
-                  <span className="mt-1.5 line-clamp-2 block text-[13px] font-semibold leading-[15px] text-text">{c.name}</span>
-                </Link>
-              </li>
+      {/* mobile hero band: our promo line + the first section's categories on the blue gradient */}
+      {(() => {
+        const [first, ...rest] = catalog.groups();
+        return (
+          <>
+            <section className="px-3 pb-5 pt-2 md:hidden" style={{ background: "linear-gradient(180deg, var(--color-hero-mid) 0%, #3a5299 38%, #c9d4ee 72%, var(--color-bg) 100%)" }} aria-labelledby="hero-h">
+              <div className="pb-4 pt-1 text-center text-on-hero">
+                <h2 id="hero-h" className="inline-block -skew-x-6 rounded-md bg-bg px-3 py-1 text-[26px] font-black italic leading-none tracking-tight text-accent">SAVE EVERY DAY</h2>
+                <p className="mt-1.5 text-[11px] font-bold tracking-[0.22em]">LOWEST PRICES ON DAILY NEEDS</p>
+              </div>
+              <ul className="grid grid-cols-4 gap-2">
+                {first.categories.map((c) => <li key={c.slug}><CategoryCard href={`/cn/${c.slug}`} name={c.name} icon={c.icon} onHero /></li>)}
+              </ul>
+            </section>
+            {[first, ...rest].map((g, gi) => (
+              <section key={g.slug} className={`px-3 pt-6 md:px-0 md:pt-8 ${gi === 0 ? "hidden md:block" : ""}`} aria-labelledby={`g-${g.slug}`}>
+                <h2 id={`g-${g.slug}`} className="mb-3 px-1 text-[17px] font-extrabold leading-5 text-text md:mb-4 md:text-2xl">{g.name}</h2>
+                <ul className="grid grid-cols-4 gap-2 md:grid-cols-8 md:gap-4">
+                  {g.categories.map((c) => <li key={c.slug}><CategoryCard href={`/cn/${c.slug}`} name={c.name} icon={c.icon} /></li>)}
+                </ul>
+              </section>
             ))}
-          </ul>
-        </section>
-      ))}
+          </>
+        );
+      })()}
 
       {/* storefronts */}
       <section className="pt-6 md:pt-8" aria-labelledby="stores-h">

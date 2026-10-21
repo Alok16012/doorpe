@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   description: "Fruits, vegetables, dairy, snacks and daily essentials delivered from a store near you in minutes.",
   manifest: "/manifest.webmanifest",
 };
-export const viewport: Viewport = { themeColor: "#a3cdff", width: "device-width", initialScale: 1 };
+export const viewport: Viewport = { themeColor: "#081a4d", width: "device-width", initialScale: 1 };
 
 export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   const [user, { loc, svc }] = await Promise.all([currentUser(), currentLocation()]);

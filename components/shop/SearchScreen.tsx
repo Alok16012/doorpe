@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { ArrowLeft, Clock, Search, TrendingUp, X } from "lucide-react";
+import { ArrowLeft, Clock, Mic, Search, TrendingUp, X } from "lucide-react";
 import type { CardProduct } from "@/lib/dto";
 import { ProductCard, ProductCardSkeleton } from "./ProductCard";
 
@@ -35,11 +35,32 @@ export function SearchScreen({ initialQ, eta, cats }: { initialQ: string; eta: n
   const [recent, setRecent] = useState<string[]>([]);
   const input = useRef<HTMLInputElement>(null);
 
-  useEffect(() => { setRecent(readRecent()); input.current?.focus(); }, []);
+  const [listening, setListening] = useState(false);
+  const [voiceMsg, setVoiceMsg] = useState("");
+  type Rec = { lang: string; interimResults: boolean; maxAlternatives: number; start: () => void; stop: () => void; onresult: (e: { results: ArrayLike<ArrayLike<{ transcript: string }>> }) => void; onerror: (e: { error: string }) => void; onend: () => void };
+  function startVoice() {
+    const W = window as unknown as { SpeechRecognition?: new () => Rec; webkitSpeechRecognition?: new () => Rec };
+    const Ctor = W.SpeechRecognition || W.webkitSpeechRecognition;
+    if (!Ctor) { setVoiceMsg("Voice search isn't supported in this browser. Try Chrome."); return; }
+    const r = new Ctor();
+    r.lang = "en-IN"; r.interimResults = true; r.maxAlternatives = 1;
+    r.onresult = (e) => { const t = Array.from(e.results).map((x) => x[0].transcript).join(" "); setQ(t); };
+    r.onerror = (e) => setVoiceMsg(e.error === "not-allowed" ? "Microphone access is blocked. Allow it in your browser settings." : "Didn't catch that. Try again.");
+    r.onend = () => setListening(false);
+    setVoiceMsg(""); setListening(true);
+    try { r.start(); } catch { setListening(false); }
+  }
+
+  useEffect(() => {
+    setRecent(readRecent());
+    if (new URLSearchParams(window.location.search).get("voice") === "1") startVoice();
+    else input.current?.focus();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     const term = q.trim();
-    const url = term ? `/s?q=${encodeURIComponent(term)}` : "/s";
+    const url = term ? `/s?q=${encodeURIComponent(term)}` : window.location.search.includes("voice=1") ? "/s?voice=1" : "/s";
     window.history.replaceState(null, "", url);
     if (!term) { setData(null); setLoading(false); return; }
     setLoading(true); setError(false);
@@ -77,9 +98,13 @@ export function SearchScreen({ initialQ, eta, cats }: { initialQ: string; eta: n
             placeholder="Search groceries, snacks, essentials…" aria-label="Search products"
             className="h-full flex-1 bg-transparent text-[15px] font-semibold outline-none placeholder:font-medium placeholder:text-faint [&::-webkit-search-cancel-button]:hidden" />
           {q && <button type="button" onClick={() => { setQ(""); input.current?.focus(); }} aria-label="Clear search" className="grid size-9 place-items-center rounded-full hover:bg-surface"><X size={18} /></button>}
+          <button type="button" onClick={startVoice} aria-label={listening ? "Listening" : "Search by voice"} aria-pressed={listening} className={`grid size-9 place-items-center rounded-full ${listening ? "animate-pulse bg-accent text-on-accent" : "text-accent hover:bg-surface"}`}><Mic size={18} /></button>
         </form>
       </div>
 
+      {(listening || voiceMsg) && (
+        <p role="status" className={`mx-3 mb-2 rounded-lg px-3 py-2 text-sm font-semibold md:mx-0 ${voiceMsg ? "bg-warn-soft text-warning" : "bg-accent-soft text-accent"}`}>{voiceMsg || "Listening… say what you need, like “toned milk”"}</p>
+      )}
       {!term && (
         <div className="space-y-6 px-3 pb-10 pt-2 md:px-0">
           {recent.length > 0 && (

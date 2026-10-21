@@ -71,3 +71,11 @@ Swapped the palette in tokens.json and globals.css: page `#f2f7ff`, tiles `#e1ef
 ## 2026-10-22: theme one step darker (user request)
 
 Surfaces `#e9f2ff`, tiles `#d3e6ff`, search `#eef5ff`, buttons `#245fc0`, ADD `#2259b8`, logo tile `#a3cdff`, discount flag `#5b3cc4`; storefront/banner tints, hero gradient, map pin, icons and manifests moved one step darker to match. Still 23/23 AA.
+
+## 2026-10-22: navy look inspired by a screenshot the user shared
+
+Home: navy gradient header with white delivery line, white search bar with a working voice-search mic (Web Speech API, en-IN), a "SAVE EVERY DAY" promo line, and category cards with the name on top and the product art in the corner (first section sits on the gradient). Product cards: corner "+" add button that turns into a navy stepper, multi-size "+" opens the size sheet, orange discount flag, green "% off" next to the ETA. Free-delivery strip at the bottom when the cart is empty; "Add ₹X more for FREE delivery" chip above the cart bar.
+
+Palette: navy accent `#14307a`, hero gradient `#081a4d → #15317d`, logo tile navy with white text, cool light surfaces `#eef2fb` / `#dde5f5`, discount `#c2410c`. 25/25 pairs pass AA. No other brand's name, logo or campaign wording used.
+
+Verified: plus → stepper → back to plus, size sheet opens for multi-size items, no horizontal overflow at 360 and 1280 px on shop and rider pages, production build passes.

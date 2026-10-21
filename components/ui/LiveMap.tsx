@@ -37,7 +37,7 @@ export function LiveMap({
       const pts: Pt[] = [];
       if (store) { Lmod.marker([store.lat, store.lng], { icon: Lmod.divIcon({ html: pin("🏪", "var(--color-brand)"), className: "", iconSize: [38, 38], iconAnchor: [19, 19] }), title: "Store" }).addTo(m); pts.push(store); }
       if (home) { Lmod.marker([home.lat, home.lng], { icon: Lmod.divIcon({ html: pin("🏠", "var(--color-accent)"), className: "", iconSize: [38, 38], iconAnchor: [19, 19] }), title: "You" }).addTo(m); pts.push(home); }
-      if (store && home) Lmod.polyline([[store.lat, store.lng], [home.lat, home.lng]], { color: "#245fc0", weight: 3, dashArray: "6 8", opacity: 0.7 }).addTo(m);
+      if (store && home) Lmod.polyline([[store.lat, store.lng], [home.lat, home.lng]], { color: "#14307a", weight: 3, dashArray: "6 8", opacity: 0.7 }).addTo(m);
       if (pick) {
         const pm = Lmod.marker([pick.lat, pick.lng], { draggable: true, icon: Lmod.divIcon({ html: pin("📍", "#fff"), className: "", iconSize: [38, 38], iconAnchor: [19, 36] }), title: "Delivery spot" }).addTo(m);
         pm.on("dragend", () => { const p = pm.getLatLng(); onPickRef.current?.({ lat: p.lat, lng: p.lng }); });

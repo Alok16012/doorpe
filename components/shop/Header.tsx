@@ -12,13 +12,13 @@ const Caret = () => (
   <svg width="10" height="6" viewBox="0 0 10 6" aria-hidden className="ml-1.5 shrink-0"><path d="M0 0h10L5 6z" fill="currentColor" /></svg>
 );
 
-function DeliveryLine({ big = false }: { big?: boolean }) {
+function DeliveryLine({ big = false, light = false }: { big?: boolean; light?: boolean }) {
   const { loc, svc, openLocation } = useApp();
   const title = !loc ? "Delivery in minutes" : !svc?.ok ? "Currently unavailable" : !svc.open ? "Store closed now" : `Delivery in ${svc.etaMin} minutes`;
   return (
     <button onClick={() => openLocation()} className="block min-w-0 max-w-full text-left" aria-label={`${title}. ${loc ? `Delivering to ${loc.label}. ` : ""}Change location`}>
-      <span className={`block font-extrabold leading-tight text-black ${big ? "text-[18px] md:text-lg" : "text-[16px] md:text-lg"}`}>{title}</span>
-      <span className="mt-0.5 flex items-center text-[13px] text-text md:text-[13px]">
+      <span className={`block font-extrabold leading-tight ${light ? "text-on-hero" : "text-text"} ${big ? "text-[18px] md:text-lg" : "text-[16px] md:text-lg"}`}>{title}</span>
+      <span className={`mt-0.5 flex items-center text-[13px] ${light ? "text-on-hero/90" : "text-text"}`}>
         <span className="truncate">{loc ? `${loc.label}${loc.sub ? ", " + loc.sub : ""}` : "Select Location"}</span>
         <Caret />
       </span>
@@ -26,18 +26,18 @@ function DeliveryLine({ big = false }: { big?: boolean }) {
   );
 }
 
-function AccountButton() {
+function AccountButton({ light = false }: { light?: boolean }) {
   const { user, openLogin } = useApp();
   const router = useRouter();
   if (user)
     return (
-      <Link href="/account" className="grid size-10 shrink-0 place-items-center md:size-auto md:px-3 md:text-lg md:font-normal md:text-text" aria-label="Your account">
+      <Link href="/account" className={`grid size-10 shrink-0 place-items-center md:size-auto md:px-3 md:text-lg md:font-normal md:text-text ${light ? "text-on-hero" : ""}`} aria-label="Your account">
         <CircleUserRound size={30} strokeWidth={1.5} className="md:hidden" />
         <span className="hidden md:inline">Account</span>
       </Link>
     );
   return (
-    <button onClick={() => openLogin(() => router.refresh())} className="grid size-10 shrink-0 place-items-center md:size-auto md:px-3 md:text-lg md:text-text" aria-label="Log in">
+    <button onClick={() => openLogin(() => router.refresh())} className={`grid size-10 shrink-0 place-items-center md:size-auto md:px-3 md:text-lg md:text-text ${light ? "text-on-hero" : ""}`} aria-label="Log in">
       <CircleUserRound size={30} strokeWidth={1.5} className="md:hidden" />
       <span className="hidden md:inline">Login</span>
     </button>
@@ -60,7 +60,7 @@ export function Header() {
   const home = path === "/";
   const onSearch = path.startsWith("/s");
   return (
-    <header className={`sticky top-0 z-30 bg-bg ${onSearch ? "hidden md:block" : ""} md:border-b md:border-border`}>
+    <header className={`sticky top-0 z-30 ${home ? "bg-hero-mid md:bg-bg" : "bg-bg"} ${onSearch ? "hidden md:block" : ""} md:border-b md:border-border`}>
       {/* desktop */}
       <div className="mx-auto hidden h-[86px] max-w-[1280px] items-center md:flex">
         <Link href="/" className="flex h-full items-center border-r border-border pr-8" aria-label="Home"><Logo /></Link>
@@ -72,12 +72,12 @@ export function Header() {
       {/* mobile */}
       <div className="md:hidden">
         {home ? (
-          <div className="px-4 pt-4">
+          <div className="px-4 pt-4" style={{ background: "linear-gradient(180deg, var(--color-hero-from) 0%, var(--color-hero-mid) 100%)" }}>
             <div className="flex items-start justify-between gap-2">
-              <DeliveryLine big />
-              <AccountButton />
+              <DeliveryLine big light />
+              <AccountButton light />
             </div>
-            <div className="pb-3 pt-4"><SearchTrigger /></div>
+            <div className="pb-3 pt-4"><SearchTrigger onHero /></div>
           </div>
         ) : (
           <div className="flex h-16 items-center gap-2 border-b border-border px-2">

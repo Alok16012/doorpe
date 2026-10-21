@@ -4,7 +4,7 @@
   "start_url": "/rider",
   "scope": "/rider",
   "display": "standalone",
-  "background_color": "#245fc0",
-  "theme_color": "#245fc0",
+  "background_color": "#14307a",
+  "theme_color": "#14307a",
   "icons": [{ "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml" }]
 }
