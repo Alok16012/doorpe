@@ -72,12 +72,13 @@ export function Header() {
       {/* mobile */}
       <div className="md:hidden">
         {home ? (
-          <div className="px-4 pt-4" style={{ background: "linear-gradient(180deg, var(--color-hero-from) 0%, var(--color-hero-mid) 100%)" }}>
+          <div className="mobile-home-header px-4 pt-4">
+            <p className="mb-2 text-[9px] font-extrabold tracking-[0.18em] text-accent">DOORPE <span className="mx-1 text-faint">/</span> YOUR EVERYDAY STORE</p>
             <div className="flex items-start justify-between gap-2">
-              <DeliveryLine big light />
-              <AccountButton light />
+              <DeliveryLine big />
+              <AccountButton />
             </div>
-            <div className="pb-3 pt-4"><SearchTrigger onHero /></div>
+            <div className="pb-3 pt-4"><SearchTrigger /></div>
           </div>
         ) : (
           <div className="flex h-16 items-center gap-2 border-b border-border px-2">

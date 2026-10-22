@@ -19,7 +19,7 @@ export function ProductCard({ p, eta, variant = "grid", sponsored = false }: { p
   const soldOut = p.variants.every((x) => x.stock <= 0);
   const rail = variant === "rail";
   return (
-    <article className={`relative flex h-full flex-col bg-bg ${rail ? "w-[128px] shrink-0 md:w-[180px]" : "w-full rounded-xl border border-border p-2"}`}>
+    <article className={`product-card ${rail ? "product-card-rail" : ""} relative flex h-full flex-col bg-bg ${rail ? "w-[128px] shrink-0 md:w-[180px]" : "w-full rounded-xl border border-border p-2"}`}>
       <div className={`relative ${rail ? "rounded-xl border border-border" : "rounded-lg bg-surface/60"}`}>
         <Link href={`/p/${p.slug}`} className="block" tabIndex={-1} aria-hidden>
           <ProductArt label={p.name} icon={p.icon} dim={soldOut} />

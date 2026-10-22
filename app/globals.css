@@ -154,3 +154,146 @@ body {
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
 }
+
+/* Mobile storefront: compact offers and photo-led category browsing. */
+@media (width < 768px) {
+  .mobile-home-header {
+    background: #fff;
+    border-bottom: 1px solid #edf0f5;
+    padding-top: max(14px, env(safe-area-inset-top));
+  }
+  .mobile-home-header [role="search"] {
+    background: #f7f8fb;
+    border-color: #e9edf4;
+    border-radius: 14px;
+  }
+  .mobile-home-header > div:last-child { padding-top: 12px; }
+  .home-offers { padding: 16px 16px 0; }
+  .home-hero {
+    grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+    min-height: 208px;
+    align-items: center;
+    gap: 12px;
+    border-radius: 22px;
+    padding: 20px;
+    box-shadow: 0 8px 20px #102a6b12;
+  }
+  .home-hero-title {
+    font-size: clamp(21px, 6vw, 28px);
+    line-height: 1.08;
+    letter-spacing: -0.6px;
+  }
+  .home-hero-description { font-size: 11px; line-height: 17px; }
+  .home-hero-cta {
+    margin-top: 13px;
+    padding: 9px 14px;
+    border-radius: 100px;
+    background: #fff;
+    color: #14307a;
+    font-size: 11px;
+    box-shadow: 0 2px 6px #0000000d;
+  }
+  .home-hero-art {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 7px;
+    transform: rotate(-5deg);
+  }
+  .home-hero-art img {
+    border: 2px solid #ffffff38;
+    border-radius: 14px;
+    box-shadow: 0 6px 14px #00000020;
+  }
+  .home-hero-art img:first-child {
+    grid-column: 1 / -1;
+    width: 82%;
+    justify-self: center;
+  }
+  .home-mini-offers {
+    display: flex;
+    gap: 10px;
+    margin: 14px -16px 0;
+    padding: 0 16px 5px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: 16px;
+  }
+  .home-mini-offers::-webkit-scrollbar { display: none; }
+  .home-mini-offer {
+    flex: 0 0 74%;
+    min-height: 150px;
+    gap: 10px;
+    padding: 16px;
+    border-radius: 18px;
+    scroll-snap-align: start;
+  }
+  .home-mini-copy { max-width: 70%; }
+  .home-mini-copy p:first-child {
+    font-size: 17px;
+    line-height: 20px;
+    letter-spacing: -0.25px;
+  }
+  .home-mini-copy p + p { font-size: 11px; line-height: 15px; }
+  .home-mini-cta {
+    border-radius: 100px;
+    background: #ffffffc9;
+    color: #0d1838;
+    padding: 7px 11px;
+    font-size: 10px;
+  }
+  .home-mini-art { right: 10px; bottom: 12px; }
+  .home-mini-art img { width: 44px; height: 44px; border-radius: 10px; }
+  .home-category-section { padding: 24px 16px 0; scroll-margin-top: 150px; }
+  .home-category-section h2 {
+    padding-inline: 0;
+    margin-bottom: 14px;
+    font-size: 18px;
+    line-height: 23px;
+    letter-spacing: -0.45px;
+  }
+  .home-category-grid { column-gap: 10px; row-gap: 16px; }
+  .category-tile {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    overflow: visible;
+    padding: 0;
+    border-radius: 0;
+    background: transparent !important;
+    text-align: center;
+  }
+  .category-tile > span {
+    order: 2;
+    display: block;
+    margin-top: 7px;
+    min-height: 42px;
+    font-size: 11px;
+    line-height: 14px;
+    font-weight: 650;
+    -webkit-line-clamp: 3;
+  }
+  .category-tile > img {
+    position: static;
+    order: 1;
+    aspect-ratio: 1;
+    width: 100%;
+    height: auto;
+    padding: 5px;
+    border-radius: 18px;
+    background: linear-gradient(150deg, var(--color-category-tile), var(--color-category-tile-end));
+    object-fit: contain;
+    box-shadow: none;
+  }
+  .home-store-section { margin-top: 22px; padding-block: 20px; background: #f7f8fc; }
+  .home-store-section h2 { font-size: 18px; letter-spacing: -0.4px; }
+  .home-store-section ul { gap: 12px; }
+  .home-store-section li { width: 78px; }
+  .home-store-section li > a > span:first-child { height: 78px; border-radius: 18px; }
+  .home-store-section img { width: 64px; height: 64px; }
+  .product-rail > div:first-child { padding-inline: 16px; }
+  .product-rail > div:last-child { gap: 12px; padding: 0 16px 5px; }
+  .product-rail h2 { font-size: 18px; letter-spacing: -0.4px; }
+  .product-card-rail { width: 150px; padding: 8px; border: 1px solid #e9edf4; border-radius: 18px; }
+  .product-card-rail > div:first-child { border: 0; border-radius: 13px; background: #f8f9fc; }
+  .home-movie-section { margin-inline: 16px; border-radius: 22px; background: #edf1fa; }
+}
