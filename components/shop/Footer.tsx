@@ -5,7 +5,7 @@ import { catalog } from "@/lib/catalog";
 export function Footer() {
   const cats = catalog.allCategories();
   return (
-    <footer className="border-t border-border bg-surface pb-24 md:pb-0">
+    <footer className="hidden border-t border-border bg-surface md:block">
       <div className="mx-auto max-w-[1280px] px-4 py-8 md:px-6">
         <p className="text-2xl font-extrabold tracking-tight">{BRAND.name}</p>
         <p className="mt-1 max-w-md text-sm text-muted">{BRAND.shortPitch}. Order from the store closest to you and track your rider live.</p>

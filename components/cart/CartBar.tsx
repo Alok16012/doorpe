@@ -3,20 +3,24 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ChevronRight, ShoppingCart } from "lucide-react";
 import { useCartTotals } from "./store";
+import { showsTabBar, TAB_BAR_H } from "../shop/TabBar";
 import { inr } from "@/lib/money";
 
 /** Floating green cart bar (mobile). Desktop shows the cart in the header. */
 export function CartBar({ freeAbove }: { freeAbove?: number }) {
   const { count, total } = useCartTotals();
-  const onProduct = usePathname().startsWith("/p/");
+  const path = usePathname();
+  const onProduct = path.startsWith("/p/");
+  const withTabs = showsTabBar(path);
+  const bottom = withTabs ? `calc(${TAB_BAR_H} + 8px)` : onProduct ? "84px" : "calc(12px + env(safe-area-inset-bottom))";
   if (!count)
     return freeAbove && !onProduct ? (
-      <p className="fixed inset-x-0 bottom-0 z-40 bg-accent-soft py-2 text-center text-xs font-semibold text-text shadow-bar md:hidden">
+      <p className="fixed inset-x-0 z-40 bg-accent-soft py-2 text-center text-xs font-semibold text-text md:hidden" style={{ bottom: withTabs ? TAB_BAR_H : 0, paddingBottom: withTabs ? undefined : "calc(8px + env(safe-area-inset-bottom))" }}>
         <b className="font-extrabold text-accent">FREE DELIVERY</b> on orders above {inr(freeAbove)}
       </p>
     ) : null;
   return (
-    <div className={`pointer-events-none fixed inset-x-0 z-40 flex justify-center px-3 md:hidden ${onProduct ? "bottom-[84px]" : "bottom-3"}`}>
+    <div className="pointer-events-none fixed inset-x-0 z-40 flex justify-center px-3 md:hidden" style={{ bottom }}>
       <Link href="/cart" key={count} aria-label={`View cart, ${count} items, ${inr(total)}`}
         className="pointer-events-auto relative flex h-[52px] w-full max-w-md items-center gap-2.5 rounded-xl bg-accent py-2 pl-3 pr-[18px] text-on-accent animate-bump">
         <span className="grid size-9 place-items-center rounded-md bg-white/15"><ShoppingCart size={20} aria-hidden /></span>

@@ -64,7 +64,7 @@ export function AdminShell({ children, user, openIssues }: { children: React.Rea
         <Nav openIssues={openIssues} />
         {foot}
       </aside>
-      <header className="sticky top-0 z-30 flex h-14 items-center gap-3 border-b border-border bg-bg px-3 lg:hidden">
+      <header style={{ paddingTop: "env(safe-area-inset-top)" }} className="sticky top-0 z-30 flex min-h-14 items-center gap-3 border-b border-border bg-bg px-3 lg:hidden">
         <button onClick={() => setOpen(true)} aria-label="Open menu" className="grid size-10 place-items-center rounded-md hover:bg-surface"><Menu size={22} /></button>
         <Logo size="sm" /><span className="text-sm font-bold text-muted">Admin</span>
       </header>

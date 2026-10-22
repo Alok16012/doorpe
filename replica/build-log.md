@@ -79,3 +79,7 @@ Home: navy gradient header with white delivery line, white search bar with a wor
 Palette: navy accent `#14307a`, hero gradient `#081a4d → #15317d`, logo tile navy with white text, cool light surfaces `#eef2fb` / `#dde5f5`, discount `#c2410c`. 25/25 pairs pass AA. No other brand's name, logo or campaign wording used.
 
 Verified: plus → stepper → back to plus, size sheet opens for multi-size items, no horizontal overflow at 360 and 1280 px on shop and rider pages, production build passes.
+
+## 2026-10-22: phones behave like an app (user request)
+
+Footer is desktop-only. Phones get a bottom tab bar (Home, Categories, Orders, Account) on top-level screens only; inner screens (category listing, product, cart, checkout, tracking) stay full-screen with a back arrow. New `/categories` tab with every category. Tab roots have no back arrow. The cart bar and free-delivery strip sit just above the tab bar. Safe areas handled (`viewport-fit=cover`, top and bottom insets), `appleWebApp` meta for home-screen installs, portrait manifest, and no web-page overscroll bounce on phones. Desktop layout unchanged.

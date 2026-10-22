@@ -79,7 +79,7 @@ export function RiderHome() {
 
   return (
     <>
-      <header className={`sticky top-0 z-30 px-4 pb-4 pt-4 text-on-accent ${s.me.online ? "bg-accent" : "bg-muted"}`}>
+      <header style={{ paddingTop: "calc(16px + env(safe-area-inset-top))" }} className={`sticky top-0 z-30 px-4 pb-4 text-on-accent ${s.me.online ? "bg-accent" : "bg-muted"}`}>
         <div className="flex items-center justify-between gap-3">
           <div className="min-w-0">
             <p className="truncate text-lg font-extrabold">Hi, {s.me.name.split(" ")[0]}</p>

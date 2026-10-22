@@ -10,7 +10,7 @@ export const metadata: Metadata = { title: "Your account" };
 
 export default async function AccountPage() {
   const user = await currentUser();
-  if (!user) return (<><TitleBar title="Your account" back="/" /><LoginPrompt /></>);
+  if (!user) return (<><TitleBar title="Your account" back="/" tabRoot /><LoginPrompt /></>);
   const items = [
     { href: "/account/orders", icon: Package, label: "Your orders", sub: "Track, reorder, get help" },
     { href: "/account/addresses", icon: MapPin, label: "Saved addresses", sub: "Home, work and more" },
@@ -21,7 +21,7 @@ export default async function AccountPage() {
   ];
   return (
     <>
-      <TitleBar title="Your account" back="/" />
+      <TitleBar title="Your account" back="/" tabRoot />
       <div className="mx-auto max-w-xl space-y-3 p-3">
         <section className="rounded-md bg-bg p-4">
           <p className="text-lg font-extrabold">{user.name || "Hello there"}</p>

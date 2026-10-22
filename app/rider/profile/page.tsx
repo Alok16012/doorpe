@@ -9,7 +9,7 @@ export default async function RiderProfilePage() {
   const s = storeById(r.riderStoreId || "");
   return (
     <div>
-      <header className="bg-accent px-4 py-4 text-on-accent"><h1 className="text-lg font-extrabold">Profile</h1><p className="text-xs opacity-90">+91 {r.phone}</p></header>
+      <header style={{ paddingTop: "calc(16px + env(safe-area-inset-top))" }} className="bg-accent px-4 pb-4 text-on-accent"><h1 className="text-lg font-extrabold">Profile</h1><p className="text-xs opacity-90">+91 {r.phone}</p></header>
       <div className="space-y-3 p-4">
         <section className="rounded-xl bg-bg p-4 text-sm">
           <p className="text-xs font-semibold text-muted">YOUR STORE</p>

@@ -15,11 +15,11 @@ const TONE = { placed: "bg-info-soft text-info", packing: "bg-info-soft text-inf
 
 export default async function OrdersPage() {
   const user = await currentUser();
-  if (!user) return (<><TitleBar title="Your orders" back="/account" /><LoginPrompt title="Log in to see your orders" /></>);
+  if (!user) return (<><TitleBar title="Your orders" back="/account" tabRoot /><LoginPrompt title="Log in to see your orders" /></>);
   const orders = await listOrders(user);
   return (
     <>
-      <TitleBar title="Your orders" back="/account" />
+      <TitleBar title="Your orders" back="/account" tabRoot />
       <div className="mx-auto max-w-xl space-y-3 p-3">
         {orders.length === 0 ? (
           <div className="rounded-lg bg-bg px-6 py-12 text-center">

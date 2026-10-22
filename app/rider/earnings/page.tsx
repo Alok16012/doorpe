@@ -20,7 +20,7 @@ export default async function EarningsPage() {
   );
   return (
     <div>
-      <header className="bg-accent px-4 py-4 text-on-accent"><h1 className="text-lg font-extrabold">Earnings</h1><p className="text-xs opacity-90">{inr(PAY.base)} per trip + {inr(PAY.perKm)}/km, and 100% of tips</p></header>
+      <header style={{ paddingTop: "calc(16px + env(safe-area-inset-top))" }} className="bg-accent px-4 pb-4 text-on-accent"><h1 className="text-lg font-extrabold">Earnings</h1><p className="text-xs opacity-90">{inr(PAY.base)} per trip + {inr(PAY.perKm)}/km, and 100% of tips</p></header>
       <div className="space-y-3 p-4">
         <Box t="TODAY" v={e.today} />
         <Box t="LAST 7 DAYS" v={e.week} />

@@ -7,6 +7,7 @@ import { useCartTotals } from "../cart/store";
 import { inr } from "@/lib/money";
 import { SearchTrigger } from "./SearchTrigger";
 import { Logo } from "./Logo";
+import { showsTabBar } from "./TabBar";
 
 const Caret = () => (
   <svg width="10" height="6" viewBox="0 0 10 6" aria-hidden className="ml-1.5 shrink-0"><path d="M0 0h10L5 6z" fill="currentColor" /></svg>
@@ -60,7 +61,7 @@ export function Header() {
   const home = path === "/";
   const onSearch = path.startsWith("/s");
   return (
-    <header className={`sticky top-0 z-30 ${home ? "bg-hero-mid md:bg-bg" : "bg-bg"} ${onSearch ? "hidden md:block" : ""} md:border-b md:border-border`}>
+    <header style={{ paddingTop: "env(safe-area-inset-top)" }} className={`sticky top-0 z-30 ${home ? "bg-hero-mid md:bg-bg" : "bg-bg"} ${onSearch ? "hidden md:block" : ""} md:border-b md:border-border`}>
       {/* desktop */}
       <div className="mx-auto hidden h-[86px] max-w-[1280px] items-center md:flex">
         <Link href="/" className="flex h-full items-center border-r border-border pr-8" aria-label="Home"><Logo /></Link>
@@ -82,7 +83,7 @@ export function Header() {
           </div>
         ) : (
           <div className="flex h-16 items-center gap-2 border-b border-border px-2">
-            <button onClick={() => (history.length > 1 ? router.back() : router.push("/"))} aria-label="Go back" className="grid size-10 shrink-0 place-items-center"><ArrowLeft size={22} /></button>
+            {showsTabBar(path) ? <span className="w-2" /> : <button onClick={() => (history.length > 1 ? router.back() : router.push("/"))} aria-label="Go back" className="grid size-10 shrink-0 place-items-center"><ArrowLeft size={22} /></button>}
             <div className="min-w-0 flex-1"><DeliveryLine /></div>
             <Link href="/s" aria-label="Search" className="grid size-10 shrink-0 place-items-center"><Search size={22} /></Link>
           </div>

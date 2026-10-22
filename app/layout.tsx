@@ -12,8 +12,10 @@ export const metadata: Metadata = {
   title: { default: `${BRAND.name} · ${BRAND.tagline}`, template: `%s · ${BRAND.name}` },
   description: "Fruits, vegetables, dairy, snacks and daily essentials delivered from a store near you in minutes.",
   manifest: "/manifest.webmanifest",
+  appleWebApp: { capable: true, title: BRAND.name, statusBarStyle: "black-translucent" },
+  formatDetection: { telephone: false },
 };
-export const viewport: Viewport = { themeColor: "#081a4d", width: "device-width", initialScale: 1 };
+export const viewport: Viewport = { themeColor: "#081a4d", width: "device-width", initialScale: 1, viewportFit: "cover" };
 
 export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   const [user, { loc, svc }] = await Promise.all([currentUser(), currentLocation()]);
