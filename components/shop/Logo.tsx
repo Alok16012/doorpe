@@ -11,7 +11,7 @@ export function Logo({ size = "md" }: { size?: "sm" | "md" | "lg" }) {
   return (
     <span role="img" aria-label={BRAND.name} className={`inline-flex shrink-0 items-center bg-white ${sizing.box}`}>
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src="/logo-mark.png" alt="" width={492} height={468} className={`${sizing.mark} w-auto`} />
+      <img src="/logo-mark.png" alt="" width={492} height={468} className={`${sizing.mark} w-auto`} style={size === "sm" ? { filter: "contrast(1.1)" } : undefined} />
       <svg aria-hidden="true" viewBox="214 0 805 210" width={805} height={210} className={`${sizing.word} w-auto overflow-hidden`}>
         <image href="/logo-wordmark.png" width={1019} height={210} />
       </svg>
