@@ -73,11 +73,11 @@ export function Header() {
       <div className="md:hidden">
         {home ? (
           <div className="mobile-home-header px-4 pt-4">
-            <p className="mb-2 text-[9px] font-extrabold tracking-[0.18em] text-accent">DOORPE <span className="mx-1 text-faint">/</span> YOUR EVERYDAY STORE</p>
-            <div className="flex items-start justify-between gap-2">
-              <DeliveryLine big />
+            <div className="mb-2 flex items-center justify-between gap-3">
+              <Link href="/" aria-label="DoorPe home" className="-ml-2 inline-flex shrink-0"><Logo size="sm" /></Link>
               <AccountButton />
             </div>
+            <DeliveryLine big />
             <div className="pb-3 pt-4"><SearchTrigger /></div>
           </div>
         ) : (

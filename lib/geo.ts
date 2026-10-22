@@ -71,7 +71,7 @@ export function serviceability(lat: number, lng: number): Serviceability {
     if (d < bestD) { bestD = d; best = s; }
   }
   if (bestD > best.radiusKm) return { ok: false, nearest: best, distanceKm: bestD };
-  const etaMin = Math.max(7, Math.round(5 + bestD * 2.2));
+  const etaMin = Math.max(13, Math.round(5 + bestD * 2.2));
   return { ok: true, store: best, distanceKm: bestD, etaMin, open: isOpen(best) };
 }
 

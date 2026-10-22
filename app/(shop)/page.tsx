@@ -38,7 +38,7 @@ export default async function Home() {
           </span>
         </Link>
         <div className="home-mini-offers mt-3 grid grid-cols-1 gap-3 sm:grid-cols-3 md:mt-5 md:gap-5">
-          {minis.concat(catalog.banners().slice(0, 1).map((b) => ({ ...b, title: "Snacks for every craving", body: "Chips, chocolates and cold drinks", cta: "Order now", href: "/c/late-night-cravings", tint: "#d6dbff", art: "🍟🍫🥤" }))).map((b) => (
+          {minis.concat(catalog.banners().slice(0, 1).map((b) => ({ ...b, title: "Snacks for every craving", body: "Chips, chocolates and cold drinks", cta: "Order now", href: "/c/late-night-cravings", tint: "#ffe5ce", art: "🍟🍫🥤" }))).map((b) => (
             <Link key={b.title} href={b.href} className="home-mini-offer relative flex min-h-[180px] flex-col justify-between gap-4 overflow-hidden rounded-xl p-4 sm:min-h-[220px] md:min-h-[195px] md:p-6" style={{ background: b.tint }}>
               <div className="home-mini-copy relative z-10 max-w-[60%] sm:max-w-full md:max-w-[60%]">
                 <p className="text-xl font-extrabold leading-6 sm:text-lg md:text-[22px] md:leading-7">{b.title}</p>
