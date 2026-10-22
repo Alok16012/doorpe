@@ -21,7 +21,8 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
   const [user, { loc, svc }] = await Promise.all([currentUser(), currentLocation()]);
   return (
     <html lang="en" className={figtree.variable}>
-      <body className="min-h-dvh antialiased">
+      {/* extensions like Grammarly add data-* attributes to <body> before hydration */}
+      <body className="min-h-dvh antialiased" suppressHydrationWarning>
         <AppProvider initialUser={user} loc={loc} svc={clientSvc(svc)}>
           {children}
         </AppProvider>
