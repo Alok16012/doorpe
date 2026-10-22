@@ -166,7 +166,8 @@ body {
   .mobile-home-header {
     background: #fff;
     border-bottom: 1px solid #edf0f5;
-    padding-top: max(14px, env(safe-area-inset-top));
+    /* the sticky <header> already pads for the notch; adding the inset here doubled it */
+    padding-top: 14px;
   }
   .mobile-home-header [role="search"] {
     background: #f7f8fb;
