@@ -152,7 +152,7 @@ export function OrderScreen({ initial, justPlaced }: { initial: LiveOrder; justP
               const iss = issues.find((x) => x.itemVariantId === it.variantId);
               return (
                 <li key={it.variantId} className="flex items-center gap-3 py-2.5">
-                  <div className="w-12 shrink-0"><ProductArt icon={it.icon} tint={it.tint} size="sm" /></div>
+                  <div className="w-12 shrink-0"><ProductArt label={it.name} icon={it.icon} tint={it.tint} size="sm" /></div>
                   <div className="min-w-0 flex-1">
                     <Link href={`/p/${it.productSlug}`} className="line-clamp-1 text-sm font-semibold hover:underline">{it.name}</Link>
                     <p className="text-xs text-muted">{it.unit} × {it.qty}</p>
@@ -287,7 +287,7 @@ function HelpSheet({ open, onClose, order, issues, onIssue }: { open: boolean; o
         {order.status !== "delivered" ? (
           <>
             <p className="text-sm text-muted">Your order is {order.status === "cancelled" ? "cancelled" : "still on its way"}. For anything urgent, call the rider or write to us.</p>
-            <a href="mailto:help@turant.example" className="block rounded-md border border-border px-4 py-3 text-sm font-bold">Email support</a>
+            <a href="mailto:help@doorpe.example" className="block rounded-md border border-border px-4 py-3 text-sm font-bold">Email support</a>
           </>
         ) : !kind ? (
           <ul className="divide-y divide-border">
@@ -304,7 +304,7 @@ function HelpSheet({ open, onClose, order, issues, onIssue }: { open: boolean; o
                     return (
                       <label key={it.variantId} className={`flex cursor-pointer items-center gap-3 rounded-md border px-3 py-2 ${item === it.variantId ? "border-accent bg-accent-soft" : "border-border"} ${done ? "opacity-50" : ""}`}>
                         <input type="radio" name="item" disabled={done} checked={item === it.variantId} onChange={() => setItem(it.variantId)} className="sr-only" />
-                        <span aria-hidden className="text-xl">{it.icon}</span>
+                        <span aria-hidden className="w-10 shrink-0"><ProductArt icon={it.icon} label={it.name} size="sm" /></span>
                         <span className="flex-1 text-sm font-semibold">{it.name} <span className="text-xs text-muted">· {it.unit} × {it.qty}</span></span>
                         <span className="text-sm font-bold">{inr(it.price * it.qty)}</span>
                       </label>

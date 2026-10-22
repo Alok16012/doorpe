@@ -1,4 +1,4 @@
--- Turant (quick-commerce clone) — Postgres schema for Supabase.
+-- DoorPe (quick-commerce clone) — Postgres schema for Supabase.
 -- Money is integer paise (₹1 = 100) with currency 'INR'. Times are timestamptz (UTC).
 -- Access: Supabase RLS. Customers read catalogue publicly and own their rows;
 -- staff (profiles.role in admin|store|rider) act through server routes using the service key.

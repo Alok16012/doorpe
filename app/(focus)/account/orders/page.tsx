@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { emojiSrc } from "@/lib/emoji";
 import type { Metadata } from "next";
 import { ChevronRight, Package } from "lucide-react";
 import { currentUser } from "@/lib/auth";
@@ -34,7 +35,7 @@ export default async function OrdersPage() {
               <span className="text-xs text-muted">{new Date(o.placedAt).toLocaleString("en-IN", { dateStyle: "medium", timeStyle: "short" })}</span>
             </div>
             <div className="mt-3 flex items-center gap-1.5">
-              {o.items.slice(0, 5).map((it) => <span key={it.variantId} aria-hidden className="grid size-11 place-items-center rounded-sm text-2xl" style={{ background: it.tint }}>{it.icon}</span>)}
+              {o.items.slice(0, 5).map((it) => <span key={it.variantId} aria-hidden className="grid size-11 place-items-center overflow-hidden rounded-sm p-1" style={{ background: it.tint }}><img src={emojiSrc(it.icon, it.name)} alt="" loading="lazy" className="size-full rounded-sm object-contain" /></span>)}
               {o.items.length > 5 && <span className="grid size-11 place-items-center rounded-sm bg-surface text-xs font-bold">+{o.items.length - 5}</span>}
             </div>
             <div className="mt-3 flex items-center justify-between text-sm">

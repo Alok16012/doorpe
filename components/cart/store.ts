@@ -5,7 +5,7 @@ import { useSyncExternalStore } from "react";
 export type Line = { variantId: string; qty: number; price: number; mrp: number; name: string; unit: string; icon: string; tint: string; slug: string; max: number };
 type State = { lines: Line[] };
 
-const KEY = "turant_cart_v1";
+const KEY = "doorpe_cart_v1";
 let state: State = { lines: [] };
 let loaded = false;
 const subs = new Set<() => void>();

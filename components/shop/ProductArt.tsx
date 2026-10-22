@@ -1,10 +1,10 @@
 import { emojiSrc } from "@/lib/emoji";
 
-/** Product image. 3D renders (Fluent Emoji, MIT) on white, like a packshot. */
+/** Local item photography shared by the catalogue, cart and order history. */
 export function ProductArt({ icon, tint, size = "md", dim = false, label, bg = "white", className = "" }: {
   icon: string; tint?: string; size?: "sm" | "md" | "lg" | "xl"; dim?: boolean; label?: string; bg?: "white" | "tint"; className?: string;
 }) {
-  const pad = { sm: "p-1.5", md: "p-3", lg: "p-5", xl: "p-12" }[size];
+  const pad = { sm: "p-1.5", md: "p-3", lg: "p-5", xl: "p-6" }[size];
   return (
     <div
       className={`grid aspect-square w-full place-items-center overflow-hidden ${pad} ${className}`}
@@ -12,9 +12,9 @@ export function ProductArt({ icon, tint, size = "md", dim = false, label, bg = "
     >
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
-        src={emojiSrc(icon)} alt={label ?? ""} aria-hidden={label ? undefined : true}
+        src={emojiSrc(icon, label)} alt={label ?? ""} aria-hidden={label ? undefined : true}
         loading="lazy" decoding="async" draggable={false} width={256} height={256}
-        className={`h-full w-full object-contain ${dim ? "opacity-40 grayscale" : ""}`}
+        className={`h-full w-full rounded-lg object-contain ${dim ? "opacity-40 grayscale" : ""}`}
       />
     </div>
   );

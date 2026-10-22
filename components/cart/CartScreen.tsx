@@ -100,7 +100,7 @@ export function CartScreen({ picks, eta, shared }: { picks: CardProduct[]; eta: 
               const card: CardProduct = { slug: l.productSlug, name: l.name, brand: "", icon: l.icon, tint: l.tint, variants: [{ id: l.variantId, unit: l.unit, price: l.price, mrp: l.mrp, stock: l.available }] };
               return (
                 <li key={l.variantId} className="flex items-center gap-3 px-4 py-3">
-                  <Link href={`/p/${l.productSlug}`} className="w-[70px] shrink-0 rounded-lg border border-border"><ProductArt icon={l.icon} size="sm" dim={l.problem === "out_of_stock"} /></Link>
+                  <Link href={`/p/${l.productSlug}`} className="w-[70px] shrink-0 rounded-lg border border-border"><ProductArt label={l.name} icon={l.icon} size="sm" dim={l.problem === "out_of_stock"} /></Link>
                   <div className="min-w-0 flex-1">
                     <p className="line-clamp-2 text-[13px] leading-4 text-text">{l.name}</p>
                     <p className="text-xs text-muted">{l.unit}</p>

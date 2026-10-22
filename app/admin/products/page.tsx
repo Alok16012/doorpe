@@ -47,7 +47,7 @@ export default async function ProductsPage(props: PageProps<"/admin/products">) 
                   <tr key={p.id} className={p.active ? "" : "opacity-60"}>
                     <td className={td}>
                       <div className="flex items-center gap-3">
-                        <div className="w-10 shrink-0 rounded-md border border-border"><ProductArt icon={p.icon} size="sm" /></div>
+                        <div className="w-10 shrink-0 rounded-md border border-border"><ProductArt label={p.name} icon={p.icon} size="sm" /></div>
                         <div><p className="font-semibold">{p.name}</p><p className="text-xs text-muted">{p.brand}</p></div>
                       </div>
                     </td>

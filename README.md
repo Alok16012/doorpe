@@ -1,10 +1,10 @@
-# Turant — quick-commerce web app (Blinkit-style)
+# DoorPe — quick-commerce web app (Blinkit-style)
 
 A clean-room rebuild of the quick-commerce core loop: pick a location → browse or search → add to cart → log in with phone OTP → checkout → live order tracking → help and refunds. Plus a store dashboard for staff.
 
 The layout follows Blinkit closely: same structure, type sizes and component shapes, measured from their public mobile site. The colour theme is our own pastel blue (tokens in `replica/design/tokens.json` → `app/globals.css`). The name, logo, marketing copy and product images are our own. Product names and brands are fictional demo data.
 
-Product images are [Microsoft Fluent Emoji 3D](https://github.com/microsoft/fluentui-emoji) (MIT licence, copyright Microsoft Corporation), stored in `public/img/e/`. Font: Figtree (SIL Open Font Licence), standing in for the paid Okra font.
+Item images are real photographs from Wikimedia Commons, optimized and stored locally in `public/img/items/`. Source, author, and license details are available at `/photo-credits` and in `public/img/items/credits.json`. Regenerate assets with `python3 scripts/import-item-photos.py` (requires Pillow and network access); selections are maintained in `scripts/item-photo-plan.json`. Font: Figtree (SIL Open Font Licence), standing in for the paid Okra font.
 
 ## Run it
 

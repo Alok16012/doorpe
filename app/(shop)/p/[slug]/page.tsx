@@ -46,7 +46,7 @@ export default async function ProductPage(props: PageProps<"/p/[slug]">) {
       <div className="md:mt-4 md:grid md:grid-cols-2 md:gap-10">
         <div className="md:sticky md:top-[100px] md:self-start">
           <div className="bg-bg p-4 md:rounded-lg md:border md:border-border md:p-8">
-            <ProductArt icon={p.icon} tint={p.tint} size="xl" label={p.name} dim={card.variants.every((v) => v.stock <= 0)} />
+            <ProductArt label={p.name} icon={p.icon} tint={p.tint} size="xl" dim={card.variants.every((v) => v.stock <= 0)} />
           </div>
         </div>
         <div className="px-4 pt-2 md:px-0">

@@ -31,27 +31,27 @@ type DB = {
 };
 export type { DB };
 
-const DIR = process.env.DATA_DIR || (process.env.NETLIFY || process.env.VERCEL ? "/tmp/turant" : path.join(process.cwd(), ".data"));
+const DIR = process.env.DATA_DIR || (process.env.NETLIFY || process.env.VERCEL ? "/tmp/doorpe" : path.join(process.cwd(), ".data"));
 const FILE = path.join(DIR, "db.json");
 const empty = (): DB => ({ users: [], otps: [], addresses: [], orders: [], issues: [], wallet: [], stock: {}, idem: {}, catalogVersion: 1, storeOverrides: {}, riderLocations: {} });
 
-const g = globalThis as unknown as { __turantDb?: DB; __turantQueue?: Promise<unknown> };
+const g = globalThis as unknown as { __doorpeDb?: DB; __doorpeQueue?: Promise<unknown> };
 
 /** Synchronous load, so pure helpers (catalogue, fees, stores) can read without await. */
 export function dbSync(): DB {
-  if (g.__turantDb) {
+  if (g.__doorpeDb) {
     // fill fields added after this process first loaded the file
     const e = empty() as Record<string, unknown>;
-    const d = g.__turantDb as unknown as Record<string, unknown>;
+    const d = g.__doorpeDb as unknown as Record<string, unknown>;
     for (const k of Object.keys(e)) if (d[k] === undefined) d[k] = e[k];
-    return g.__turantDb;
+    return g.__doorpeDb;
   }
   try {
-    g.__turantDb = { ...empty(), ...JSON.parse(readFileSync(FILE, "utf8")) };
+    g.__doorpeDb = { ...empty(), ...JSON.parse(readFileSync(FILE, "utf8")) };
   } catch {
-    g.__turantDb = empty();
+    g.__doorpeDb = empty();
   }
-  return g.__turantDb!;
+  return g.__doorpeDb!;
 }
 
 async function load(): Promise<DB> {
@@ -78,8 +78,8 @@ export function write<T>(fn: (db: DB) => T): Promise<T> {
     await persist(db);
     return out;
   };
-  const next = (g.__turantQueue || Promise.resolve()).then(run, run);
-  g.__turantQueue = next.catch(() => undefined);
+  const next = (g.__doorpeQueue || Promise.resolve()).then(run, run);
+  g.__doorpeQueue = next.catch(() => undefined);
   return next;
 }
 

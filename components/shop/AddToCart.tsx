@@ -111,7 +111,7 @@ export function VariantSheet({ p, open, onClose }: { p: CardProduct; open: boole
           const off = pctOff(v.price, v.mrp);
           return (
             <li key={v.id} className="flex items-center gap-3 rounded-lg bg-bg p-3">
-              <div className="relative w-14 shrink-0 rounded-md border border-border"><ProductArt icon={p.icon} size="sm" dim={v.stock <= 0} /></div>
+              <div className="relative w-14 shrink-0 rounded-md border border-border"><ProductArt label={p.name} icon={p.icon} size="sm" dim={v.stock <= 0} /></div>
               <div className="min-w-0 flex-1">
                 {off > 0 && <span className="mb-1 inline-block rounded-xs bg-deal px-1.5 py-0.5 text-[9px] font-extrabold text-on-deal">{off}% OFF</span>}
                 <p className="text-[13px] font-semibold">{v.unit}</p>

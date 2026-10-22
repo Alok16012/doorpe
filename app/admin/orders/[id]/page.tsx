@@ -31,7 +31,7 @@ export default async function AdminOrderPage(props: PageProps<"/admin/orders/[id
                 const iss = issues.find((x) => x.itemVariantId === it.variantId);
                 return (
                   <li key={it.variantId} className="flex items-center gap-3 px-4 py-3 text-sm">
-                    <div className="w-11 shrink-0 rounded-md border border-border"><ProductArt icon={it.icon} size="sm" /></div>
+                    <div className="w-11 shrink-0 rounded-md border border-border"><ProductArt label={it.name} icon={it.icon} size="sm" /></div>
                     <div className="flex-1"><p className="font-semibold">{it.name}</p><p className="text-xs text-muted">{it.unit} × {it.qty} · {inr(it.price)} each</p>{iss && <p className="text-xs font-bold text-warning">Complaint: {iss.kind} · {iss.status}</p>}</div>
                     <p className="font-semibold tabular-nums">{inr(it.price * it.qty)}</p>
                   </li>

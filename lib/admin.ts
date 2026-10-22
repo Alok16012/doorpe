@@ -119,7 +119,7 @@ export async function saveProduct(input: ProductInput, id?: string): Promise<Cat
     const list = db.catalog!.products;
     const now = new Date().toISOString();
     const clean = {
-      name: input.name.trim().slice(0, 120), brand: input.brand.trim().slice(0, 60) || "Turant", icon: input.icon.trim().slice(0, 500),
+      name: input.name.trim().slice(0, 120), brand: input.brand.trim().slice(0, 60) || "DoorPe", icon: input.icon.trim().slice(0, 500),
       category: input.category, sub: input.sub, tags: input.tags.trim().toLowerCase().slice(0, 300), description: input.description?.trim().slice(0, 2000),
       active: !!input.active,
       info: Object.fromEntries(Object.entries(input.info || {}).filter(([k, v]) => k.trim() && v.trim()).slice(0, 12).map(([k, v]) => [k.trim().slice(0, 40), v.trim().slice(0, 120)])),

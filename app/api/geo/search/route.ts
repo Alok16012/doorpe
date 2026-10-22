@@ -15,7 +15,7 @@ export async function GET(req: Request) {
   last = Date.now();
   try {
     const url = `https://nominatim.openstreetmap.org/search?format=jsonv2&addressdetails=1&limit=6&countrycodes=in&q=${encodeURIComponent(q)}`;
-    const res = await fetch(url, { headers: { "User-Agent": "Turant-demo/0.1 (quick-commerce demo)", "Accept-Language": "en" } });
+    const res = await fetch(url, { headers: { "User-Agent": "DoorPe-demo/0.1 (quick-commerce demo)", "Accept-Language": "en" } });
     if (!res.ok) return fail("Location search is busy. Try again.", 502);
     const rows = (await res.json()) as { lat: string; lon: string; name?: string; display_name: string }[];
     const results = rows.map((r) => {

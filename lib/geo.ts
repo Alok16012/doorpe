@@ -9,7 +9,7 @@ let overridesSource: () => Record<string, StoreOverride> = () => ({});
 export function setStoreOverridesSource(fn: () => Record<string, StoreOverride>) { overridesSource = fn; }
 export function stores(): Store[] {
   // the DB lives on globalThis, so every server bundle sees the same overrides
-  const shared = (globalThis as unknown as { __turantDb?: { storeOverrides?: Record<string, StoreOverride> } }).__turantDb?.storeOverrides;
+  const shared = (globalThis as unknown as { __doorpeDb?: { storeOverrides?: Record<string, StoreOverride> } }).__doorpeDb?.storeOverrides;
   const o = shared ?? overridesSource();
   return STORES.map((s) => ({ ...s, isOpen: true, ...(o[s.id] || {}) }));
 }

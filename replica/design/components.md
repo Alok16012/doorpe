@@ -1,4 +1,4 @@
-# Turant components
+# DoorPe components
 
 Tokens: `replica/design/tokens.json` → `app/globals.css` (`--color-*`, mapped into Tailwind as `bg-surface`, `text-muted`, `border-input`…). Icons: Lucide (ISC). Product art: emoji on a tinted tile (our own, no photography from the original). Font: Manrope (OFL) via `next/font/google`.
 

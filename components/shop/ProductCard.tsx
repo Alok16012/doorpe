@@ -22,7 +22,7 @@ export function ProductCard({ p, eta, variant = "grid", sponsored = false }: { p
     <article className={`relative flex h-full flex-col bg-bg ${rail ? "w-[128px] shrink-0 md:w-[180px]" : "w-full rounded-xl border border-border p-2"}`}>
       <div className={`relative ${rail ? "rounded-xl border border-border" : "rounded-lg bg-surface/60"}`}>
         <Link href={`/p/${p.slug}`} className="block" tabIndex={-1} aria-hidden>
-          <ProductArt icon={p.icon} dim={soldOut} />
+          <ProductArt label={p.name} icon={p.icon} dim={soldOut} />
         </Link>
         {off > 0 && !soldOut && <OffBadge pct={off} className="left-2 top-0" />}
         {soldOut

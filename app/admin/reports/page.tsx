@@ -34,7 +34,7 @@ export default async function ReportsPage() {
               {r.topProducts.map((p, i) => (
                 <li key={p.name} className="flex items-center gap-3 px-4 py-2.5 text-sm">
                   <span className="w-5 text-right text-xs font-bold text-muted">{i + 1}</span>
-                  <div className="w-8 shrink-0"><ProductArt icon={p.icon} size="sm" className="!p-0.5" /></div>
+                  <div className="w-8 shrink-0"><ProductArt label={p.name} icon={p.icon} size="sm" className="!p-0.5" /></div>
                   <span className="min-w-0 flex-1 truncate font-semibold">{p.name}</span>
                   <span className="shrink-0 tabular-nums text-muted">{p.units} sold</span>
                   <span className="w-20 text-right font-semibold tabular-nums">{inr(p.revenue)}</span>

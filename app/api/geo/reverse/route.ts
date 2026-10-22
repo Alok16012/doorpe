@@ -6,7 +6,7 @@ export async function GET(req: Request) {
   if (!Number.isFinite(lat) || !Number.isFinite(lng)) return fail("Bad coordinates");
   try {
     const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&zoom=17&lat=${lat}&lon=${lng}`, {
-      headers: { "User-Agent": "Turant-demo/0.1 (quick-commerce demo)", "Accept-Language": "en" },
+      headers: { "User-Agent": "DoorPe-demo/0.1 (quick-commerce demo)", "Accept-Language": "en" },
     });
     const r = (await res.json()) as { display_name?: string; name?: string };
     const parts = (r.display_name || "").split(", ");

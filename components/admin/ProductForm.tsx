@@ -114,10 +114,10 @@ export function ProductForm({ product, icons, categories, subs }: {
             <input className={field} value={isUrl ? icon : ""} onChange={(e) => setIcon(e.target.value || "🛒")} placeholder="https://… or /uploads/…" />
           </label>
           <p className="mt-3 text-xs font-semibold text-muted">Or pick one of ours</p>
-          <input className={`${field} mt-1`} value={iconQ} onChange={(e) => setIconQ(e.target.value)} placeholder="Filter by emoji" aria-label="Filter images" />
+          <input className={`${field} mt-1`} value={iconQ} onChange={(e) => setIconQ(e.target.value)} placeholder="Search photos (e.g. milk)" aria-label="Filter images" />
           <div className="mt-2 grid max-h-64 grid-cols-6 gap-1.5 overflow-y-auto">
-            {icons.filter((x) => !iconQ || x.includes(iconQ)).map((x) => (
-              <button type="button" key={x} onClick={() => setIcon(x)} aria-label={`Use ${x}`} aria-pressed={icon === x}
+            {icons.filter((x) => !iconQ || x.toLowerCase().includes(iconQ.toLowerCase().replace(/ /g, "-"))).map((x) => (
+              <button type="button" key={x} onClick={() => setIcon(x)} aria-label={`Use ${x.split("/").pop()?.replace(/\.webp$/, "").replace(/-/g, " ")} photo`} aria-pressed={icon === x}
                 className={`rounded-md border p-1 ${icon === x ? "border-accent bg-accent-soft" : "border-transparent hover:border-border"}`}>
                 <ProductArt icon={x} size="sm" className="!p-0.5" />
               </button>

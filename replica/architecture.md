@@ -1,6 +1,6 @@
-# Architecture: Turant (a rebuild of Blinkit's core features)
+# Architecture: DoorPe (a rebuild of Blinkit's core features)
 
-Working name "Turant" (Hindi: instantly). replica-brand can rename it later; every brand string lives in `lib/brand.ts`.
+Name "DoorPe". replica-brand can rename it later; every brand string lives in `lib/brand.ts`.
 
 ## Stack
 

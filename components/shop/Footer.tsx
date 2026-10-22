@@ -16,6 +16,7 @@ export function Footer() {
           </ul>
         </nav>
         <div className="mt-6 flex flex-wrap gap-x-5 gap-y-1 text-sm font-semibold text-muted">
+          <Link href="/photo-credits" className="hover:text-text">Photo credits</Link>
           <Link href="/help" className="hover:text-text">Help & FAQs</Link>
           <Link href="/account" className="hover:text-text">Your account</Link>
           <Link href="/admin" className="hover:text-text">Store dashboard</Link>

@@ -56,7 +56,7 @@ export function LoginSheet({ open, onClose, onDone }: { open: boolean; onClose: 
           <div className="absolute -left-10 top-3 grid w-[140%] grid-cols-6 gap-3">
             {wall.map((e, i) => (
               <span key={i} className={`grid aspect-square place-items-center rounded-2xl bg-surface-tint p-2 ${i % 12 >= 6 ? "translate-x-10" : ""}`}>
-                <img src={emojiSrc(e)} alt="" className="size-full" />
+                <img src={emojiSrc(e)} alt="" className="size-full rounded-xl object-cover" />
               </span>
             ))}
           </div>

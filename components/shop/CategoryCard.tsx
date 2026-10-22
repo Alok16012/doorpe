@@ -8,7 +8,7 @@ export function CategoryCard({ href, name, icon, onHero = false }: { href: strin
       style={onHero ? undefined : { background: "linear-gradient(160deg, var(--color-surface-tint) 0%, var(--color-surface) 100%)" }}>
       <span className="relative z-10 line-clamp-2 text-[12px] font-bold leading-[14px] text-text md:text-sm md:leading-4">{name}</span>
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={emojiSrc(icon)} alt="" loading="lazy" className="absolute -bottom-1 -right-1 size-[64px] transition-transform group-hover:scale-105 md:size-[84px]" />
+      <img src={emojiSrc(icon)} alt="" loading="lazy" className="absolute bottom-1 right-1 size-[62px] rounded-xl bg-white object-cover shadow-sm transition-transform group-hover:scale-105 md:bottom-2 md:right-2 md:size-[80px]" />
     </Link>
   );
 }

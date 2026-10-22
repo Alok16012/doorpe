@@ -68,7 +68,7 @@ export default async function CategoryPage(props: PageProps<"/cn/[slug]">) {
                     className={`relative flex flex-col items-center gap-1.5 px-1 py-2.5 text-center md:flex-row md:gap-3 md:border-b md:border-border md:px-3 md:py-3 md:text-left ${active ? "md:bg-accent-soft" : "hover:bg-surface"}`}>
                     {active && <span aria-hidden className="absolute inset-y-1 right-0 w-1 rounded-l-sm bg-accent" />}
                     <span aria-hidden className={`grid size-[52px] place-items-center overflow-hidden rounded-lg md:size-12 ${active ? "bg-surface-tint" : "bg-surface"}`}>
-                      <img src={emojiSrc(s.icon)} alt="" className={`size-10 transition-transform ${active ? "translate-y-0.5 scale-110" : ""}`} />
+                      <img src={emojiSrc(s.icon)} alt="" className={`size-10 rounded-md object-cover transition-transform ${active ? "translate-y-0.5 scale-110" : ""}`} />
                     </span>
                     <span className={`text-[11px] leading-[13px] md:text-sm ${active ? "font-semibold text-text" : "text-muted"}`}>{s.name}</span>
                   </Link>

@@ -20,7 +20,7 @@ const PAY: { key: Order["paymentMethod"]; label: string; sub: string; icon: type
   { key: "upi", label: "UPI", sub: "Any UPI app · demo payment", icon: Smartphone },
   { key: "card", label: "Credit / debit card", sub: "Visa, Mastercard, RuPay · demo payment", icon: CreditCard },
   { key: "cod", label: "Cash on delivery", sub: "Pay the rider by cash or UPI", icon: Banknote },
-  { key: "wallet", label: "Turant wallet", sub: "Refunds and credits", icon: Wallet },
+  { key: "wallet", label: "DoorPe wallet", sub: "Refunds and credits", icon: Wallet },
 ];
 
 export function CheckoutScreen({ coupons, tipOptions }: { coupons: { code: string; title: string }[]; tipOptions: number[] }) {

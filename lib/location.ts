@@ -3,7 +3,7 @@ import { cookies } from "next/headers";
 import "./db/local"; // wires admin store overrides into geo
 import { serviceability, type Serviceability } from "./geo";
 
-export const LOC_COOKIE = "turant_loc";
+export const LOC_COOKIE = "doorpe_loc";
 export type Loc = { lat: number; lng: number; label: string; sub: string };
 
 export async function currentLocation(): Promise<{ loc: Loc | null; svc: Serviceability | null }> {

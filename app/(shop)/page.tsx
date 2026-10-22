@@ -33,7 +33,7 @@ export default async function Home() {
             <span className="mt-5 inline-block rounded-md bg-black px-5 py-2.5 text-sm font-semibold text-white">{hero.cta}</span>
           </div>
           <span aria-hidden className="absolute right-10 top-1/2 flex -translate-y-1/2 gap-2">
-            {emojiList(hero.art).map((e) => <img key={e} src={emojiSrc(e)} alt="" className="size-36 drop-shadow-xl" />)}
+            {emojiList(hero.art).map((e) => <img key={e} src={emojiSrc(e)} alt="" className="size-36 rounded-2xl object-cover shadow-xl" />)}
           </span>
         </Link>
         <div className="mt-5 grid grid-cols-3 gap-5">
@@ -44,7 +44,7 @@ export default async function Home() {
                 <p className="mt-1 text-sm text-muted">{b.body}</p>
               </div>
               <span className="relative z-10 w-fit rounded-md bg-black px-3 py-1.5 text-xs font-semibold text-white">{b.cta}</span>
-              <span aria-hidden className="absolute -right-1 bottom-2 flex">{emojiList(b.art).slice(0, 2).map((e) => <img key={e} src={emojiSrc(e)} alt="" className="size-20" />)}</span>
+              <span aria-hidden className="absolute -right-1 bottom-2 flex">{emojiList(b.art).slice(0, 2).map((e) => <img key={e} src={emojiSrc(e)} alt="" className="size-20 rounded-xl object-cover shadow-sm" />)}</span>
             </Link>
           ))}
         </div>
@@ -84,7 +84,7 @@ export default async function Home() {
             <li key={s.slug} className="w-[90px] shrink-0 md:w-auto">
               <Link href={s.href} className="block text-center">
                 <span className="flex h-[90px] items-end justify-center overflow-hidden rounded-lg" style={{ background: `linear-gradient(180deg, ${s.tint} 0%, color-mix(in srgb, ${s.tint} 70%, #000 6%) 100%)` }}>
-                  <img src={emojiSrc(s.icon)} alt="" className="size-[70px] translate-y-1" loading="lazy" />
+                  <img src={emojiSrc(s.icon)} alt="" className="size-[76px] rounded-t-xl object-cover" loading="lazy" />
                 </span>
                 <span className="mt-2 block text-[13px] font-semibold leading-[15px] text-text">{s.name.split(" ")[0]}<br />{s.name.split(" ").slice(1).join(" ") || "Store"}</span>
               </Link>
@@ -103,7 +103,7 @@ export default async function Home() {
               <h2 id="theme-h" className="text-[17px] font-extrabold leading-5 text-text md:text-2xl">Movie night sorted</h2>
               <p className="mt-1 text-sm text-muted">Everything for the couch, delivered before the trailer ends</p>
             </div>
-            <img src={emojiSrc("🍿")} alt="" className="size-16 shrink-0" />
+            <img src={emojiSrc("🍿")} alt="" className="size-16 shrink-0 rounded-xl object-cover" />
           </div>
           <ul className="mt-4 grid grid-cols-4 gap-2 md:gap-4">
             {[["popcorn", "chips-namkeen", "Popcorn & Popped"], ["chips", "chips-namkeen", "Chips & Crisps"], ["soft-drinks", "drinks-juices", "Cold Drinks"], ["tubs", "ice-creams", "Ice Cream Tubs"]].map(([sub, cat, label]) => (

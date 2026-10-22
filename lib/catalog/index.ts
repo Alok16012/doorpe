@@ -1,4 +1,5 @@
 import "server-only";
+import { emojiSrc } from "../emoji";
 import { writeFileSync, mkdirSync } from "fs";
 import { COLLECTIONS, STOREFRONTS, BANNERS, SEARCH_HINTS } from "./data";
 import { dbSync } from "../db/local";
@@ -19,7 +20,7 @@ type Index = {
   all: Product[]; live: Product[]; bySlug: Map<string, Product>; byId: Map<string, Product>;
   variants: Map<string, { product: Product; variant: Variant }>;
 };
-const g = globalThis as unknown as { __turantCatalog?: Index };
+const g = globalThis as unknown as { __doorpeCatalog?: Index };
 
 /** The stored catalogue, seeding it from the demo data the first time. */
 export function catalogData(): CatalogData {
@@ -29,7 +30,7 @@ export function catalogData(): CatalogData {
     db.catalogVersion = (db.catalogVersion || 0) + 1;
     try {
       // persist the seed right away so admin edits have something to change
-      const dir = process.env.DATA_DIR || (process.env.NETLIFY || process.env.VERCEL ? "/tmp/turant" : `${process.cwd()}/.data`);
+      const dir = process.env.DATA_DIR || (process.env.NETLIFY || process.env.VERCEL ? "/tmp/doorpe" : `${process.cwd()}/.data`);
       mkdirSync(dir, { recursive: true });
       writeFileSync(`${dir}/db.json`, JSON.stringify(db, null, 1));
     } catch {}
@@ -40,28 +41,28 @@ export function catalogData(): CatalogData {
 function index(): Index {
   const db = dbSync();
   const data = catalogData();
-  if (g.__turantCatalog && g.__turantCatalog.version === db.catalogVersion) return g.__turantCatalog;
+  if (g.__doorpeCatalog && g.__doorpeCatalog.version === db.catalogVersion) return g.__doorpeCatalog;
 
   const cats = new Map<string, Category>();
   const subs = new Map<string, Sub>();
   const groups: Group[] = [...data.groups].sort((a, b) => a.sort - b.sort).map((x) => ({ slug: x.slug, name: x.name, categories: [] }));
   for (const c of [...data.categories].sort((a, b) => a.sort - b.sort)) {
     if (!c.active) continue;
-    const cat: Category = { slug: c.slug, name: c.name, icon: c.icon, tint: c.tint, group: c.group, subs: [] };
+    const cat: Category = { slug: c.slug, name: c.name, icon: emojiSrc(c.icon, c.name), tint: c.tint, group: c.group, subs: [] };
     cats.set(c.slug, cat);
     groups.find((x) => x.slug === c.group)?.categories.push(cat);
   }
   for (const s of [...data.subs].sort((a, b) => a.sort - b.sort)) {
     const cat = cats.get(s.category);
     if (!s.active || !cat) continue;
-    const sub: Sub = { slug: s.slug, name: s.name, icon: s.icon, category: s.category };
+    const sub: Sub = { slug: s.slug, name: s.name, icon: emojiSrc(s.icon, s.name), category: s.category };
     subs.set(s.slug, sub);
     cat.subs.push(sub);
   }
   const all: Product[] = data.products.map((p) => {
     const cat = data.categories.find((c) => c.slug === p.category);
     return {
-      id: p.id, slug: p.slug, name: p.name, brand: p.brand, icon: p.icon, tint: cat?.tint ?? "#eef0f4",
+      id: p.id, slug: p.slug, name: p.name, brand: p.brand, icon: emojiSrc(p.icon, p.name), tint: cat?.tint ?? "#eef0f4",
       active: p.active && !!cats.get(p.category) && !!subs.get(p.sub),
       group: cat?.group ?? "", category: p.category, sub: p.sub, tags: p.tags,
       info: { Brand: p.brand, ...p.info },
@@ -74,7 +75,7 @@ function index(): Index {
     all, live, bySlug: new Map(all.map((p) => [p.slug, p])), byId: new Map(all.map((p) => [p.id, p])),
     variants: new Map(all.flatMap((p) => p.variants.map((v) => [v.id, { product: p, variant: v }] as const))),
   };
-  g.__turantCatalog = idx;
+  g.__doorpeCatalog = idx;
   return idx;
 }
 

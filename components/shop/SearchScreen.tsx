@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import { emojiSrc } from "@/lib/emoji";
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { ArrowLeft, Clock, Mic, Search, TrendingUp, X } from "lucide-react";
@@ -8,7 +9,7 @@ import { ProductCard, ProductCardSkeleton } from "./ProductCard";
 
 type Sugg = { label: string; icon: string; href: string; kind: "product" | "category" };
 const TRENDING = ["milk", "eggs", "bread", "paneer", "chips", "atta", "ice cream", "coffee"];
-const RECENT_KEY = "turant_recent_searches";
+const RECENT_KEY = "doorpe_recent_searches";
 
 function readRecent(): string[] {
   try { return JSON.parse(localStorage.getItem(RECENT_KEY) || "[]"); } catch { return []; }
@@ -129,7 +130,7 @@ export function SearchScreen({ initialQ, eta, cats }: { initialQ: string; eta: n
             <ul className="grid grid-cols-4 gap-3 md:grid-cols-8">
               {cats.map((c) => (
                 <li key={c.slug}><Link href={`/cn/${c.slug}`} className="block text-center">
-                  <span aria-hidden className="grid aspect-square place-items-center rounded-md text-3xl" style={{ background: c.tint }}>{c.icon}</span>
+                  <span aria-hidden className="grid aspect-square place-items-center overflow-hidden rounded-md p-2" style={{ background: c.tint }}><img src={emojiSrc(c.icon, c.name)} alt="" loading="lazy" className="size-full rounded-lg object-cover" /></span>
                   <span className="mt-1 line-clamp-2 block text-xs font-bold leading-4">{c.name}</span>
                 </Link></li>
               ))}
@@ -144,7 +145,7 @@ export function SearchScreen({ initialQ, eta, cats }: { initialQ: string; eta: n
             <ul className="mb-3 divide-y divide-border rounded-md border border-border bg-bg" aria-label="Suggestions">
               {productSugg.slice(0, 5).map((s) => (
                 <li key={s.href}><Link href={s.href} className="flex items-center gap-3 px-3 py-2.5 text-sm hover:bg-surface">
-                  <span aria-hidden className="grid size-9 place-items-center rounded-sm bg-surface text-xl">{s.icon}</span>
+                  <span aria-hidden className="grid size-9 shrink-0 place-items-center overflow-hidden rounded-sm bg-surface"><img src={emojiSrc(s.icon, s.label)} alt="" className="size-full object-contain" /></span>
                   <Highlight text={s.label} q={term} />
                   {s.kind === "category" && <span className="ml-auto text-xs font-semibold text-muted">in Categories</span>}
                 </Link></li>

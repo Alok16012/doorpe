@@ -4,7 +4,7 @@ import { createHmac, timingSafeEqual } from "crypto";
 import { read, write, uid } from "./db/local";
 import type { User } from "./types";
 
-const COOKIE = "turant_session";
+const COOKIE = "doorpe_session";
 const SECRET = process.env.SESSION_SECRET || "dev-only-secret-change-me";
 const MAX_AGE = 60 * 60 * 24 * 30;
 const ADMIN_PHONES = (process.env.ADMIN_PHONES || "9999999999").split(",").map((s) => s.trim());

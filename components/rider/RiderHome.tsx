@@ -201,7 +201,7 @@ function ActiveJob({ a, store, rider, onStep }: { a: NonNullable<State["active"]
                 <li key={it.variantId}>
                   <label className="flex items-center gap-3 text-sm">
                     <input type="checkbox" checked={!!checked[it.variantId]} onChange={(e) => setChecked((c) => ({ ...c, [it.variantId]: e.target.checked }))} className="size-5 accent-[var(--color-accent)]" />
-                    <span className="w-8 shrink-0"><ProductArt icon={it.icon} size="sm" className="!p-0" /></span>
+                    <span className="w-8 shrink-0"><ProductArt label={it.name} icon={it.icon} size="sm" className="!p-0" /></span>
                     <span className="flex-1">{it.name} <span className="text-muted">· {it.unit}</span></span>
                     <b className="tabular-nums">×{it.qty}</b>
                   </label>
