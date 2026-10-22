@@ -75,7 +75,7 @@ export function Header() {
         {home ? (
           <div className="mobile-home-header px-4 pt-4">
             <div className="mb-2 flex items-center justify-between gap-3">
-              <Link href="/" aria-label="DoorPe home" className="-ml-2 inline-flex shrink-0"><Logo size="sm" /></Link>
+              <Link href="/" aria-label="DoorPe home" className="home-logo -ml-2 inline-flex shrink-0"><Logo size="sm" /></Link>
               <AccountButton />
             </div>
             <DeliveryLine big />

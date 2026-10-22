@@ -167,8 +167,10 @@ body {
     background: #fff;
     border-bottom: 1px solid #edf0f5;
     /* the sticky <header> already pads for the notch; adding the inset here doubled it */
-    padding-top: 14px;
+    padding-top: 4px;
   }
+  /* logo sits flush under the status bar: drop the tile's own top/bottom space */
+  .mobile-home-header .home-logo > span { height: auto; padding-top: 0; padding-bottom: 0; }
   .mobile-home-header [role="search"] {
     background: #f7f8fb;
     border-color: #e9edf4;
